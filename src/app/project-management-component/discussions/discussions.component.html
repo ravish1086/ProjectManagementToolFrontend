@@ -1,0 +1,93 @@
+<h2 class="cm-d-flex flex-sb-ac">Discussions <p-button class="add-discussion-button"
+        (onClick)=" addDiscussionTrue = true">New Discussion</p-button></h2>
+<div class="discussion-list">
+    <!-- <div class="discussion-item" *ngFor="let discussion of allDiscussions">
+        <h3>{{discussion.discussionTitle}}</h3>
+        <p>{{discussion.discussionDescription}}</p>
+        <button (click)="viewComments(discussion._id, 'Discussion', discussion)">View Comments</button>
+        <div>Discussion Comments</div>
+        <div *ngFor="let comments of discussion.discussionComments">
+            <div>{{comments.comment}}</div>
+            <div>{{comments.commentedAt}}</div>
+            <div>{{comments.commentedBy.fullName}}</div>
+        </div>
+        <div>
+            <input type="text" #comment placeholder="Add Comment">
+            <button (click)="addComment(discussion._id, 'Discussion', comment, discussion)">Add Comment</button>
+        </div>
+    </div> -->
+
+
+    <div class="discussion-item" *ngFor="let discussion of allDiscussions">
+        <div class="card">
+            <p-panel [toggleable]="true">
+            <ng-template pTemplate="header">
+                <div class="cm-d-flex f-gap-10 align-c">
+                    <strong class="font-bold">
+                        {{discussion.discussionTitle}}
+                    </strong>
+                    
+                    
+                    
+                </div>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <div class="flex-sb-ac">
+                    <div class="cm-d-flex f-gap-10">
+                        <p-tag [severity]="discussionStatusConfig[discussion.discussionType]" value="{{discussion.discussionType}}"/>    
+            
+                        
+                    </div>
+                    <div class="p-text-secondary">
+                        <div class="cm-d-flex f-gap-5">
+                            <span *ngFor="let member of discussion.discussionMembers">
+                                <p-chip label="{{member.fullName}}" icon="pi pi-user" />
+                            </span>
+                        
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <p>{{discussion.discussionDescription}}</p>
+            <p-panel [styleClass]="'comments-panel'" [toggleable]="true" [collapsed]="true" >
+                <ng-template pTemplate="header">
+                    <div class="cm-d-flex f-gap-10 align-c">
+                        <strong class="font-bold">
+                            View Comments
+                        </strong>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="content">
+                    <app-comments [entity]="discussion" [entityType]="'Discussion'"></app-comments>
+                </ng-template>
+            </p-panel>
+            <ng-template pTemplate="icons">
+                <button class="p-panel-header-icon p-link mr-2" (click)="menu.toggle($event); selectedDiscussion = discussion">
+                    <span class="pi pi-cog"></span>
+                </button>
+                <p-menu #menu id="config_menu" [model]="items" [popup]="true" >
+                    <ng-template pTemplate="item" let-item>
+                                <div class="cm-d-flex f-gap-10 align-c padding-10px " >
+                                    <span [class]="item.icon"></span>
+                                    <span class="ml-2">{{ item.label }}</span>
+                                </div>
+                            
+                    </ng-template>
+                </p-menu>
+            </ng-template>
+            </p-panel>
+        </div>
+        <div class="flex-sb-ac">
+            <div class="created-at">By: {{discussion?.createdBy?.fullName}}</div>
+            <div class="created-at">Created {{discussion.createdAtAgo}}</div>
+        </div>
+
+    </div>
+</div>
+<div class="no-records-card" *ngIf="allDiscussions.length==0">
+    No Discussions Found
+</div>
+<p-dialog [(visible)]="addDiscussionTrue" [style]="{ width: '50rem' }" [modal]="true" header="Add/Edit Discussion">
+    <app-add-discussion *ngIf="addDiscussionTrue" [selectedProject]="selectedProject" [selectedDiscussion]="selectedDiscussion" 
+        (discussionAdded)="getDiscussions(this.selectedProject._id); addDiscussionTrue=false"></app-add-discussion>
+</p-dialog>

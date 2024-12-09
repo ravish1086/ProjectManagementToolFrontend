@@ -1,0 +1,17 @@
+<div class="margin-botton-10px">
+    <div *ngFor="let comments of entity.comments" class="comment-div" [class.j-c-fe]="comments.commentedBy.username == 'ravsharm18'">
+        <div>
+            <div class="flex-sb-ac ">
+                <div class="cm-d-flex f-gap-5 align-c "><i class="pi pi-user"></i> {{comments.commentedBy.fullName}} <span class="font-italics">({{comments.commentedBy.designation}})</span></div>
+                <div>{{comments.createdAtAgo}}</div>
+                
+            </div>
+            <div>{{comments.comment}}</div>
+        </div>
+
+    </div>
+</div>
+<div>
+    <textarea (keyup.enter)="addComment(entity._id, entityType, comment, entity)" type="text" #comment placeholder="Add Comment" rows="2" style="width: 100%; border-radius: 10px; border-color: rgb(179, 179, 179); padding: 10px;"></textarea>
+    <!-- <button (click)="">Add Comment</button> -->
+</div>

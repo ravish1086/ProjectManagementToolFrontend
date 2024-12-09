@@ -1,0 +1,60 @@
+
+<form [formGroup]="formGroupName" (ngSubmit)="saveUpdateForm()" class="label-type1 ng-select-type1 calendar-type1 input-type1 input-div-bg master-form cm-d-flex flex-wrap f-gap-10">
+    <div class="flex-33p" >
+                <label for="issueTitle">Issue Title<span class="asterisk">*</span></label>
+                <input class="width-100" pInputText type="text" id="issueTitle" placeholder="Issue Title" formControlName="issueTitle">
+                
+    <div *ngIf="formGroupName.get('issueTitle')?.invalid && formGroupName.get('issueTitle')?.touched">
+    </div>
+    </div>
+
+    <div class="flex-33p" >
+                <label for="issueStatus">Issue Status<span class="asterisk">*</span></label>
+                <ng-select #ngdrop tabindex="1" [items]="issueStatusList" bindLabel=""
+                    bindValue="" placeholder="" id="issueStatus" formControlName="issueStatus">
+                </ng-select>
+    <div *ngIf="formGroupName.get('issueStatus')?.invalid && formGroupName.get('issueStatus')?.touched">
+    </div>
+    </div>
+    <div class="flex-33p" >
+                <label for="issuePriority">Issue Priority<span class="asterisk">*</span></label>
+                <ng-select #ngdrop tabindex="1" [items]="issuePriorityList" bindLabel=""
+                    bindValue="" placeholder="" id="issuePriority" formControlName="issuePriority">
+                </ng-select>
+    <div *ngIf="formGroupName.get('issuePriority')?.invalid && formGroupName.get('issuePriority')?.touched">
+    </div>
+    </div>
+    <div class="flex-33p" >
+                <label for="issueType">Issue Type<span class="asterisk">*</span></label>
+                <ng-select #ngdrop tabindex="1" [items]="issueTypesList" bindLabel=""
+                    bindValue="" placeholder="" id="issueType" formControlName="issueType">
+                </ng-select>
+    <div *ngIf="formGroupName.get('issueType')?.invalid && formGroupName.get('issueType')?.touched">
+    </div>
+    </div>
+    <div class="flex-33p" >
+        <label for="issueDueDate">Issue Due Date<span class="asterisk">*</span></label>
+        <p-calendar id="travelDate" [iconDisplay]="'input'" formControlName="issueDueDate"
+                    [showIcon]="true" dateFormat="dd/mm/yy" placeholder="Issue Due Date"></p-calendar>
+<div *ngIf="formGroupName.get('issueDueDate')?.invalid && formGroupName.get('issueDueDate')?.touched">
+</div>
+</div>
+    <div class="flex-100p" >
+                <label for="issueAssignee">Issue Assignee<span class="asterisk">*</span></label>
+                <ng-select #ngdrop tabindex="1" [items]="selectedProject.projectMembers" bindLabel="fullName" multiple="true"
+                    bindValue="_id" placeholder="" id="issueAssignee" formControlName="issueAssignee">
+                </ng-select>
+    <div *ngIf="formGroupName.get('issueAssignee')?.invalid && formGroupName.get('issueAssignee')?.touched">
+    </div>
+    </div>
+    <div class="flex-100p" >
+        <label for="issueDescription">Issue Description<span class="asterisk">*</span></label>
+        <p-editor formControlName="issueDescription" [style]="{ height: '320px' }" />
+        <!-- <textarea pInputText rows="2" class="width-100" type="text" id="issueDescription" placeholder="Issue Description" formControlName="issueDescription"></textarea> -->
+        
+<div *ngIf="formGroupName.get('issueDescription')?.invalid && formGroupName.get('issueDescription')?.touched">
+</div>
+</div>
+
+    <p-button class="add-task-button" type="submit" icon="pi pi-save" iconPos="right" label="Save"></p-button>
+    </form>

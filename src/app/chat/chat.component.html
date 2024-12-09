@@ -1,0 +1,25 @@
+<div class="chat-container">
+    <div class="chat-header flex-sb-ac">
+      <h3>{{receiver.fullName}}</h3>
+      <div class="cm-d-flex align-c f-gap-10">
+        <small>Chat</small>
+        <i class="pi pi-times cursor" (click)="closeChatWindow()"></i>
+      </div>
+    </div>
+    <div class="messages" id="chat-container">
+      <div *ngFor="let message of messages" class="message" [class.sender]="message.sender._id === userId">
+        <div *ngIf="message.receiver._id === userId">
+          <small>{{ message.sender.fullName }} &nbsp;&nbsp; {{message.updatedAt}}</small>
+          <p>{{ message.message }}</p>
+        </div>
+        <div *ngIf="message.receiver._id != userId">
+          <small>{{ message.sender.fullName }} (You)&nbsp;&nbsp; {{message.updatedAt}}</small>
+          <p>{{ message.message }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="input-container">
+      <textarea rows="3" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" placeholder="Type a message..."  class="width-100"></textarea>
+      <i class="pi pi-send" (click)="sendMessage()"></i>
+    </div>
+</div>

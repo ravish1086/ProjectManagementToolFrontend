@@ -1,0 +1,11 @@
+<div>
+    <div class="notification cursor" [class.read]="notification.read" *ngFor="let notification of notifications" (click)="notificationClicked(notification)" >
+        <h2>{{ notification.title }}</h2>
+        <p>{{ notification.message }}</p>
+        <div class="notification-meta">
+            <span>User ID: {{ notification.user }}</span>
+            <span>Entity ID: {{ notification.entityId }}</span>
+            <span>Entity Type: {{ notification.entityType }}</span>
+        </div>
+    </div>
+</div>

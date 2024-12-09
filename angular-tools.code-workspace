@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../../backend/ProjectManagement"
+		}
+	],
+	"settings": {
+		"html-css-class-completion.includeGlobPattern": "**/src*.{css,html,scss}"
+	}
+}

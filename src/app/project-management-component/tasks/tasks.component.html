@@ -1,0 +1,139 @@
+<div class="cm-d-flex j-c-c">
+    <p-selectButton [options]="taskDueOptions" [(ngModel)]="dueType" optionLabel="value" optionValue="value" (onChange)="fetchRecordsByDueType()">
+        <ng-template let-item pTemplate>
+            <div class="cm-d-flex f-gap-5 align-c">
+                <i [class]="item.icon"></i> {{item.label}}
+            </div>
+        </ng-template>
+    </p-selectButton>
+</div>
+<h2 class="cm-d-flex flex-sb-ac">
+    Tasks
+    <div class="cm-d-flex f-gap-10">
+        <p-selectButton [options]="justifyOptions" [(ngModel)]="selectedView" optionLabel="icon" optionValue="value">
+            <ng-template let-item pTemplate>
+                <i [class]="item.icon"></i>
+            </ng-template>
+        </p-selectButton>
+        <p-button class="add-task-button" (onClick)=" addTaskTrue=true">Add Task</p-button>
+
+    </div>
+</h2>
+
+<div class="task-list" *ngIf="selectedView == 'card'">
+    <div class="task-item" *ngFor="let task of allTasks">
+        <div class="card">
+            <p-panel [toggleable]="true">
+                <ng-template pTemplate="header">
+                    <div class="cm-d-flex f-gap-10 align-c" [id]="task._id">
+                        <strong class="font-bold">
+                            {{task.taskName}}
+                        </strong>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <div class="flex-sb-ac">
+                        <div class="cm-d-flex f-gap-10">
+                            <p-tag [severity]="taskStatusConfig[task.taskStatus]" value="{{task.taskStatus}}" />
+
+                            <p-tag [severity]="taskPriorityConfig[task.taskPriority]" value="{{task.taskPriority}}" />
+                            <p-tag icon="pi pi-exclamation-triangle" severity="warning"
+                                value="Due By: {{task.taskDueDate}}"></p-tag>
+
+                        </div>
+                        <div class="p-text-secondary">
+                            <div class="cm-d-flex f-gap-5">
+                                <i class="pi pi-paperclip" *ngIf="task.taskAttachments.length>0" (click)="openFile(task.taskAttachments[0])">
+
+                                </i>
+                                <span *ngFor="let member of task.taskMembers">
+
+                                    <p-chip label="{{member.fullName}}" icon="pi pi-user" />
+
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="icons">
+                    <button class="p-panel-header-icon p-link mr-2" (click)="menu.toggle($event); selectedTask = task">
+                        <span class="pi pi-cog"></span>
+                    </button>
+                    <p-menu #menu id="config_menu" [model]="items" [popup]="true">
+                        <ng-template pTemplate="item" let-item>
+                            <div class="cm-d-flex f-gap-10 align-c padding-10px ">
+                                <span [class]="item.icon"></span>
+                                <span class="ml-2">{{ item.label }}</span>
+                            </div>
+
+
+                        </ng-template>
+                    </p-menu>
+                </ng-template>
+
+                <pre>{{task.taskDescription}}</pre>
+                <p-panel [styleClass]="'comments-panel'" [toggleable]="true" [collapsed]="true">
+                    <ng-template pTemplate="header">
+                        <div class="cm-d-flex f-gap-10 align-c">
+                            <strong class="font-bold">
+                                View Comments
+                            </strong>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="content">
+                        <app-comments [entity]="task" [entityType]="'Task'"></app-comments>
+                    </ng-template>
+
+
+                </p-panel>
+            </p-panel>
+        </div>
+        <div class="flex-sb-ac">
+            <div class="created-at">By: {{task?.createdBy?.fullName}}</div>
+            <div class="created-at">Created At: {{task.createdAt}}</div>
+        </div>
+
+    </div>
+</div>
+<div *ngIf="selectedView == 'table'">
+    <p-table [value]="allTasks" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Task Name</th>
+                <th>Task Description</th>
+                <th>Task Due Date</th>
+                <th>Task Status</th>
+                <th>Task Priority</th>
+                <th>Created At</th>
+                <th>Assigned To</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-task>
+            <tr>
+                <td>{{task.taskName}}</td>
+                <td>{{task.taskDescription}}</td>
+                <td><p-tag icon="pi pi-exclamation-triangle" severity="warning"
+                        value="Due By: {{task.taskDueDate}}"></p-tag></td>
+                <td>
+                    <p-tag [severity]="taskStatusConfig[task.taskStatus]" value="{{task.taskStatus}}" />
+                </td>
+                <td>
+                    <p-tag [severity]="taskPriorityConfig[task.taskPriority]" value="{{task.taskPriority}}" />
+                </td>
+                <td>{{task.createdAt}}</td>
+                <td>
+                    <span *ngFor="let member of task.taskMembers">{{member.fullName}}</span>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<div class="no-records-card" *ngIf="allTasks.length==0">
+    No Tasks Found
+</div>
+<p-dialog header="Add/Edit Task" [modal]="true" [(visible)]="addTaskTrue" [style]="{ width: '50rem' }">
+    <app-add-task *ngIf="addTaskTrue" [selectedProject]="selectedProject" [selectedTask]="selectedTask" 
+        (taskAdded)="this.getTasks(this.selectedProject._id); addTaskTrue=false"></app-add-task>
+</p-dialog>

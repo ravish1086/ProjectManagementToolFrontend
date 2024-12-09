@@ -1,0 +1,46 @@
+<form [formGroup]="formGroupeName" (ngSubmit)="saveUpdateForm()" class="label-type1 ng-select-type1 calendar-type1 input-type1 input-div-bg master-form cm-d-flex flex-wrap f-gap-10">
+    <div class="flex-33p" >
+                <label for="projectName">Project Name<span class="asterisk">*</span></label>
+                <input class="width-100" pInputText type="text" id="projectName" placeholder="Project Name" formControlName="projectName">
+                
+    <div *ngIf="formGroupeName.get('projectName')?.invalid && formGroupeName.get('projectName')?.touched">
+    <small *ngIf="formGroupeName.get('projectName')?.errors?.['required']">Custom Message.</small>
+    </div>
+    </div>
+    <div class="flex-33p" >
+        <label for="projectStatus">Project Status<span class="asterisk">*</span></label>
+        <ng-select #ngdrop tabindex="1" [items]="projectStatusList" 
+             placeholder="Select Project Status" id="projectStatus" formControlName="projectStatus">
+        </ng-select>
+<div *ngIf="formGroupeName.get('projectStatus')?.invalid && formGroupeName.get('projectStatus')?.touched">
+</div>
+</div>
+    <div class="flex-33p" >
+                <label for="projectManager">Project Manager<span class="asterisk">*</span></label>
+                <ng-select #ngdrop tabindex="1" [items]="usersList" bindLabel="fullName"
+                    bindValue="_id" placeholder="Project Manager" id="projectManager" formControlName="projectManager">
+                </ng-select>
+    <div *ngIf="formGroupeName.get('projectManager')?.invalid && formGroupeName.get('projectManager')?.touched">
+    <small *ngIf="formGroupeName.get('projectManager')?.errors?.['required']">Custom Message.</small>
+    </div>
+    </div>
+    <div class="flex-100p" >
+                <label for="projectMembers">Project Members<span class="asterisk">*</span></label>
+                <ng-select #ngdrop tabindex="1" [items]="usersList" bindLabel="fullName" [multiple]="true"
+                    bindValue="_id" placeholder="Project Members" id="projectMembers" formControlName="projectMembers">
+                </ng-select>
+    <div *ngIf="formGroupeName.get('projectMembers')?.invalid && formGroupeName.get('projectMembers')?.touched">
+    </div>
+    </div>
+    <div class="flex-100p" >
+        <label for="projectDescription">Project Description<span class="asterisk">*</span></label>
+        <textarea rows="3" class="width-100" pInputText type="text" id="projectDescription" placeholder="Project Description" formControlName="projectDescription"></textarea>
+        
+<div *ngIf="formGroupeName.get('projectDescription')?.invalid && formGroupeName.get('projectDescription')?.touched">
+<small *ngIf="formGroupeName.get('projectDescription')?.errors?.['required']">Custom Message.</small>
+</div>
+</div>
+<p-button [label]="'Save'" iconPos="right" icon="pi pi-save" type="submit">
+
+</p-button>
+    </form>

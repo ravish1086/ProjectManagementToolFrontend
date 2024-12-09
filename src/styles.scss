@@ -1,0 +1,844 @@
+/* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+@import "@ng-select/ng-select/themes/default.theme.css";
+// .cm-d-flex{
+//     display: flex;
+//     gap: 20px;
+//     >div{
+//         flex:50%;
+//     }
+// }
+
+.cm-d-flex {
+    display: flex;
+}
+.display-block{
+    display: block;
+}
+.display-none{
+    display: none;
+}
+.mr-t-30 {
+    margin-top: 30px;
+}
+.mr-t-20 {
+    margin-top: 20px;
+}
+.mr-t-10{
+    margin-top: 10px;
+}
+.mr-t-5{
+    margin-top: 5px;
+}
+.align-fe{
+    align-items: flex-end;
+}
+.order-1{
+    order: 1;
+    align-self: baseline;
+}
+.align-self-e{
+    align-self: end;
+}
+.align-self-s{
+    align-self: start;
+}
+.mr-b15{
+  margin-bottom: 15px;
+}
+.max-w70{
+    max-width: 70%;
+}
+
+.container-fluid {
+    overflow: hidden;
+    --bs-gutter-x: 0rem;
+    --bs-gutter-y: 0;
+}
+.main-content {
+    padding: 1.5rem 3rem 1.5rem 3rem;
+    min-height: calc(100vh - 100px);
+    background: #F5F5F5 0% 0% no-repeat padding-box;
+}
+img{
+    width: 100%;
+    height: auto;
+}
+.img-90p{
+    width: 90%;
+    height: auto;
+}
+
+.cm-flex{
+    display: flex;
+}
+.flex-d-col {
+    flex-direction: column;
+}
+.flex-wrap{
+    flex-wrap: wrap;
+}
+.flex-24p{
+    width: 24%;
+}
+.label-type1{
+    label{
+        font-size: 14px;
+        font-weight: 500;
+        color: #797979;
+        
+        padding: 5px 0px;
+    }
+    label:not(.p-checkbox-label):not(.ml-2){
+        font-size: 13px;
+        line-height: 13px;
+        font-weight: 400;
+        color: #797979;
+        background-color: white;
+        padding: 5px 20px 2px 5px;
+        /* margin-top: -11px; */
+        // position: absolute;
+        top: -10px;
+        z-index: 2;
+        left: 16px;
+        display: block;
+    }
+}
+.j-c-fe{
+    justify-content: flex-end;
+}
+.j-c-fs{
+    justify-content: flex-start;
+}
+.flex-sb-ac {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.j-c-c {
+    justify-content: center;
+}
+.j-c-sb{
+    justify-content: space-between;
+}
+
+.align-c {
+    align-items: center;
+}
+.txt-align-right{
+    text-align: right;
+}
+.align-fs{
+    align-items: flex-start;
+}
+.pos-rel {
+    position: relative
+}
+.pos-relative{
+    position: relative
+}
+.height-70px{
+    height: 70px;
+}
+.height-85px{
+    height: 85px;
+}
+.pos-abs {
+    position: absolute;
+}
+.f-gap-24{
+    gap: 24px;
+}
+
+.f-gap-40{
+    gap: 40px;
+}
+.f-gap-60{
+    gap: 60px;
+}
+.flex-1{
+    flex: 1 1 0%;
+}
+.mr-l-auto {
+    margin: 0 0 0 auto;
+}
+.f-gap-5 {
+    gap: 5px;
+}
+.f-gap-8 {
+    gap: 8px;
+}
+.f-gap-10 {
+    gap: 10px;
+}
+
+.f-gap-15 {
+    gap: 15px;
+}
+
+.f-gap-20 {
+    gap: 20px;
+}
+
+.f-gap-30 {
+    gap: 30px;
+}
+.f-gap-40 {
+    gap: 40px;
+}
+.f-gap-60{
+    gap: 60px;
+}
+.width-100 {
+    width: 100%;
+}
+.width-50{
+    width: 50%;
+}
+.width-65{
+    width: 65%;
+}
+.width-80{
+    width: 80%;
+}
+.height-100{
+    height: 100%;
+}
+.flex-30p{
+    width: 30%;
+}
+.flex-33p {
+   width: 32%;
+   position: relative;
+}
+.flex-40p {
+    width: 40%;
+ }
+ .flex-55p {
+    width: 55%;
+ }
+.flex-100p{
+    width: 100%;
+}
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+.flex-auto{
+    flex: 0 0 auto;
+}
+.cursor:hover {
+    cursor: pointer;
+}
+.pdd-0-4{
+ padding: 0 4rem;
+}
+.pdd-gap{
+    padding: 0.5rem 0;
+}
+.pdd-gap-2{
+    padding: 0.75rem 0;
+}
+.pdd-gap-3{
+    padding: 0.3rem 0; 
+}
+.pdd-gap-4{
+    padding: 1rem 0; 
+}
+.pdd-0{
+    padding: 0 !important;
+}
+.pdd-1{
+    padding: 1rem;
+}
+.pdd-l-r{
+    padding: 0 1.25rem;
+}
+.flex-10 {
+    flex: 1 1 10%;
+}
+.flex-15 {
+    flex: 1 1 15%;
+}
+.flex-8 {
+    flex: 1 1 8%;
+}
+.flex-25 {
+    flex: 1 1 25%;
+}
+.flex-29 {
+    flex: 1 1 29%;
+}
+.flex-30 {
+    flex: 1 1 30%;
+}
+
+.flex-50 {
+    flex: 1 1 50%;
+}
+.flex-60 {
+    flex: 1 1 60%;
+}
+.flex-38 {
+    flex: 1 1 38%;
+}
+.flex-75 {
+    flex: 1 1 75%;
+}
+.flex-90 {
+    flex: 1 1 90%;
+}
+.flex-88{
+    flex: 1 1 88%;
+}
+.flex-10{
+    flex: 1 1 10%;
+}
+.flex-70 {
+    flex: 1 1 70%;
+}
+.calendar-icon{
+    width: 14px;
+}   
+
+.dropdowndiv{
+    @extend .cm-d-flex;
+    @extend .j-c-c;
+    @extend .align-c;
+    .newItem{
+        font: normal normal 400 12px/12px Poppins;
+        color: black;
+    }
+}
+.container-box-shadow{
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.1607843137);
+}
+.padding-top-2p5{
+    padding-top: 2.5rem;
+}
+.padding-RL-40px{
+    padding: 0px 40px;
+}
+.padding-5px{
+    padding: 5px;
+}
+.padding-10px{
+    padding: 10px;
+}
+.ng-select-type1{
+    .ng-select-container{
+        .ng-value-label{
+            font-size: 14px;font-size: 14px;
+        }
+    }
+
+.ng-select-opened > .ng-select-container {
+    background-color: transparent;
+}
+} 
+.ng-select-type2{
+    .ng-select-container{
+        min-width: 200px;
+        background-color: transparent !important;
+        border-width: 0 0 1px 0;
+        border-radius: 0;
+        height: 40px !important;
+        border-color: #212129;
+        .ng-value-label{
+            font-size: 14px;
+        }
+    }
+    .ng-clear-wrapper .ng-clear {
+       
+        margin-left: 3px;
+
+    }
+
+}
+.calendar-type1{
+    .p-calendar{
+        width: 100%;
+    }
+   .p-calendar .p-inputtext{
+        padding: 0.5rem 0.75rem;
+        font-size: 14px;
+    }
+} 
+.input-type1{
+    .p-inputtext{
+        padding: 0.5rem 0.75rem;
+        font-size: 14px;
+    }
+}
+.p-fileupload-choose{
+    border-radius: 40px;
+    font-size: 14px;
+    background-color: #1d5da2 ;
+    border-color: #1d5da2 ;
+    padding: 0.65rem 1.25rem;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+}
+.hr-color{
+    border-color: rgb(71 156 247 / 21%);
+    border-width: 1px;
+}
+.input-style-type2{
+    width: 100%;
+    i{
+        margin-left: -10px;
+    }
+    .p-inputtext{
+        background: #ffffff00;
+        // padding: 0.75rem 0.75rem;
+        border: 1px solid #454545;
+        padding-left: 1.75rem;
+        
+        border-radius: 0px;
+        border-width: 0 0 1px 0;
+        box-shadow: none;
+    }
+}
+.width-350px{
+    width: 350px;
+}
+.txt-area{
+    border-radius: 20px;
+    padding: 10px;
+}
+textarea:focus-visible {
+   outline: none;
+}
+ng-select:focus-visible {
+    outline: none;
+}
+.ng-select.ng-select-focused:not(.ng-select-opened) > .ng-select-container{
+border-color: #212129;
+box-shadow: none;
+}
+
+
+
+////
+/// 
+/// 
+/// ?
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 80%;
+    transition: width 0.3s;
+    animation: fadeIn 0.5s;
+    margin: auto;
+    padding: 5px 20px 0px 20px;
+}
+.logoff{
+    // text-decoration: underline;
+}
+.logoff:hover{
+    cursor: pointer;
+    color: blue;
+}
+.header {
+    text-align: center;
+    background-color: #4f7aa6;
+    color: #ffffff;
+    padding: 1px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    h3{
+        margin: 10px;
+    }
+}
+
+p-button .p-button {
+
+    background: #0043af;
+
+}
+.p-tabview .p-tabview-panels {
+ 
+    padding: 0rem 0;
+}
+.tasks, .issues, .discussions, .team {
+    background-color: #fbfbfb;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.task-list, .issue-list, .discussion-list {
+    margin-top: 10px;
+}
+
+.task-item, .issue-item, .discussion-item {
+    background-color: #ffffff;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px 2px rgba(0, 0, 0, 0.1);
+}
+
+.task-status, .issue-label {
+    display: inline-block;
+    padding: 5px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+// button {
+//     background-color: #007bff;
+//     color: white;
+//     border: none;
+//     padding: 10px;
+//     border-radius: 5px;
+//     cursor: pointer;
+//     transition: background-color 0.3s;
+// }
+
+// button:hover {
+//     background-color: #0056b3;
+// }
+.p-chip .p-chip-text {
+    line-height: 1.5;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+    font-size: 12px;
+}
+.p-chip-icon{
+    margin-top: -2px;
+}
+.p-chip{
+    padding: 0 0.75rem 0 0.3rem;
+    // background-color: white;
+    // border-color: grey;
+    // border-width: 1px;
+    // border-style: solid;
+}
+.pi-user:before {
+    font-size: 12px;
+    border: 1px solid #000;
+    border-radius: 50%;
+    padding: 2px;
+}
+.created-at{
+    text-align: right;
+    font-size: 12px;
+    padding: 5px 20px;
+    color: grey;
+}
+.created-at-abs{
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 12px;
+    color: #797979;
+}
+.task-item{
+    padding: 15px 15px 5px 15px;
+
+}
+.comment-div
+{
+    margin: 3px;
+    display: flex;
+    >div{
+    width: 80%;
+    background-color: #f9f9f9;
+    border: 1px solid #f9f9f9;
+    border-radius: 10px;
+    padding: 2px 10px 0px 5px;
+
+    }
+   > div > div:nth-child(1) {
+        padding: 3px;
+        font-size: 10px;
+        color: grey;
+    }
+    > div  > div:nth-child(2) {
+            padding: 10px 20px 10px 25px;
+            font-size: 12px;
+            color: black;
+        }
+}
+.p-panel-header-icon{
+    background-color: transparent;
+    color: grey;
+}
+.p-panel-header-icon:hover {
+    background-color: rgb(238, 238, 238) !important;
+}
+.comments-panel .p-panel-content {
+   > div:nth-child(1) {
+        max-height: 300px;
+        overflow-y: scroll;
+    }
+}
+
+.comments-panel.p-panel-toggleable .p-panel-header {
+    padding: 0.1rem 1.25rem;
+    font-size: 12px;
+}
+.comments-panel .p-panel-header{
+    border-radius: 6px;
+}
+.p-panel .p-panel-content {
+    padding: 0.5rem 1.25rem;
+}
+.margin-bottom-10ps{
+    margin-bottom: 10px;
+}
+.p-datepicker table th {
+    padding: 0.2rem;
+}
+.p-datepicker table td {
+    padding: 0.2rem;
+}
+.p-datepicker table td > span {
+    width: 2rem;
+    height: 2rem;
+}
+.p-datepicker{
+    transform: scale(0.8);
+}
+.login-container{
+    display: flex;  
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+    height: 100vh;
+}
+.login-container form{
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #ffffff;
+    padding: 40px;
+    width: 25%;
+    .p-inputtext{
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+.project-title{
+    font-weight: 500;
+    font-size: 24px;
+    color: #212129;
+    font-style: oblique;
+}
+.font-10px{
+    font-size: 10px;
+}
+.project-item{
+    color: #007bff;
+    padding: 10px;
+    
+}
+.project-list{
+    list-style-type: none;
+}
+.font-italics{
+    font-style: italic;
+}
+.project-item:hover:not(.cursor-disabled){
+    cursor: pointer;
+    color: #000286;
+    font-weight: 600;
+    background-color: #f5f7ff;
+    border-radius: 10px;
+}
+.p-button:focus-visible {
+    box-shadow: none;
+}
+.p-button:focus {
+    box-shadow: none;
+}
+.notification {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+  }
+  
+  .notification.read {
+    background-color: #e0e0e0;
+  }
+  
+  .notification h2 {
+    margin: 0 0 10px;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .notification p {
+    margin: 0 0 10px;
+    font-size: 14px;
+    color: #666;
+    white-space: break-spaces;
+    overflow: hidden;
+  }
+  
+  .notification-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #999;
+  }
+  
+  .notification-meta span {
+    margin-right: 10px;
+  }
+  .viewQuill .p-editor-toolbar {
+   display: none;
+}
+.viewQuill .p-editor-content {
+   border-top: 1px solid #ccc !important;
+}
+
+.pi-circle-on::before{
+    color: rgb(0, 190, 0) !important;
+}
+.pi-times-circle::before{
+    color: red !important;
+}
+
+@media (max-width: 1000px) {
+    .container {
+        width: 100%;
+    }
+    .login-container form{
+        width: 80%;
+    }
+    app-chat{
+        width: 50% !important;
+    }
+}
+pre{
+    white-space: break-spaces;
+}
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 10px 10px 0px 10px;
+    background-color: white;
+    .chat-header{
+        padding: 10px 10px 10px 10px;
+        h3{
+            margin: 0px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        small{
+            font-weight: 600;
+            color: #00028e;
+        }
+        border-bottom: 1px solid #ccc;
+    }
+    // box-shadow: 1px 1px 3px 2px rgba(0, 0, 0, 0.2);
+  }
+  
+  .messages {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: flex-start;
+    height: 100%;
+  }
+  
+  .message {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    width: 100%;
+    display: flex;
+    
+        justify-content: flex-start;
+        > div {
+            width: 82%;
+            >p{
+                font-size: 12px;
+                margin: 0px;
+                width: 100%;
+            padding: 10px 6px;
+            border-radius: 6px;
+            background-color: #d8d8f9;
+            border-bottom-left-radius: 0;
+            }
+        }
+        small{
+            font-size: 10px;
+            color: #848484;
+        }
+  }
+  
+  .message.sender {
+    // background-color: #e1ffc7;
+    align-self: flex-end;
+    justify-content: flex-end;
+    >div {
+        width: 82%;
+        >p{
+            width: 100%;
+            padding: 6px;
+            border-radius: 6px;
+            background-color: #bbdbfb;
+            border-bottom-right-radius: 0;
+        }
+    }
+  }
+  
+  .input-container {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    gap: 5px;
+    align-items: center;
+    textarea{
+        border-radius: 8px 8px 8px 8px;
+        padding: 6px;
+    }
+    pi{
+        font-size: 1.25rem;
+    }
+  }
+
+  app-chat{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    // overflow-y: scroll;
+    width: 30%;
+    transition: width 0.3s;
+    animation: fadeIn 0.5s;
+    // border: 1px solid #ccc;  
+    // box-shadow: 1px 1px 3px 2px rgba(0, 0, 0, 0.2);
+    height: 70%;
+  }
+
+  .cursor-disabled:hover{
+      cursor: not-allowed;
+  }

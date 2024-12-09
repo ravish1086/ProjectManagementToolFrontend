@@ -1,0 +1,120 @@
+    <div class="container flex-sb-ac">
+        <div class="flex-sb-ac f-gap-10">
+            <div>Hello, {{sessionObject.user.fullName}}</div>
+        </div>
+        <div class="flex-sb-ac f-gap-10">
+            <div> <i class="pi pi-bell" (click)="notificationsVisible = !notificationsVisible"></i> </div>
+            <div class="cm-d-flex f-gap-5 align-c logoff" (click)="logout()"><i class="pi pi-sign-out"></i> Logout</div>
+            
+        </div>
+    </div>
+    <div class="container ">
+        <header class="header">
+            <h3>Project Management Tool</h3>
+        </header>
+        <p-sidebar [(visible)]="sidebarVisible">
+            <h3>Projects</h3>
+            <ul class="project-list">
+                <li *ngFor="let project of projectsList" class="project-item">
+                    <div  (click)="selectProject(project)">{{project.projectName}}</div>
+                </li>
+                
+            </ul>
+            <br>
+            <br>
+            <br>
+            <h3>Team Members</h3>
+            <ul class="project-list">
+                <ng-container *ngFor="let member of activeUsers" >
+                   
+                    <li class="project-item" (click)=" openChat(member) " *ngIf="member._id != sessionObject.user._id">
+                        <div class="cm-d-flex f-gap-10 align-c">
+                            <div>{{member.fullName}}</div>
+                            <div>
+                                <span *ngIf="member.active">
+                                    <i class="pi pi-circle-on"></i>
+                                </span>
+                                <span *ngIf="!member.active">
+                                    <i class="pi pi-times-circle"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="project-item cursor-disabled" *ngIf="member._id == sessionObject.user._id">
+                        <div class="cm-d-flex f-gap-10 align-c">
+                            <div>{{member.fullName}}</div>
+                            <div>
+                                <span *ngIf="member.active">
+                                    <i class="pi pi-circle-on"></i>
+                                </span>
+                                <span *ngIf="!member.active">
+                                    <i class="pi pi-times-circle"></i>
+                                </span>
+
+                            </div>
+                            <small>(You)</small>
+
+                        </div>
+                    </li>
+                </ng-container>
+                
+            </ul>
+        </p-sidebar>
+        <div >
+            <div class="flex-sb-ac">
+                <p-button (onClick)="sidebarVisible = !sidebarVisible" icon="pi pi-arrow-right" label="Projects" /> 
+                <div class="project-title">{{selectedProject?.projectName}}</div>
+                <p-button (onClick)="addProjectTrue = true" icon="pi pi-plus" label="Add Project" />
+            </div>
+            
+        </div>
+        <br>
+        <br>
+        <main>
+            <p-tabView [(activeIndex)]="activeIndex" >
+                <p-tabPanel header="Tasks" [cache]="false" >
+                    <ng-template pTemplate="content">
+                        <section class="tasks" >
+                            <app-tasks [selectedProject]="selectedProject" *ngIf="selectedProject"></app-tasks>
+                        </section>
+                    </ng-template>
+                    
+                </p-tabPanel>
+                <p-tabPanel header="Issues" [cache]="false">
+                    <ng-template pTemplate="content">
+                    <section class="issues">
+                        <app-issues [selectedProject]="selectedProject" *ngIf="selectedProject"></app-issues>
+                    </section>
+                    </ng-template>
+                </p-tabPanel>
+                <p-tabPanel header="Discussions" [cache]="false">
+                    <ng-template pTemplate="content">
+                    <section class="discussions">
+                    <app-discussions [selectedProject]="selectedProject" *ngIf="selectedProject"></app-discussions>
+                        
+                    </section>
+                    </ng-template>
+                </p-tabPanel>
+                <p-tabPanel header="Team">
+                    <section class="team ">
+                        <app-teams [selectedProject]="selectedProject" *ngIf="selectedProject"></app-teams>
+                    </section>
+                </p-tabPanel>
+            </p-tabView>
+            
+
+          
+
+            
+        </main>
+    </div>
+
+<p-sidebar [(visible)]="notificationsVisible" [position]="'right'">
+    <h3>Notifications</h3>
+    <app-notifications [notifications]="notificationsList" (clickEvent)="goToAnchor($event.entityId)"></app-notifications>
+</p-sidebar>
+<p-dialog [(visible)]="addProjectTrue" [style]="{ width: '50rem' }" [modal]="true" header="Add Project">
+    <app-add-project (projectAdded)="getAllProjects(); addProjectTrue=false"></app-add-project>
+</p-dialog>   
+
+<app-chat [receiver]="receiver" *ngIf="receiver" (closeChat)="closeChat()"></app-chat>

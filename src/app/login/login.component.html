@@ -1,0 +1,21 @@
+<div class="login-container">
+    <form [formGroup]="formGroupeName" (ngSubmit)="login()" class="label-type1 ng-select-type1 calendar-type1 input-type1 input-div-bg master-form">
+        <div class="flex-100p" >
+                    <label for="username">Username<span class="asterisk">*</span></label>
+                    <input pInputText type="text" id="username" placeholder="Username" formControlName="username">
+                    
+        <div *ngIf="formGroupeName.get('username')?.invalid && formGroupeName.get('username')?.touched">
+        <small *ngIf="formGroupeName.get('username')?.errors?.['required']">Please enter Username.</small>
+        </div>
+        </div>
+        <div class="flex-100p" >
+                    <label for="password">Password<span class="asterisk">*</span></label>
+                    <input pInputText type="password" id="password" placeholder="Password" formControlName="password">
+                    
+        <div *ngIf="formGroupeName.get('password')?.invalid && formGroupeName.get('password')?.touched">
+        <small *ngIf="formGroupeName.get('password')?.errors?.['required']">Please enter Password.</small>
+        </div>
+        </div>
+        <p-button type="submit" icon="pi pi-sign-in" iconPos="right" label="Login"></p-button>
+        </form>
+</div>

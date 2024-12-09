@@ -1,0 +1,18 @@
+<div class="flex-sb-ac align-c mr-t-20"><strong style="font-size: 24px;">Team</strong>
+    <div class="cm-d-flex j-c-fe">
+        <div>Managed Under: <strong>{{selectedProject.projectManager.fullName}} ({{selectedProject.projectManager.designation}})</strong></div>
+    </div>
+</div>
+
+
+                        <div class="team-list">
+                            <div class="team-member" *ngFor="let teamMember of projectMembers">
+                                <h3>{{teamMember.fullName}}</h3>
+                                <p>Designation: {{teamMember.designation}}</p>
+                                <p>Role: {{teamMember.role}}</p>
+                                <p>Email: {{teamMember.email}}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- <button class="add-team-button">Add Team Member</button> -->

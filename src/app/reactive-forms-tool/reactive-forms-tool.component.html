@@ -1,0 +1,318 @@
+<div class="cm-d-flex">
+    <div>
+        <h4>Enter the Json for the form</h4>
+        <textarea [(ngModel)]="pastedString" rows="20" cols="100" (input)="parseInput()"></textarea>
+    </div>
+    <div>
+        <ngx-json-viewer [json]="parsedJson"></ngx-json-viewer>
+    </div>    
+</div>
+
+<button (click)="processJson()">Process</button>
+
+
+<div>
+    <table>
+        <thead>
+            <th style="width:300px">Control Name</th>
+            <th style="width:300px">Control Label</th>
+
+            <th style="width: 300px;">Type</th>
+            <th>Validations</th>
+            <th>HTML Control?</th>
+            <th>Option</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let control of formControls; let i=index;">
+                <td>{{control.controlName}}</td>
+                <td>{{control.controlLabel}}</td>
+                <td>
+                    <ng-select [items]="inputType" [(ngModel)]="control.controlType" 
+                    bindValue="value" bindLabel="name">
+                    </ng-select>
+                </td>
+                <td>
+                    <ng-select [items]="validations" [(ngModel)]="control.validations" 
+                    bindValue="value" bindLabel="name" multiple="true">
+                    </ng-select>
+                </td>
+                <td>
+                    <p-checkbox binary="true" [(ngModel)]="control.isHtmlControl"></p-checkbox>
+                </td>
+                <td><i class="pi pi-trash" (click)="deleteControl(i)"></i></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<p-sidebar [(visible)]="sidebarVisible" position="right" [style]="{width: '80%'}">
+    <div *ngIf="sidebarVisible" class="">
+        <h4>Form Preview</h4>
+
+
+
+
+
+
+
+<form [formGroup]="formGroupeName" (ngSubmit)="saveUpdateForm()" class="cm-d-flex label-type1 ng-select-type1 calendar-type1 input-type1 input-div-bg master-form flex-wrap f-gap-20">
+<ng-container *ngFor="let control of formControls" >
+    <div class="flex-33p" *ngIf="control.controlType == 'number'">
+        <label for="{{control.controlName}}">{{control.controlLabel}}<span class="asterisk">*</span></label>
+        <input pInputText type="number" id="{{control.controlName}}" placeholder="{{control.controlLabel}}" formControlName="{{control.controlName}}">
+        
+<div *ngIf="formGroupeName.get(control.controlName)?.invalid && formGroupeName.get(control.controlName)?.touched">
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['required']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['min']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['max']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['minLength']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['maxLength']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['pattern']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['email']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['url']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['date']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['time']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['phone']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['number']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['alphanumeric']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['alphabets']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['decimal']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['lowercase']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['uppercase']">Custom Message.</small>
+</div>
+</div>
+<div class="flex-33p" *ngIf="control.controlType == 'text'">
+        <label for="{{control.controlName}}">{{control.controlLabel}}<span class="asterisk">*</span></label>
+        <input pInputText type="text" id="{{control.controlName}}" placeholder="{{control.controlLabel}}" formControlName="{{control.controlName}}">
+        
+<div *ngIf="formGroupeName.get(control.controlName)?.invalid && formGroupeName.get(control.controlName)?.touched">
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['required']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['min']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['max']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['minLength']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['maxLength']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['pattern']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['email']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['url']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['date']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['time']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['phone']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['number']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['alphanumeric']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['alphabets']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['decimal']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['lowercase']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['uppercase']">Custom Message.</small>
+</div>
+</div>
+<div class="flex-33p" *ngIf="control.controlType == 'email'">
+        <label for="{{control.controlName}}">{{control.controlLabel}}<span class="asterisk">*</span></label>
+        <input pInputText type="email" id="{{control.controlName}}" placeholder="{{control.controlLabel}}" formControlName="{{control.controlName}}">
+<div *ngIf="formGroupeName.get(control.controlName)?.invalid && formGroupeName.get(control.controlName)?.touched">
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['required']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['min']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['max']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['minLength']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['maxLength']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['pattern']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['email']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['url']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['date']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['time']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['phone']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['number']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['alphanumeric']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['alphabets']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['decimal']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['lowercase']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['uppercase']">Custom Message.</small>
+</div>
+</div>
+<div class="flex-33p" *ngIf="control.controlType == 'date'">
+        <label for="{{control.controlName}}">{{control.controlLabel}}<span class="asterisk">*</span></label>
+        <p-calendar id="travelDate"  [iconDisplay]="'input'" formControlName="{{control.controlName}}"
+                    [showIcon]="true" dateFormat="dd/mm/yy" placeholder="{{control.controlLabel}}" [minDate]="minDate"></p-calendar>
+<div *ngIf="formGroupeName.get(control.controlName)?.invalid && formGroupeName.get(control.controlName)?.touched">
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['required']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['min']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['max']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['minLength']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['maxLength']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['pattern']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['email']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['url']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['date']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['time']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['phone']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['number']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['alphanumeric']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['alphabets']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['decimal']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['lowercase']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['uppercase']">Custom Message.</small>
+</div>
+</div>
+<div class="flex-33p" *ngIf="control.controlType == 'checkbox'">
+        <label for="{{control.controlName}}">{{control.controlLabel}}<span class="asterisk">*</span></label>
+        <p-checkbox id="{{control.controlName}}" name="{{control.controlName}}" binary="true" formControlName="{{control.controlName}}"></p-checkbox>
+<div *ngIf="formGroupeName.get(control.controlName)?.invalid && formGroupeName.get(control.controlName)?.touched">
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['required']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['min']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['max']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['minLength']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['maxLength']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['pattern']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['email']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['url']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['date']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['time']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['phone']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['number']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['alphanumeric']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['alphabets']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['decimal']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['lowercase']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['uppercase']">Custom Message.</small>
+</div>
+</div>
+<div class="flex-33p " *ngIf="control.controlType == 'radio'">
+        <label >{{control.controlLabel}}<span class="asterisk">*</span></label>
+        <div class="cm-d-flex f-gap-10 radio-box-div">
+            <div *ngFor="let category of categories" class="field-checkbox ">
+                <p-radioButton 
+                    [inputId]="category.key" 
+                    [value]="category.value"
+                    binary="true"
+                    formControlName="{{control.controlName}}"
+                     />
+                <label [for]="category.key" class="ml-2">
+                    {{ category.name }}
+                </label>
+            </div>
+        </div>
+<div *ngIf="formGroupeName.get(control.controlName)?.invalid && formGroupeName.get(control.controlName)?.touched">
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['required']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['min']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['max']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['minLength']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['maxLength']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['pattern']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['email']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['url']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['date']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['time']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['phone']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['number']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['alphanumeric']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['alphabets']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['decimal']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['lowercase']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['uppercase']">Custom Message.</small>
+</div>
+</div>
+<div class="flex-33p" *ngIf="control.controlType == 'dropdown'">
+        <label for="{{control.controlName}}">{{control.controlLabel}}<span class="asterisk">*</span></label>
+        <ng-select #ngdrop  tabindex="1"  [items]="[]"  bindLabel="roleName"
+            bindValue="roleId"  placeholder="Select Role" id="{{control.controlName}}"  formControlName="{{control.controlName}}">
+        </ng-select>
+<div *ngIf="formGroupeName.get(control.controlName)?.invalid && formGroupeName.get(control.controlName)?.touched">
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['required']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['min']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['max']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['minLength']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['maxLength']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['pattern']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['email']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['url']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['date']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['time']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['phone']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['number']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['alphanumeric']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['alphabets']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['decimal']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['lowercase']">Custom Message.</small>
+<small *ngIf="formGroupeName.get(control.controlName)?.errors?.['uppercase']">Custom Message.</small>
+</div>
+</div>
+</ng-container>
+
+</form>
+
+
+
+        <!-- <div class="flex-33p">
+            <label for="fullName">Full Name<span class="asterisk">*</span></label>
+            <input pInputText type="text" id="fullName" placeholder="Full Name">
+        </div>
+        <div class="flex-33p">
+            <label for="roleName">Role<span class="asterisk">*</span></label>
+            <ng-select #ngdrop  tabindex="1"  [items]="[]"  bindLabel="roleName"
+                bindValue="roleId"  placeholder="Select Role" id="roleName"  >
+            </ng-select>
+        </div>
+        <div class="flex-33p">
+            <label for="userAgency">User Agency<span class="asterisk">*</span></label>
+            <p-calendar id="travelDate"  [iconDisplay]="'input'"
+                        [showIcon]="true" dateFormat="dd/mm/yy" placeholder="Travel Date" [minDate]="minDate"></p-calendar>
+        </div>
+        <div class="flex-33p ">
+            <label >Is Domestic?<span class="asterisk">*</span></label>
+            <div class="cm-d-flex f-gap-10 radio-box-div">
+                <div *ngFor="let category of categories" class="field-checkbox ">
+                    <p-radioButton 
+                        [inputId]="category.key" 
+                        [value]="category.value"
+                        binary="true"
+                        [(ngModel)]="selectedCategory"
+                         />
+                    <label [for]="category.key" class="ml-2">
+                        {{ category.name }}
+                    </label>
+                </div>
+            </div>
+            
+        </div>
+        <div class="flex-33p">
+            <label for="roleName">Department<span class="asterisk">*</span></label>
+            <p-checkbox  inputId="isRequestClosed" binary="true"
+                        [label]="'Send to Admin for Request Bookings ?'" [readonly]="true" [styleClass]="'readOnly'"></p-checkbox>
+        </div> -->
+        
+
+
+
+
+            <!-- <pre [innerHTML]="sanitizer.bypassSecurityTrustHtml(getHTMLBoilerplateCodeForAllControls())">
+        
+            </pre> -->
+
+    
+    </div>
+
+    <p-tabView>
+        <p-tabPanel header="HTML">
+            <pre [innerText]="htmlTemplate"></pre>
+        </p-tabPanel>
+        <p-tabPanel header="TypeScript">
+            <pre [innerHTML]="formControlCode" ></pre>
+        </p-tabPanel>
+        <p-tabPanel header="Necessary Ts Imports">
+            <div>
+                Import Statements
+                <div *ngFor="let item of imports">
+                    <div>{{item.importStatement}}</div>
+                </div>
+                <br>
+                <br>
+                Import Declarations
+                <div *ngFor="let item of imports">
+                    <div>{{item.importDeclaration}}</div>
+                </div>
+                <pre [innerHTML]="defaultImports"></pre>
+            </div>
+        </p-tabPanel>
+    </p-tabView>
+</p-sidebar>
+<!-- <ng-template #container></ng-template> -->
+<!-- <ngx-dynamic-hooks [content]="htmlTemplate" ></ngx-dynamic-hooks> -->
+<p-button (onClick)="createFormControlCode(); " icon="pi pi-view" label="Preview Form" />

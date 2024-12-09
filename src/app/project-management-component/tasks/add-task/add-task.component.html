@@ -1,0 +1,54 @@
+<form [formGroup]="formGroupName" (ngSubmit)="saveUpdateForm()" class="label-type1 ng-select-type1 calendar-type1 input-type1 input-div-bg master-form cm-d-flex flex-wrap f-gap-10">
+    <div class="flex-24p" >
+                <label for="taskName">Task Name<span class="asterisk">*</span></label>
+                <input pInputText type="text" id="taskName" placeholder="Task Name" formControlName="taskName">
+                
+    <div *ngIf="formGroupName.get('taskName')?.invalid && formGroupName.get('taskName')?.touched">
+    </div>
+    </div>
+
+    <div class="flex-24p" >
+                <label for="taskStatus">Task Status<span class="asterisk">*</span></label>
+                <ng-select #ngdrop  tabindex="1"  [items]="taskStatusList"  placeholder="Select Status" id="taskStatus"  formControlName="taskStatus">
+                </ng-select>
+    <div *ngIf="formGroupName.get('taskStatus')?.invalid && formGroupName.get('taskStatus')?.touched">
+    </div>
+    </div>
+
+    <div class="flex-24p" >
+                <label for="taskDueDate">Task Due Date<span class="asterisk">*</span></label>
+                <p-calendar id="travelDate"  [iconDisplay]="'input'" formControlName="taskDueDate"
+                            [showIcon]="true" dateFormat="dd/mm/yy" placeholder="Task Due Date" ></p-calendar>
+    <div *ngIf="formGroupName.get('taskDueDate')?.invalid && formGroupName.get('taskDueDate')?.touched">
+    </div>
+    </div>
+    <div class="flex-24p" >
+                <label for="taskPriority">Task Priority<span class="asterisk">*</span></label>
+                <ng-select #ngdrop  tabindex="1"  [items]="taskPriorityList" placeholder="Select Priority" id="taskPriority"  formControlName="taskPriority">
+                </ng-select>
+    <div *ngIf="formGroupName.get('taskPriority')?.invalid && formGroupName.get('taskPriority')?.touched">
+    </div>
+    </div>
+    <div class="flex-100p" >
+        <label for="taskDescription">Task Description<span class="asterisk">*</span></label>
+        <textarea rows="2" class="width-100" pInputText type="text" id="taskDescription" placeholder="Task Description" formControlName="taskDescription"></textarea>
+        
+<div *ngIf="formGroupName.get('taskDescription')?.invalid && formGroupName.get('taskDescription')?.touched">
+</div>
+</div>
+    <div class="flex-100p" >
+                <label for="taskMembers">Task Members<span class="asterisk">*</span></label>
+                <ng-select #ngdrop  tabindex="1"  [items]="selectedProject.projectMembers"  bindLabel="fullName" [multiple]="true"
+                    bindValue="_id"  placeholder="Select Members" id="taskMembers"  formControlName="taskMembers">
+                </ng-select>
+    <div *ngIf="formGroupName.get('taskMembers')?.invalid && formGroupName.get('taskMembers')?.touched">
+    </div>
+    </div>
+    <div class="flex-100p" >
+        <label for="taskMembers">Attachments<span class="asterisk"></span></label>
+        <input type="file" value="" id="attachments"  (change)="onFileSelected($event)" />
+        <div *ngIf="formGroupName.get('taskMembers')?.invalid && formGroupName.get('taskMembers')?.touched">
+        </div>
+    </div>
+    <p-button class=" p-button-rounded" type="submit" icon="pi pi-save" iconPos="right" [label]="'Save'"></p-button>
+    </form>
