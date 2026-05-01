@@ -29,6 +29,11 @@
     <div *ngIf="formGroupName.get('taskPriority')?.invalid && formGroupName.get('taskPriority')?.touched">
     </div>
     </div>
+    <div class="flex-24p" >
+                <label for="moduleId">Module (Optional)</label>
+                <ng-select #ngdrop  tabindex="1"  [items]="modulesList" bindLabel="moduleName" bindValue="_id" placeholder="Select Module" id="moduleId"  formControlName="moduleId">
+                </ng-select>
+    </div>
     <div class="flex-100p" >
         <label for="taskDescription">Task Description<span class="asterisk">*</span></label>
         <textarea rows="2" class="width-100" pInputText type="text" id="taskDescription" placeholder="Task Description" formControlName="taskDescription"></textarea>

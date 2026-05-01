@@ -22,16 +22,30 @@ export class AddTaskComponent {
   taskPriorityList:string[] = ['Low', 'Medium', 'High'];
   localSelectedTask:any;
   selectedFile!: File;
+  modulesList: any[] = [];
   constructor(private apiService:ApiService) { }
 
   ngOnInit(): void {
     this.initForm();
+    this.getModules();
+  }
+
+  getModules(): void {
+    if(this.selectedProject) {
+      this.apiService.get(apiPaths.getProjectModules + '/' + this.selectedProject._id).subscribe({
+        next: (res: any) => {
+          this.modulesList = res.data;
+        },
+        error: (err) => console.error(err)
+      });
+    }
   }
 
   initForm(): void {
     console.log(this.selectedProject)
     this.formGroupName = new FormGroup({
       projectId: new FormControl(this.selectedProject._id,[]),
+      moduleId: new FormControl(null,[]),
       _id: new FormControl(null,[]),
       taskId: new FormControl(null,[]),
       taskName: new FormControl(null,[]),
@@ -45,7 +59,10 @@ export class AddTaskComponent {
 
       if(this.selectedtask){
         this.localSelectedTask = JSON.parse(JSON.stringify(this.selectedtask));
-    this.localSelectedTask.taskMembers = this.localSelectedTask.taskMembers.map((member:any) => member._id);
+        this.localSelectedTask.taskMembers = this.localSelectedTask.taskMembers.map((member:any) => member._id);
+        if (this.localSelectedTask.moduleId && typeof this.localSelectedTask.moduleId === 'object') {
+            this.localSelectedTask.moduleId = this.localSelectedTask.moduleId._id;
+        }
         this.formGroupName.patchValue(this.localSelectedTask);
       }
     }
@@ -65,6 +82,9 @@ export class AddTaskComponent {
       const formData = new FormData();
       formData.append('_id', this.formGroupName.value._id);
       formData.append('projectId', this.selectedProject._id);
+      if(this.formGroupName.value.moduleId) {
+          formData.append('moduleId', this.formGroupName.value.moduleId);
+      }
       formData.append('taskId', this.localSelectedTask?this.localSelectedTask._id:null);
       formData.append('taskName', this.formGroupName.value.taskName);
       formData.append('taskDescription', this.formGroupName.value.taskDescription);

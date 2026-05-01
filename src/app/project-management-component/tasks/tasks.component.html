@@ -35,7 +35,7 @@
                     <div class="flex-sb-ac">
                         <div class="cm-d-flex f-gap-10">
                             <p-tag [severity]="taskStatusConfig[task.taskStatus]" value="{{task.taskStatus}}" />
-
+                            <p-tag *ngIf="task.moduleId" [value]="task.moduleId.moduleName" severity="info" />
                             <p-tag [severity]="taskPriorityConfig[task.taskPriority]" value="{{task.taskPriority}}" />
                             <p-tag icon="pi pi-exclamation-triangle" severity="warning"
                                 value="Due By: {{task.taskDueDate}}"></p-tag>
@@ -102,6 +102,7 @@
         <ng-template pTemplate="header">
             <tr>
                 <th>Task Name</th>
+                <th>Module</th>
                 <th>Task Description</th>
                 <th>Task Due Date</th>
                 <th>Task Status</th>
@@ -113,6 +114,10 @@
         <ng-template pTemplate="body" let-task>
             <tr>
                 <td>{{task.taskName}}</td>
+                <td>
+                    <p-tag *ngIf="task.moduleId" [value]="task.moduleId.moduleName" severity="info"></p-tag>
+                    <span *ngIf="!task.moduleId">-</span>
+                </td>
                 <td>{{task.taskDescription}}</td>
                 <td><p-tag icon="pi pi-exclamation-triangle" severity="warning"
                         value="Due By: {{task.taskDueDate}}"></p-tag></td>
