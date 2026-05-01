@@ -13,6 +13,8 @@
 
 .cm-d-flex {
     display: flex;
+    flex-wrap: wrap;
+
 }
 .display-block{
     display: block;
@@ -116,6 +118,7 @@ img{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 .j-c-c {
     justify-content: center;

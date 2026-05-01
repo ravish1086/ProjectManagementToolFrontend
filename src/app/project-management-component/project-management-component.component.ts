@@ -24,6 +24,7 @@ import { NotificationsComponent } from "../notifications/notifications.component
 import { MessageService } from 'primeng/api';
 import { ChatComponent } from "../chat/chat.component";
 import { SubjectUtilService } from '../services/subject-util.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-project-management-component',
@@ -62,7 +63,7 @@ addProjectTrue=false;
   ngOnInit(): void {
     this.getAllProjects();
     this.getNotifications();
-    this.createSocketConnection();
+    // this.createSocketConnection();
     this.checkNotificationPermission();
   }
 
@@ -128,7 +129,7 @@ addProjectTrue=false;
   }
 
   //call notification API method when io connection receives newNotification event
-  socket = io('http://localhost:3000');
+  socket:any//io(environment.apiUrl);
   
   newNotificationSocketConnection(){
     this.socket.on('newNotification', (data:any) => {

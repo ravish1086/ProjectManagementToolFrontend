@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { sessionObject } from './login/session';
 import { ToastModule } from 'primeng/toast';
 @Component({
@@ -12,7 +12,7 @@ import { ToastModule } from 'primeng/toast';
 export class AppComponent {
   title = 'angular-tools';
 
-  constructor() {
+  constructor(private router:Router) {
     let session = localStorage.getItem('session');
     if(session){
       let sessionObj = JSON.parse(session);
@@ -22,15 +22,15 @@ export class AppComponent {
           sessionObject.loggedIn = sessionObj.loggedIn;
       }
       else{
-        if(window.location.pathname != '/login'){
-          window.location.href = '/login';
+        if(!window.location.pathname.includes('/login')){
+          this.router.navigateByUrl('');
         }
       }
     }
     else{
-      if(window.location.pathname != '/login'){
-        window.location.href = '/login';
-    }
+      if(!window.location.pathname.includes('/login')){
+        this.router.navigateByUrl('');
+      }
   }
 }
   
