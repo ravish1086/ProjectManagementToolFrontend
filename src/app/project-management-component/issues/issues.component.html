@@ -36,8 +36,10 @@
 
     <div class="record-card__body">
       <div class="d-flex gap-3 a-start">
-        <div class="record-card__thumbnail" *ngIf="extractImage(issue.issueDescription)">
-          <p-image 
+        <div class="record-card__thumbnail cursor-pointer" 
+             (click)="pImg.onImageClick()"
+             *ngIf="extractImage(issue.issueDescription)">
+          <p-image #pImg
                    [src]="extractImage(issue.issueDescription)!"
                    [preview]="true"
                    alt="Image">

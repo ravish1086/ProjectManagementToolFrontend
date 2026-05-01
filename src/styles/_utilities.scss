@@ -195,7 +195,7 @@
 .text-warning { color: $color-warning; }
 
 // ── Cursor ─────────────────────────────────────────────────────────────────
-.cursor, .cursor:hover { cursor: pointer; }
+.cursor, .cursor-pointer, .cursor:hover { cursor: pointer; }
 .cursor-disabled:hover { cursor: not-allowed; }
 
 // ── Overflow ───────────────────────────────────────────────────────────────

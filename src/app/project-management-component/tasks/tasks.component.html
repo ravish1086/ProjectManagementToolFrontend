@@ -66,8 +66,10 @@
 
     <div class="record-card__body">
       <div class="d-flex gap-3 a-start">
-        <div class="record-card__thumbnail" *ngIf="task.taskAttachments?.length > 0">
-          <p-image
+        <div class="record-card__thumbnail cursor-pointer" 
+             (click)="pImg.onImageClick()"
+             *ngIf="task.taskAttachments?.length > 0">
+          <p-image #pImg
             [src]="apiUrl + '/' + task.taskAttachments[0].attachmentUrl"
             [preview]="true"
             alt="Attachment">
