@@ -26,6 +26,7 @@ import { ChatComponent } from "../chat/chat.component";
 import { SubjectUtilService } from '../services/subject-util.service';
 import { ApiManagerComponent } from './api-manager/api-manager.component';
 import { environment } from '../../environments/environment';
+import { NotesComponent } from './notes/notes.component';
 
 @Component({
   selector: 'app-project-management-component',
@@ -35,7 +36,7 @@ import { environment } from '../../environments/environment';
     AddTaskComponent, AddIssueComponent, AddDiscussionComponent,
     SelectButtonModule, FormsModule, TasksComponent, IssuesComponent,
     DiscussionsComponent, TeamsComponent, AddProjectComponent, NotificationsComponent, ChatComponent,
-    ApiManagerComponent],
+    ApiManagerComponent, NotesComponent],
   templateUrl: './project-management-component.component.html'
 })
 export class ProjectManagementComponentComponent {

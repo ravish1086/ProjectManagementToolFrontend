@@ -95,6 +95,13 @@
                     </section>
                     </ng-template>
                 </p-tabPanel>
+                <p-tabPanel header="Notes" [cache]="false">
+                    <ng-template pTemplate="content">
+                        <section class="notes">
+                            <app-notes [selectedProject]="selectedProject" *ngIf="selectedProject"></app-notes>
+                        </section>
+                    </ng-template>
+                </p-tabPanel>
                 <p-tabPanel header="Team">
                     <section class="team ">
                         <app-teams [selectedProject]="selectedProject" *ngIf="selectedProject"></app-teams>
