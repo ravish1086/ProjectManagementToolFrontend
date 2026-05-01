@@ -15,16 +15,19 @@ import { CommentsComponent } from '../comments/comments.component';
 import { ChipModule } from 'primeng/chip';
 import { DialogModule } from 'primeng/dialog';
 import { EditorModule } from 'primeng/editor';
+import { TabViewModule } from 'primeng/tabview';
 @Component({
   selector: 'app-issues',
   standalone: true,
   imports: [ButtonModule, FormsModule,SelectButtonModule,
     CommonModule, OverlayPanelModule, AddIssueComponent,
-     TableModule, TagModule, PanelModule, CommentsComponent, ChipModule, DialogModule, EditorModule],
+     TableModule, TagModule, PanelModule, CommentsComponent, ChipModule, DialogModule, EditorModule, TabViewModule],
   templateUrl: './issues.component.html'
 })
 export class IssuesComponent {
   allIssues:any[] = [];
+  modulesList: any[] = [];
+  activeModuleIndex: number = 0;
   addIssueTrue=false;
   selectedIssue:any;
   @Input('selectedProject') selectedProject:any;
@@ -48,12 +51,29 @@ constructor(private apiService:ApiService) { }
 
 
   ngOnChanges(){
+    this.getModules();
     this.getIssues(this.selectedProject._id);
-  
+  }
+
+  getModules(): void {
+    if (this.selectedProject) {
+      this.apiService.get(apiPaths.getProjectModules + '/' + this.selectedProject._id).subscribe({
+        next: (res: any) => {
+          this.modulesList = [{ _id: 'ALL', moduleName: 'All Modules' }, ...res.data];
+        },
+        error: (err) => console.error(err)
+      });
+    }
+  }
+
+  onModuleTabChange(event: any) {
+      this.activeModuleIndex = event.index;
+      this.getIssues(this.selectedProject._id);
   }
 
   getIssues(projectId:string){
-    this.apiService.get(apiPaths.getIssues+'?projectId=' + projectId).subscribe({
+    let moduleId = this.modulesList[this.activeModuleIndex]?._id || 'ALL';
+    this.apiService.get(apiPaths.getIssues+'?projectId=' + projectId + '&moduleId=' + moduleId).subscribe({
       next: (response:any) => {
         console.log(response);
         this.allIssues = response.issues;

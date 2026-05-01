@@ -19,19 +19,22 @@ import { RippleModule } from 'primeng/ripple';
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
 import { CommentsComponent } from "../comments/comments.component";
+import { TabViewModule } from 'primeng/tabview';
 @Component({
   selector: 'app-discussions',
   standalone: true,
   imports: [ButtonModule, FormsModule, SelectButtonModule,
     CommonModule, OverlayPanelModule, AddDiscussionComponent,
     TableModule, TagModule, PanelModule, PanelMenuModule, BadgeModule, RippleModule,
-    ChipModule, MenuModule, CommentsComponent, DialogModule],
+    ChipModule, MenuModule, CommentsComponent, DialogModule, TabViewModule],
   templateUrl: './discussions.component.html'
 })
 export class DiscussionsComponent {
   allDiscussions:any[] = [];
   @ViewChild('newDiscussion') newDiscussion!: any;
   addDiscussionTrue=false;
+  modulesList: any[] = [];
+  activeModuleIndex: number = 0;
   @Input('selectedProject') selectedProject:any;
   discussionStatusConfig:any = {
     'Open': 'info',
@@ -65,12 +68,29 @@ export class DiscussionsComponent {
 
 
   ngOnChanges(){
+    this.getModules();
     this.getDiscussions(this.selectedProject._id);
-  
+  }
+
+  getModules(): void {
+    if (this.selectedProject) {
+      this.apiService.get(apiPaths.getProjectModules + '/' + this.selectedProject._id).subscribe({
+        next: (res: any) => {
+          this.modulesList = [{ _id: 'ALL', moduleName: 'All Modules' }, ...res.data];
+        },
+        error: (err) => console.error(err)
+      });
+    }
+  }
+
+  onModuleTabChange(event: any) {
+      this.activeModuleIndex = event.index;
+      this.getDiscussions(this.selectedProject._id);
   }
 
   getDiscussions(projectId:string){
-    this.apiService.get(apiPaths.getDiscussions+'?projectId=' + projectId).subscribe({
+    let moduleId = this.modulesList[this.activeModuleIndex]?._id || 'ALL';
+    this.apiService.get(apiPaths.getDiscussions+'?projectId=' + projectId + '&moduleId=' + moduleId).subscribe({
       next: (response:any) => {
         console.log(response);
         this.allDiscussions = response.discussions;

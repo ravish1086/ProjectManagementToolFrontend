@@ -22,10 +22,23 @@ export class AddDiscussionComponent {
   formGroupeName!: FormGroup;
   localSelectedDiscussion:any;
   discussionTypesList:string[] = ['Open', 'Closed'];
+  modulesList: any[] = [];
   constructor(private apiService:ApiService) { }
 
   ngOnInit(): void {
     this.initForm();
+    this.getModules();
+  }
+
+  getModules(): void {
+    if(this.selectedProject) {
+      this.apiService.get(apiPaths.getProjectModules + '/' + this.selectedProject._id).subscribe({
+        next: (res: any) => {
+          this.modulesList = res.data;
+        },
+        error: (err) => console.error(err)
+      });
+    }
   }
 
   initForm(): void {
@@ -34,6 +47,7 @@ export class AddDiscussionComponent {
     this.formGroupeName = new FormGroup({ 
       discussionId: new FormControl(null,[]),
       discussionForProject: new FormControl(this.selectedProject._id,[]),
+      moduleId: new FormControl(null,[]),
       discussionTitle: new FormControl(null,[]),
       discussionDescription: new FormControl(null,[]),
       discussionMembers: new FormControl(null,[]),
@@ -43,7 +57,10 @@ export class AddDiscussionComponent {
 
       if(this.selectedDiscussion){
         this.localSelectedDiscussion = JSON.parse(JSON.stringify(this.selectedDiscussion));
-    this.localSelectedDiscussion.discussionMembers = this.localSelectedDiscussion.discussionMembers.map((member:any) => member._id);
+        this.localSelectedDiscussion.discussionMembers = this.localSelectedDiscussion.discussionMembers.map((member:any) => member._id);
+        if (this.localSelectedDiscussion.moduleId && typeof this.localSelectedDiscussion.moduleId === 'object') {
+            this.localSelectedDiscussion.moduleId = this.localSelectedDiscussion.moduleId._id;
+        }
         this.formGroupeName.patchValue(this.localSelectedDiscussion);
         this.formGroupeName.removeControl('discussionOwner');
       }

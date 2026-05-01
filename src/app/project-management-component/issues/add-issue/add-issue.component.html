@@ -39,6 +39,12 @@
 <div *ngIf="formGroupName.get('issueDueDate')?.invalid && formGroupName.get('issueDueDate')?.touched">
 </div>
 </div>
+    <div class="flex-33p" >
+                <label for="moduleId">Module (Optional)</label>
+                <ng-select #ngdrop tabindex="1" [items]="modulesList" bindLabel="moduleName"
+                    bindValue="_id" placeholder="" id="moduleId" formControlName="moduleId">
+                </ng-select>
+    </div>
     <div class="flex-100p" >
                 <label for="issueAssignee">Issue Assignee<span class="asterisk">*</span></label>
                 <ng-select #ngdrop tabindex="1" [items]="selectedProject.projectMembers" bindLabel="fullName" multiple="true"

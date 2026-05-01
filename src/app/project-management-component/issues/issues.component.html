@@ -11,6 +11,10 @@
         <p-button class="add-issue-button" (onClick)=" addIssueTrue=true">Add Issue</p-button>
     </div>
     </h2>
+<p-tabView (onChange)="onModuleTabChange($event)" [(activeIndex)]="activeModuleIndex" *ngIf="modulesList.length > 0">
+    <p-tabPanel *ngFor="let module of modulesList" [header]="module.moduleName"></p-tabPanel>
+</p-tabView>
+
 <div class="issue-list" *ngIf="selectedView == 'card'">
     <div class="issue-item pos-rel" *ngFor="let issue of allIssues" [id]="issue._id">
         <span class="created-at-abs">{{issue.createdAt}}</span>
@@ -21,6 +25,7 @@
             <div class="cm-d-flex f-gap-10">
                 <p-tag [severity]="issueStatusConfig[issue.issueStatus]" value="{{issue.issueStatus}}"></p-tag>
                 <p-tag  value="{{issue.issueType}}"></p-tag>
+                <p-tag *ngIf="issue.moduleId" [value]="issue.moduleId.moduleName" severity="info"></p-tag>
                 <p-tag [severity]="issuePriorityConfig[issue.issuePriority]" value="{{issue.issuePriority}}"></p-tag>
                 <p-tag icon="pi pi-exclamation-triangle" severity="warning" value="Due By: {{issue.issueDueDate}}"></p-tag>
             </div>
@@ -53,6 +58,7 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th>Issue Name</th>
+                    <th>Module</th>
                     <th>Issue Description</th>
                     <th>Issue Due Date</th>
                     <th>Issue Status/Type</th>
@@ -65,6 +71,10 @@
             <ng-template pTemplate="body" let-issue>
                 <tr>
                     <td>{{issue.issueTitle}}</td>
+                    <td>
+                        <p-tag *ngIf="issue.moduleId" [value]="issue.moduleId.moduleName" severity="info"></p-tag>
+                        <span *ngIf="!issue.moduleId">-</span>
+                    </td>
                     <td>{{issue.issueDescription}}</td>
                     <td><p-tag icon="pi pi-exclamation-triangle" severity="warning" value="Due By: {{issue.issueDueDate}}"></p-tag></td>
                     <td>

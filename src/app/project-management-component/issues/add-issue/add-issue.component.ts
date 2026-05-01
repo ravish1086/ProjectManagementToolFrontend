@@ -25,16 +25,30 @@ export class AddIssueComponent {
   issueStatusList:string[] = ['Not Started', 'In Progress', 'Completed'];
   issuePriorityList:string[] = ['Low', 'Medium', 'High'];
   issueTypesList:string[] = ['Bug', 'Feature', 'Task', 'Improvement'];
+  modulesList: any[] = [];
   constructor(private apiService:ApiService) { }
 
   ngOnInit(): void {
     this.initForm();
+    this.getModules();
+  }
+
+  getModules(): void {
+    if(this.selectedProject) {
+      this.apiService.get(apiPaths.getProjectModules + '/' + this.selectedProject._id).subscribe({
+        next: (res: any) => {
+          this.modulesList = res.data;
+        },
+        error: (err) => console.error(err)
+      });
+    }
   }
 
   initForm(): void {
     console.log(this.selectedProject)
     this.formGroupName = new FormGroup({
       issueProjectId: new FormControl(this.selectedProject._id,[]),
+      moduleId: new FormControl(null,[]),
       issueTitle: new FormControl(null,[]),
       issueDescription: new FormControl(null,[]),
       issueStatus: new FormControl(this.issueStatusList[0],[]),
@@ -43,6 +57,14 @@ export class AddIssueComponent {
       issueAssignee: new FormControl(null,[]),
       issueDueDate: new FormControl(null,[]),
       })
+
+      if(this.selectedIssue){
+        let localSelectedIssue = JSON.parse(JSON.stringify(this.selectedIssue));
+        if (localSelectedIssue.moduleId && typeof localSelectedIssue.moduleId === 'object') {
+            localSelectedIssue.moduleId = localSelectedIssue.moduleId._id;
+        }
+        this.formGroupName.patchValue(localSelectedIssue);
+      }
   }
 
     

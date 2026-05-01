@@ -1,5 +1,9 @@
 <h2 class="cm-d-flex flex-sb-ac">Discussions <p-button class="add-discussion-button"
         (onClick)=" addDiscussionTrue = true">New Discussion</p-button></h2>
+<p-tabView (onChange)="onModuleTabChange($event)" [(activeIndex)]="activeModuleIndex" *ngIf="modulesList.length > 0">
+    <p-tabPanel *ngFor="let module of modulesList" [header]="module.moduleName"></p-tabPanel>
+</p-tabView>
+
 <div class="discussion-list">
     <!-- <div class="discussion-item" *ngFor="let discussion of allDiscussions">
         <h3>{{discussion.discussionTitle}}</h3>
@@ -35,6 +39,7 @@
                 <div class="flex-sb-ac">
                     <div class="cm-d-flex f-gap-10">
                         <p-tag [severity]="discussionStatusConfig[discussion.discussionType]" value="{{discussion.discussionType}}"/>    
+                        <p-tag *ngIf="discussion.moduleId" [value]="discussion.moduleId.moduleName" severity="info" />
             
                         
                     </div>
