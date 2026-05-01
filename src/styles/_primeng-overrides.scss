@@ -29,11 +29,17 @@
     background: $color-accent !important;
     border-color: $color-accent !important;
     color: $color-text-inverse !important;
-    box-shadow: $shadow-xs !important;
+    box-shadow: $shadow-button !important;
 
     &:hover {
       background: $color-accent-hover !important;
       border-color: $color-accent-hover !important;
+      box-shadow: $shadow-sm !important;
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
     }
   }
 }
@@ -60,19 +66,27 @@
   font-family: $font-sans !important;
   font-size: $font-size-base !important;
   color: $color-text-primary !important;
-  border-color: $color-border !important;
+  border: 1px solid $color-border !important;
   border-radius: $radius-md !important;
   padding: $space-2 $space-3 !important;
   background: $color-bg-primary !important;
-  transition: border-color $transition-fast, box-shadow $transition-fast !important;
+  box-shadow: inset 0 1px 2px rgba(26, 29, 46, 0.02) !important;
+  transition: all $transition-fast !important;
+
+  &:hover {
+    border-color: $color-border-strong !important;
+  }
 
   &:focus {
     border-color: $color-accent !important;
-    box-shadow: 0 0 0 3px rgba(79, 107, 237, 0.12) !important;
+    background: $color-bg-primary !important;
+    box-shadow: 0 0 0 3px rgba(79, 107, 237, 0.12), inset 0 1px 2px rgba(26, 29, 46, 0.02) !important;
+    outline: none !important;
   }
 
   &::placeholder {
     color: $color-text-muted !important;
+    opacity: 0.8;
   }
 }
 
@@ -181,32 +195,47 @@
 .p-dialog {
   font-family: $font-sans !important;
   border-radius: $radius-xl !important;
-  box-shadow: $shadow-lg !important;
+  box-shadow: $shadow-xl !important;
   border: 1px solid $color-border !important;
+  overflow: hidden !important;
 
   .p-dialog-header {
     padding: $space-4 $space-6 !important;
     border-bottom: 1px solid $color-border !important;
-    background: $color-bg-primary !important;
-    border-radius: $radius-xl $radius-xl 0 0 !important;
+    background: $color-bg-secondary !important;
+    border-radius: 0 !important;
 
     .p-dialog-title {
-      font-size: $font-size-md !important;
-      font-weight: $font-weight-semibold !important;
+      font-size: $font-size-lg !important;
+      font-weight: $font-weight-bold !important;
       color: $color-text-primary !important;
+      letter-spacing: -0.01em;
+    }
+
+    .p-dialog-header-icon {
+      width: 28px !important;
+      height: 28px !important;
+      transition: all $transition-fast !important;
+      color: $color-text-secondary !important;
+
+      &:hover {
+        background: $color-bg-tertiary !important;
+        color: $color-text-primary !important;
+      }
     }
   }
 
   .p-dialog-content {
-    padding: $space-5 $space-6 !important;
+    padding: $space-6 $space-6 !important;
     background: $color-bg-primary !important;
   }
 
   .p-dialog-footer {
-    padding: $space-3 $space-6 !important;
+    padding: $space-4 $space-6 !important;
     border-top: 1px solid $color-border !important;
-    background: $color-bg-secondary !important;
-    border-radius: 0 0 $radius-xl $radius-xl !important;
+    background: $color-bg-primary !important;
+    border-radius: 0 !important;
+    @include flex(flex-end, center, $space-3);
   }
 }
 

@@ -94,12 +94,12 @@
 .width-80      { width: 80%; }
 .width-350px   { width: 350px; }
 .max-w70       { max-width: 70%; }
-.flex-100p     { width: 100%; }
-.flex-33p      { width: 32%; position: relative; }
-.flex-40p      { width: 40%; }
-.flex-55p      { width: 55%; }
-.flex-30p      { width: 30%; }
-.flex-24p      { width: 24%; }
+.flex-100p     { width: 100%; margin-bottom: $space-3; }
+.flex-33p      { width: calc(33.33% - #{$space-3}); position: relative; margin-bottom: $space-3; }
+.flex-40p      { width: 40%; margin-bottom: $space-3; }
+.flex-55p      { width: 55%; margin-bottom: $space-3; }
+.flex-30p      { width: 30%; margin-bottom: $space-3; }
+.flex-24p      { width: calc(25% - #{$space-3}); margin-bottom: $space-3; }
 .flex-10       { flex: 1 1 10%; }
 .flex-15       { flex: 1 1 15%; }
 .flex-25       { flex: 1 1 25%; }
@@ -262,11 +262,27 @@
 // ── Label type1 ────────────────────────────────────────────────────────────
 .label-type1 {
   label {
-    font-size: 12px;
-    font-weight: 500;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
     color: $color-text-secondary;
-    padding: 4px 0;
+    padding: 0 0 $space-1 0;
     display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+// ── Form Group / Field ─────────────────────────────────────────────────────
+.form-field {
+  margin-bottom: $space-4;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  &--inline {
+    flex-direction: row;
+    align-items: center;
+    gap: $space-3;
   }
 }
 
