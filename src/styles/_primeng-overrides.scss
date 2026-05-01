@@ -1,0 +1,429 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// PrimeNG Overrides — Align with design system
+// ─────────────────────────────────────────────────────────────────────────────
+@use 'tokens' as *;
+@use 'mixins' as *;
+
+// ── Global PrimeNG reset ──────────────────────────────────────────────────
+
+// Buttons
+.p-button {
+  font-family: $font-sans !important;
+  font-size: $font-size-sm !important;
+  font-weight: $font-weight-medium !important;
+  padding: 6px 14px !important;
+  border-radius: $radius-md !important;
+  transition: background $transition-fast, border-color $transition-fast, box-shadow $transition-fast !important;
+
+  &:focus,
+  &:focus-visible {
+    box-shadow: 0 0 0 3px rgba(79, 107, 237, 0.2) !important;
+    outline: none !important;
+  }
+}
+
+.p-button:not(.p-button-outlined):not(.p-button-text):not(.p-button-link) {
+  &.p-button-primary,
+  &:not([class*="p-button-"]) {
+    background: $color-accent !important;
+    border-color: $color-accent !important;
+    color: $color-text-inverse !important;
+    box-shadow: $shadow-xs !important;
+
+    &:hover {
+      background: $color-accent-hover !important;
+      border-color: $color-accent-hover !important;
+    }
+  }
+}
+
+.p-button-secondary {
+  background: $color-bg-secondary !important;
+  border-color: $color-border !important;
+  color: $color-text-primary !important;
+  &:hover {
+    background: $color-bg-tertiary !important;
+    border-color: $color-border-strong !important;
+  }
+}
+
+.p-button-sm, .p-button.p-button-sm {
+  padding: 4px 10px !important;
+  font-size: $font-size-xs !important;
+}
+
+// ── Inputs ─────────────────────────────────────────────────────────────────
+.p-inputtext {
+  font-family: $font-sans !important;
+  font-size: $font-size-base !important;
+  color: $color-text-primary !important;
+  border-color: $color-border !important;
+  border-radius: $radius-md !important;
+  padding: $space-2 $space-3 !important;
+  background: $color-bg-primary !important;
+  transition: border-color $transition-fast, box-shadow $transition-fast !important;
+
+  &:focus {
+    border-color: $color-accent !important;
+    box-shadow: 0 0 0 3px rgba(79, 107, 237, 0.12) !important;
+  }
+
+  &::placeholder {
+    color: $color-text-muted !important;
+  }
+}
+
+// ── Tabs ───────────────────────────────────────────────────────────────────
+.p-tabview {
+  .p-tabview-nav {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 2px solid $color-border !important;
+    padding: 0 !important;
+    gap: 0 !important;
+
+    li {
+      margin-bottom: -2px !important;
+
+      .p-tabview-nav-link {
+        font-family: $font-sans !important;
+        font-size: $font-size-sm !important;
+        font-weight: $font-weight-medium !important;
+        color: $color-text-secondary !important;
+        padding: $space-2 $space-4 !important;
+        border: none !important;
+        border-bottom: 2px solid transparent !important;
+        background: transparent !important;
+        border-radius: 0 !important;
+        transition: color $transition-fast, border-color $transition-fast !important;
+        margin-bottom: 0 !important;
+
+        &:focus { box-shadow: none !important; }
+        &:hover { color: $color-text-primary !important; background: $color-bg-secondary !important; }
+      }
+
+      &.p-highlight .p-tabview-nav-link {
+        color: $color-accent !important;
+        border-bottom-color: $color-accent !important;
+        font-weight: $font-weight-semibold !important;
+      }
+    }
+  }
+
+  .p-tabview-panels {
+    padding: 0 !important;
+    background: transparent !important;
+  }
+}
+
+// ── Table ──────────────────────────────────────────────────────────────────
+.p-datatable {
+  font-family: $font-sans !important;
+  font-size: $font-size-base !important;
+  border-radius: $radius-lg !important;
+  overflow: hidden !important;
+  border: 1px solid $color-border !important;
+  box-shadow: $shadow-sm !important;
+
+  .p-datatable-thead > tr > th {
+    padding: $space-2 $space-3 !important;
+    font-size: $font-size-xs !important;
+    font-weight: $font-weight-semibold !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.06em !important;
+    color: $color-text-secondary !important;
+    background: $color-bg-secondary !important;
+    border-bottom: 1px solid $color-border !important;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+  }
+
+  .p-datatable-tbody > tr > td {
+    padding: $space-2 $space-3 !important;
+    font-size: $font-size-base !important;
+    color: $color-text-primary !important;
+    border-bottom: 1px solid $color-bg-secondary !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-top: none !important;
+  }
+
+  .p-datatable-tbody > tr:hover > td {
+    background: $color-bg-secondary !important;
+  }
+
+  .p-datatable-tbody > tr:last-child > td {
+    border-bottom: none !important;
+  }
+}
+
+// ── Tags / Badges ─────────────────────────────────────────────────────────
+.p-tag {
+  font-family: $font-sans !important;
+  font-size: $font-size-xs !important;
+  font-weight: $font-weight-semibold !important;
+  padding: 2px $space-2 !important;
+  border-radius: $radius-pill !important;
+  letter-spacing: 0.02em !important;
+}
+
+// ── Dialog ─────────────────────────────────────────────────────────────────
+.p-dialog {
+  font-family: $font-sans !important;
+  border-radius: $radius-xl !important;
+  box-shadow: $shadow-lg !important;
+  border: 1px solid $color-border !important;
+
+  .p-dialog-header {
+    padding: $space-4 $space-6 !important;
+    border-bottom: 1px solid $color-border !important;
+    background: $color-bg-primary !important;
+    border-radius: $radius-xl $radius-xl 0 0 !important;
+
+    .p-dialog-title {
+      font-size: $font-size-md !important;
+      font-weight: $font-weight-semibold !important;
+      color: $color-text-primary !important;
+    }
+  }
+
+  .p-dialog-content {
+    padding: $space-5 $space-6 !important;
+    background: $color-bg-primary !important;
+  }
+
+  .p-dialog-footer {
+    padding: $space-3 $space-6 !important;
+    border-top: 1px solid $color-border !important;
+    background: $color-bg-secondary !important;
+    border-radius: 0 0 $radius-xl $radius-xl !important;
+  }
+}
+
+// ── Sidebar / Drawer ───────────────────────────────────────────────────────
+.p-sidebar {
+  font-family: $font-sans !important;
+  border: 1px solid $color-border !important;
+  box-shadow: $shadow-lg !important;
+
+  .p-sidebar-header {
+    padding: $space-4 !important;
+    border-bottom: 1px solid $color-border !important;
+  }
+
+  .p-sidebar-content {
+    padding: $space-3 $space-4 !important;
+  }
+}
+
+// ── Panel ──────────────────────────────────────────────────────────────────
+.p-panel {
+  border: 1px solid $color-border !important;
+  border-radius: $radius-lg !important;
+  box-shadow: $shadow-xs !important;
+  overflow: hidden !important;
+
+  .p-panel-header {
+    padding: $space-3 $space-4 !important;
+    background: $color-bg-secondary !important;
+    border-bottom: 1px solid $color-border !important;
+    font-size: $font-size-base !important;
+    font-weight: $font-weight-medium !important;
+  }
+
+  .p-panel-content {
+    padding: $space-3 $space-4 !important;
+    background: $color-bg-primary !important;
+  }
+
+  // Comments sub-panel
+  &.comments-panel {
+    border: 1px solid $color-border !important;
+    border-radius: $radius-md !important;
+
+    .p-panel-header {
+      padding: $space-2 $space-3 !important;
+      font-size: $font-size-xs !important;
+      background: $color-accent-light !important;
+      color: $color-accent !important;
+    }
+
+    .p-panel-content {
+      padding: $space-3 !important;
+    }
+  }
+}
+
+// ── SelectButton ───────────────────────────────────────────────────────────
+.p-selectbutton {
+  .p-button {
+    font-size: $font-size-xs !important;
+    font-weight: $font-weight-medium !important;
+    padding: 4px 12px !important;
+    border-radius: 0 !important;
+    color: $color-text-secondary !important;
+    background: $color-bg-primary !important;
+    border-color: $color-border !important;
+
+    &.p-highlight {
+      background: $color-accent !important;
+      border-color: $color-accent !important;
+      color: $color-text-inverse !important;
+    }
+
+    &:first-child { border-radius: $radius-md 0 0 $radius-md !important; }
+    &:last-child  { border-radius: 0 $radius-md $radius-md 0 !important; }
+  }
+}
+
+// ── Listbox ────────────────────────────────────────────────────────────────
+.p-listbox {
+  border: 1px solid $color-border !important;
+  border-radius: $radius-lg !important;
+  font-family: $font-sans !important;
+  font-size: $font-size-base !important;
+  background: $color-bg-primary !important;
+
+  .p-listbox-item {
+    padding: $space-2 $space-3 !important;
+    border-radius: $radius-sm !important;
+    color: $color-text-primary !important;
+    transition: background $transition-fast !important;
+    font-size: $font-size-base !important;
+
+    &:hover {
+      background: $color-bg-secondary !important;
+    }
+
+    &.p-highlight {
+      background: $color-accent-light !important;
+      color: $color-accent !important;
+      font-weight: $font-weight-medium !important;
+    }
+  }
+}
+
+// ── Menu (popup) ───────────────────────────────────────────────────────────
+.p-menu {
+  font-family: $font-sans !important;
+  font-size: $font-size-sm !important;
+  border: 1px solid $color-border !important;
+  border-radius: $radius-lg !important;
+  box-shadow: $shadow-md !important;
+  padding: $space-1 !important;
+
+  .p-menuitem-link {
+    border-radius: $radius-sm !important;
+    padding: $space-2 $space-3 !important;
+    color: $color-text-primary !important;
+
+    &:hover {
+      background: $color-bg-secondary !important;
+    }
+  }
+
+  .p-menuitem-separator {
+    margin: $space-1 0 !important;
+    border-color: $color-border !important;
+  }
+}
+
+// ── Chip ───────────────────────────────────────────────────────────────────
+.p-chip {
+  font-family: $font-sans !important;
+  font-size: $font-size-xs !important;
+  font-weight: $font-weight-medium !important;
+  background: $color-bg-secondary !important;
+  border: 1px solid $color-border !important;
+  padding: 2px $space-2 !important;
+  border-radius: $radius-pill !important;
+
+  .p-chip-text {
+    font-size: $font-size-xs !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+  }
+
+  .p-chip-icon,
+  .pi-user {
+    font-size: 10px !important;
+  }
+}
+
+// ── Toast ──────────────────────────────────────────────────────────────────
+.p-toast {
+  font-family: $font-sans !important;
+  font-size: $font-size-sm !important;
+}
+
+// ── Calendar ───────────────────────────────────────────────────────────────
+.p-calendar {
+  .p-inputtext {
+    border-radius: $radius-md !important;
+  }
+
+  .p-datepicker {
+    border: 1px solid $color-border !important;
+    border-radius: $radius-lg !important;
+    box-shadow: $shadow-md !important;
+    font-family: $font-sans !important;
+    font-size: $font-size-sm !important;
+
+    table td { padding: 2px !important; }
+    table th { padding: 2px !important; }
+
+    table td > span {
+      width: 2rem !important;
+      height: 2rem !important;
+      border-radius: $radius-md !important;
+    }
+
+    table td > span.p-highlight {
+      background: $color-accent !important;
+      color: $color-text-inverse !important;
+    }
+  }
+}
+
+// ── ng-select overrides ────────────────────────────────────────────────────
+.ng-select .ng-select-container {
+  font-family: $font-sans !important;
+  font-size: $font-size-base !important;
+  border-color: $color-border !important;
+  border-radius: $radius-md !important;
+  min-height: 34px !important;
+  color: $color-text-primary !important;
+
+  &:hover { border-color: $color-border-strong !important; }
+}
+
+.ng-select.ng-select-focused:not(.ng-select-opened) > .ng-select-container {
+  border-color: $color-accent !important;
+  box-shadow: 0 0 0 3px rgba(79, 107, 237, 0.12) !important;
+}
+
+// ── Panel header icons ─────────────────────────────────────────────────────
+.p-panel-header-icon {
+  background-color: transparent !important;
+  color: $color-text-secondary !important;
+  border-radius: $radius-sm !important;
+
+  &:hover {
+    background-color: $color-bg-tertiary !important;
+    color: $color-text-primary !important;
+  }
+}
+
+// ── Scrollbar global ──────────────────────────────────────────────────────
+* {
+  scrollbar-width: thin;
+  scrollbar-color: $color-border-strong transparent;
+
+  &::-webkit-scrollbar { width: 5px; height: 5px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb {
+    background: $color-border-strong;
+    border-radius: 999px;
+  }
+}

@@ -1,0 +1,129 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Design Tokens — Light Professional Dev Theme
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Color Palette
+$color-bg-canvas:        #F6F8FA;   // Page background (GitHub-like)
+$color-bg-primary:       #FFFFFF;   // Cards, panels, modal surfaces
+$color-bg-secondary:     #F1F4F9;   // Table row alt, input backgrounds
+$color-bg-tertiary:      #E8EDF5;   // Hover states, subtle fills
+
+$color-accent:           #4F6BED;   // Primary indigo-blue
+$color-accent-hover:     #3A54D8;   // Hover/active accent
+$color-accent-light:     #EEF1FD;   // Accent background tint (chips, badges)
+$color-accent-muted:     #C4CCF7;   // Disabled / light accent
+
+$color-text-primary:     #1A1D2E;   // Main headings, labels
+$color-text-secondary:   #5B6175;   // Subtitles, meta, captions
+$color-text-muted:       #9AA0B4;   // Placeholders, disabled text
+$color-text-inverse:     #FFFFFF;   // Text on dark/accent backgrounds
+
+$color-border:           #DDE1EB;   // Default border
+$color-border-strong:    #B8C0D4;   // Emphasized borders
+
+// Status / Severity Colors
+$color-success:          #16A34A;
+$color-success-bg:       #DCFCE7;
+$color-warning:          #D97706;
+$color-warning-bg:       #FEF3C7;
+$color-danger:           #DC2626;
+$color-danger-bg:        #FEE2E2;
+$color-info:             #2563EB;
+$color-info-bg:          #DBEAFE;
+$color-secondary:        #64748B;
+$color-secondary-bg:     #F1F5F9;
+
+// HTTP Method Colors (API Manager)
+$color-http-get:         #16A34A;
+$color-http-get-bg:      #DCFCE7;
+$color-http-post:        #2563EB;
+$color-http-post-bg:     #DBEAFE;
+$color-http-put:         #D97706;
+$color-http-put-bg:      #FEF3C7;
+$color-http-patch:       #7C3AED;
+$color-http-patch-bg:    #EDE9FE;
+$color-http-delete:      #DC2626;
+$color-http-delete-bg:   #FEE2E2;
+
+// Shadows
+$shadow-xs:    0 1px 2px rgba(26, 29, 46, 0.05);
+$shadow-sm:    0 1px 3px rgba(26, 29, 46, 0.08), 0 1px 2px rgba(26, 29, 46, 0.04);
+$shadow-md:    0 4px 6px rgba(26, 29, 46, 0.07), 0 2px 4px rgba(26, 29, 46, 0.04);
+$shadow-lg:    0 10px 15px rgba(26, 29, 46, 0.08), 0 4px 6px rgba(26, 29, 46, 0.04);
+
+// Spacing Scale
+$space-1:  4px;
+$space-2:  8px;
+$space-3:  12px;
+$space-4:  16px;
+$space-5:  20px;
+$space-6:  24px;
+$space-8:  32px;
+$space-10: 40px;
+
+// Border Radius
+$radius-sm:  4px;
+$radius-md:  6px;
+$radius-lg:  10px;
+$radius-xl:  14px;
+$radius-pill: 999px;
+
+// Typography
+$font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+$font-mono:  'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+
+$font-size-xs:   11px;
+$font-size-sm:   12px;
+$font-size-base: 13px;
+$font-size-md:   14px;
+$font-size-lg:   16px;
+$font-size-xl:   20px;
+$font-size-2xl:  24px;
+
+$font-weight-normal:   400;
+$font-weight-medium:   500;
+$font-weight-semibold: 600;
+$font-weight-bold:     700;
+
+// Layout
+$navbar-height:   52px;
+$sidebar-width:   220px;
+$sidebar-collapsed: 0px;
+
+// Z-Index
+$z-sidebar:    100;
+$z-navbar:     200;
+$z-overlay:    300;
+$z-modal:      400;
+$z-toast:      500;
+
+// Transitions
+$transition-fast:   0.12s ease;
+$transition-base:   0.2s ease;
+$transition-slow:   0.3s ease;
+
+// CSS Custom Properties (for runtime theming)
+:root {
+  --color-bg-canvas:       #{$color-bg-canvas};
+  --color-bg-primary:      #{$color-bg-primary};
+  --color-bg-secondary:    #{$color-bg-secondary};
+  --color-bg-tertiary:     #{$color-bg-tertiary};
+  --color-accent:          #{$color-accent};
+  --color-accent-hover:    #{$color-accent-hover};
+  --color-accent-light:    #{$color-accent-light};
+  --color-text-primary:    #{$color-text-primary};
+  --color-text-secondary:  #{$color-text-secondary};
+  --color-text-muted:      #{$color-text-muted};
+  --color-border:          #{$color-border};
+  --color-border-strong:   #{$color-border-strong};
+  --color-success:         #{$color-success};
+  --color-warning:         #{$color-warning};
+  --color-danger:          #{$color-danger};
+  --color-info:            #{$color-info};
+  --font-sans:             #{$font-sans};
+  --font-mono:             #{$font-mono};
+  --navbar-height:         #{$navbar-height};
+  --sidebar-width:         #{$sidebar-width};
+  --shadow-sm:             #{$shadow-sm};
+  --shadow-md:             #{$shadow-md};
+}

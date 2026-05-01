@@ -1,15 +1,24 @@
 <p-toast></p-toast>
-<div class="notes-container padding-20px">
-    <div class="flex-sb-ac margin-bottom-20px" style="margin-bottom: 20px;">
-        <h2 class="margin-0" style="margin: 0;">Daily Notes</h2>
-        <div class="cm-d-flex f-gap-10 align-c" style="display: flex; gap: 10px; align-items: center;">
-            <label for="noteDate" class="font-bold">Select Date:</label>
-            <p-calendar [(ngModel)]="selectedDate" (ngModelChange)="onDateChange()" [showIcon]="true" dateFormat="dd/mm/yy" id="noteDate"></p-calendar>
-            <p-button label="Save Notes" icon="pi pi-save" (onClick)="saveNote()" [loading]="isSaving"></p-button>
-        </div>
-    </div>
 
-    <div class="editor-container">
-        <p-editor [(ngModel)]="noteContent" [style]="{ height: '500px' }"></p-editor>
+<div class="notes-layout">
+  <!-- ── Header ───────────────────────────────────────────────────────────── -->
+  <div class="notes-toolbar">
+    <h2>Daily Notes</h2>
+    <div class="notes-controls">
+      <p-calendar
+        [(ngModel)]="selectedDate"
+        (ngModelChange)="onDateChange()"
+        [showIcon]="true"
+        dateFormat="dd/mm/yy"
+        id="noteDate"
+        placeholder="Select date"
+      ></p-calendar>
+      <p-button label="Save" icon="pi pi-save" (onClick)="saveNote()" [loading]="isSaving"></p-button>
     </div>
+  </div>
+
+  <!-- ── Editor ───────────────────────────────────────────────────────────── -->
+  <div class="notes-editor">
+    <p-editor [(ngModel)]="noteContent" [style]="{ height: 'calc(100vh - 220px)' }"></p-editor>
+  </div>
 </div>

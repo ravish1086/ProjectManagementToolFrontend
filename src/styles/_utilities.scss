@@ -1,0 +1,345 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Utilities — Compact helper classes
+// ─────────────────────────────────────────────────────────────────────────────
+@use 'tokens' as *;
+
+// ── Display ────────────────────────────────────────────────────────────────
+.d-flex       { display: flex; }
+.d-block      { display: block; }
+.d-none       { display: none; }
+.d-grid       { display: grid; }
+.d-inline-flex { display: inline-flex; }
+
+// ── Flex Direction ─────────────────────────────────────────────────────────
+.flex-col     { flex-direction: column; }
+.flex-wrap    { flex-wrap: wrap; }
+.flex-nowrap  { flex-wrap: nowrap; }
+.flex-1       { flex: 1 1 0%; }
+.flex-auto    { flex: 0 0 auto; }
+.flex-shrink-0 { flex-shrink: 0; }
+
+// ── Justify ────────────────────────────────────────────────────────────────
+.j-start      { justify-content: flex-start; }
+.j-end        { justify-content: flex-end; }
+.j-center     { justify-content: center; }
+.j-between    { justify-content: space-between; }
+.j-around     { justify-content: space-around; }
+
+// ── Align ─────────────────────────────────────────────────────────────────
+.a-start      { align-items: flex-start; }
+.a-end        { align-items: flex-end; }
+.a-center     { align-items: center; }
+.a-stretch    { align-items: stretch; }
+.as-end       { align-self: flex-end; }
+.as-start     { align-self: flex-start; }
+.as-center    { align-self: center; }
+
+// ── Common combos ──────────────────────────────────────────────────────────
+.flex-between  { display: flex; justify-content: space-between; align-items: center; }
+.flex-center   { display: flex; justify-content: center; align-items: center; }
+.flex-start-c  { display: flex; justify-content: flex-start; align-items: center; }
+.flex-end-c    { display: flex; justify-content: flex-end; align-items: center; }
+
+// Legacy compatibility aliases (used in templates)
+.cm-d-flex     { display: flex; flex-wrap: wrap; }
+.cm-flex       { display: flex; }
+.flex-sb-ac    { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+.j-c-fe        { justify-content: flex-end; }
+.j-c-fs        { justify-content: flex-start; }
+.j-c-c         { justify-content: center; }
+.j-c-sb        { justify-content: space-between; }
+.align-c       { align-items: center; }
+.align-fe      { align-items: flex-end; }
+.align-fs      { align-items: flex-start; }
+.align-self-e  { align-self: flex-end; }
+.align-self-s  { align-self: flex-start; }
+.flex-d-col    { flex-direction: column; }
+.order-1       { order: 1; align-self: baseline; }
+.mr-l-auto     { margin-left: auto; }
+.float-right   { float: right; }
+.float-left    { float: left; }
+
+// ── Gap ────────────────────────────────────────────────────────────────────
+.gap-1  { gap: $space-1; }
+.gap-2  { gap: $space-2; }
+.gap-3  { gap: $space-3; }
+.gap-4  { gap: $space-4; }
+.gap-5  { gap: $space-5; }
+.gap-6  { gap: $space-6; }
+.gap-8  { gap: $space-8; }
+
+// Legacy gap aliases
+.f-gap-5   { gap: 5px; }
+.f-gap-8   { gap: 8px; }
+.f-gap-10  { gap: 10px; }
+.f-gap-15  { gap: 15px; }
+.f-gap-20  { gap: 20px; }
+.f-gap-24  { gap: 24px; }
+.f-gap-30  { gap: 30px; }
+.f-gap-40  { gap: 40px; }
+.f-gap-60  { gap: 60px; }
+
+// ── Width ──────────────────────────────────────────────────────────────────
+.w-100    { width: 100%; }
+.w-75     { width: 75%; }
+.w-50     { width: 50%; }
+.w-33     { width: 33.333%; }
+.w-25     { width: 25%; }
+.w-auto   { width: auto; }
+
+// Legacy width aliases
+.width-100     { width: 100%; }
+.width-50      { width: 50%; }
+.width-65      { width: 65%; }
+.width-80      { width: 80%; }
+.width-350px   { width: 350px; }
+.max-w70       { max-width: 70%; }
+.flex-100p     { width: 100%; }
+.flex-33p      { width: 32%; position: relative; }
+.flex-40p      { width: 40%; }
+.flex-55p      { width: 55%; }
+.flex-30p      { width: 30%; }
+.flex-24p      { width: 24%; }
+.flex-10       { flex: 1 1 10%; }
+.flex-15       { flex: 1 1 15%; }
+.flex-25       { flex: 1 1 25%; }
+.flex-29       { flex: 1 1 29%; }
+.flex-30       { flex: 1 1 30%; }
+.flex-38       { flex: 1 1 38%; }
+.flex-50       { flex: 1 1 50%; }
+.flex-60       { flex: 1 1 60%; }
+.flex-70       { flex: 1 1 70%; }
+.flex-75       { flex: 1 1 75%; }
+.flex-88       { flex: 1 1 88%; }
+.flex-90       { flex: 1 1 90%; }
+.flex-8        { flex: 1 1 8%; }
+
+// ── Height ─────────────────────────────────────────────────────────────────
+.h-100        { height: 100%; }
+.height-100   { height: 100%; }
+.height-70px  { height: 70px; }
+.height-85px  { height: 85px; }
+
+// ── Margin ─────────────────────────────────────────────────────────────────
+.m-0         { margin: 0; }
+.mt-1        { margin-top: $space-1; }
+.mt-2        { margin-top: $space-2; }
+.mt-3        { margin-top: $space-3; }
+.mt-4        { margin-top: $space-4; }
+.mt-5        { margin-top: $space-5; }
+.mb-1        { margin-bottom: $space-1; }
+.mb-2        { margin-bottom: $space-2; }
+.mb-3        { margin-bottom: $space-3; }
+.mb-4        { margin-bottom: $space-4; }
+.mr-1        { margin-right: $space-1; }
+.ml-1        { margin-left: $space-1; }
+.ml-2        { margin-left: $space-2; }
+
+// Legacy margin aliases
+.mr-t-30     { margin-top: 30px; }
+.mr-t-20     { margin-top: 20px; }
+.mr-t-10     { margin-top: 10px; }
+.mr-t-5      { margin-top: 5px; }
+.mr-b15      { margin-bottom: 15px; }
+.margin-bottom-10ps { margin-bottom: 10px; }
+
+// ── Padding ────────────────────────────────────────────────────────────────
+.p-0    { padding: 0; }
+.p-1    { padding: $space-1; }
+.p-2    { padding: $space-2; }
+.p-3    { padding: $space-3; }
+.p-4    { padding: $space-4; }
+.p-5    { padding: $space-5; }
+.px-3   { padding-left: $space-3; padding-right: $space-3; }
+.py-2   { padding-top: $space-2; padding-bottom: $space-2; }
+
+// Legacy padding aliases
+.pdd-0         { padding: 0 !important; }
+.pdd-1         { padding: 1rem; }
+.pdd-l-r       { padding: 0 1.25rem; }
+.pdd-gap       { padding: 0.5rem 0; }
+.pdd-gap-2     { padding: 0.75rem 0; }
+.pdd-gap-3     { padding: 0.3rem 0; }
+.pdd-gap-4     { padding: 1rem 0; }
+.pdd-0-4       { padding: 0 4rem; }
+.padding-top-2p5 { padding-top: 2.5rem; }
+.padding-RL-40px { padding: 0 40px; }
+.padding-5px   { padding: 5px; }
+.padding-10px  { padding: 10px; }
+.padding-20px  { padding: 20px; }
+
+// ── Position ───────────────────────────────────────────────────────────────
+.pos-rel      { position: relative; }
+.pos-relative { position: relative; }
+.pos-abs      { position: absolute; }
+
+// ── Text ───────────────────────────────────────────────────────────────────
+.text-right   { text-align: right; }
+.text-center  { text-align: center; }
+.text-left    { text-align: left; }
+.txt-align-right { text-align: right; }
+.font-bold    { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+.font-medium  { font-weight: 500; }
+.font-mono    { font-family: $font-mono; }
+.font-italics { font-style: italic; }
+.font-10px    { font-size: 10px; }
+
+// ── Colors ─────────────────────────────────────────────────────────────────
+.text-muted   { color: $color-text-muted; }
+.text-secondary { color: $color-text-secondary; }
+.text-primary { color: $color-text-primary; }
+.text-accent  { color: $color-accent; }
+.text-success { color: $color-success; }
+.text-danger  { color: $color-danger; }
+.text-warning { color: $color-warning; }
+
+// ── Cursor ─────────────────────────────────────────────────────────────────
+.cursor, .cursor:hover { cursor: pointer; }
+.cursor-disabled:hover { cursor: not-allowed; }
+
+// ── Overflow ───────────────────────────────────────────────────────────────
+.overflow-hidden { overflow: hidden; }
+.overflow-auto   { overflow: auto; }
+
+// ── Border ─────────────────────────────────────────────────────────────────
+.border-bottom { border-bottom: 1px solid $color-border; }
+.border-top    { border-top: 1px solid $color-border; }
+.hr-color      { border-color: $color-border; border-width: 1px; }
+
+// ── Icon Size ──────────────────────────────────────────────────────────────
+.calendar-icon { width: 14px; }
+
+// ── ng-select variants ─────────────────────────────────────────────────────
+.ng-select-type1 {
+  .ng-select-container .ng-value-label { font-size: 13px; }
+  &.ng-select-opened > .ng-select-container { background-color: transparent; }
+}
+
+.ng-select-type2 {
+  .ng-select-container {
+    min-width: 200px;
+    background-color: transparent !important;
+    border-width: 0 0 1px 0;
+    border-radius: 0;
+    height: 34px !important;
+    border-color: $color-border-strong;
+    .ng-value-label { font-size: 13px; }
+  }
+}
+
+// ── Calendar type1 ─────────────────────────────────────────────────────────
+.calendar-type1 {
+  .p-calendar { width: 100%; }
+  .p-calendar .p-inputtext {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+}
+
+// ── Input type1 ────────────────────────────────────────────────────────────
+.input-type1 {
+  .p-inputtext {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+}
+
+// ── Input style type2 ──────────────────────────────────────────────────────
+.input-style-type2 {
+  width: 100%;
+  i { margin-left: -10px; }
+  .p-inputtext {
+    background: transparent;
+    border: 1px solid $color-border;
+    padding-left: 1.75rem;
+    border-radius: 0;
+    border-width: 0 0 1px 0;
+    box-shadow: none;
+  }
+}
+
+// ── Label type1 ────────────────────────────────────────────────────────────
+.label-type1 {
+  label {
+    font-size: 12px;
+    font-weight: 500;
+    color: $color-text-secondary;
+    padding: 4px 0;
+    display: block;
+  }
+}
+
+// ── Container (legacy) ─────────────────────────────────────────────────────
+.container {
+  width: 100%;
+  max-width: 100%;
+  padding: 0 $space-5;
+
+  &-fluid {
+    overflow: hidden;
+    --bs-gutter-x: 0rem;
+  }
+}
+
+.container-box-shadow { box-shadow: $shadow-sm; }
+
+// ── Main content legacy ────────────────────────────────────────────────────
+.main-content {
+  padding: $space-5;
+  min-height: calc(100vh - #{$navbar-height});
+  background: $color-bg-canvas;
+}
+
+// ── Misc ───────────────────────────────────────────────────────────────────
+.display-block { display: block; }
+.display-none  { display: none; }
+
+.viewQuill .p-editor-toolbar  { display: none; }
+.viewQuill .p-editor-content  { border-top: 1px solid $color-border !important; }
+
+.p-fileupload-choose {
+  border-radius: 40px;
+  font-size: 13px;
+  background-color: $color-accent;
+  border-color: $color-accent;
+  padding: 0.5rem 1rem;
+}
+
+// ── ng-select focus ────────────────────────────────────────────────────────
+.ng-select.ng-select-focused:not(.ng-select-opened) > .ng-select-container {
+  border-color: $color-accent;
+  box-shadow: 0 0 0 3px rgba(79, 107, 237, 0.12);
+}
+
+// ── txt-area ───────────────────────────────────────────────────────────────
+.txt-area {
+  border-radius: $radius-lg;
+  padding: 10px;
+  border: 1px solid $color-border;
+  font-family: $font-sans;
+  font-size: 13px;
+}
+
+// ── dropdowndiv ────────────────────────────────────────────────────────────
+.dropdowndiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .newItem {
+    font-size: 12px;
+    color: $color-text-primary;
+  }
+}
+
+// ── img helpers ────────────────────────────────────────────────────────────
+img        { width: 100%; height: auto; }
+.img-90p   { width: 90%; height: auto; }
+
+// ── project-title (legacy) ─────────────────────────────────────────────────
+.project-title {
+  font-weight: 600;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  letter-spacing: -0.01em;
+}

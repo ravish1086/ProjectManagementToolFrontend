@@ -1,148 +1,157 @@
-<div class="cm-d-flex j-c-c">
-    <p-selectButton [options]="taskDueOptions" [(ngModel)]="dueType" optionLabel="value" optionValue="value" (onChange)="fetchRecordsByDueType()">
-        <ng-template let-item pTemplate>
-            <div class="cm-d-flex f-gap-5 align-c">
-                <i [class]="item.icon"></i> {{item.label}}
-            </div>
-        </ng-template>
+<!-- ── Section Header ─────────────────────────────────────────────────────── -->
+<div class="panel-section-header">
+  <span class="section-title">Tasks</span>
+  <div class="section-actions">
+    <!-- Due type filter -->
+    <p-selectButton
+      [options]="taskDueOptions"
+      [(ngModel)]="dueType"
+      optionLabel="value"
+      optionValue="value"
+      (onChange)="fetchRecordsByDueType()"
+    >
+      <ng-template let-item pTemplate>
+        <div class="flex-start-c gap-1">
+          <i [class]="item.icon"></i>
+          <span>{{ item.label }}</span>
+        </div>
+      </ng-template>
     </p-selectButton>
+
+    <!-- View toggle -->
+    <p-selectButton [options]="justifyOptions" [(ngModel)]="selectedView" optionLabel="icon" optionValue="value">
+      <ng-template let-item pTemplate>
+        <i [class]="item.icon"></i>
+      </ng-template>
+    </p-selectButton>
+
+    <p-button icon="pi pi-plus" label="Add Task" (onClick)="addTaskTrue = true"></p-button>
+  </div>
 </div>
-<h2 class="cm-d-flex flex-sb-ac">
-    Tasks
-    <div class="cm-d-flex f-gap-10">
-        <p-selectButton [options]="justifyOptions" [(ngModel)]="selectedView" optionLabel="icon" optionValue="value">
-            <ng-template let-item pTemplate>
-                <i [class]="item.icon"></i>
-            </ng-template>
-        </p-selectButton>
-        <p-button class="add-task-button" (onClick)=" addTaskTrue=true">Add Task</p-button>
 
-    </div>
-</h2>
-
-<p-tabView (onChange)="onModuleTabChange($event)" [(activeIndex)]="activeModuleIndex" *ngIf="modulesList.length > 0">
+<!-- ── Module Tabs ────────────────────────────────────────────────────────── -->
+<div class="module-tabs" *ngIf="modulesList.length > 0">
+  <p-tabView (onChange)="onModuleTabChange($event)" [(activeIndex)]="activeModuleIndex">
     <p-tabPanel *ngFor="let module of modulesList" [header]="module.moduleName"></p-tabPanel>
-</p-tabView>
+  </p-tabView>
+</div>
 
-<div class="task-list" *ngIf="selectedView == 'card'">
-    <div class="task-item" *ngFor="let task of allTasks">
-        <div class="card">
-            <p-panel [toggleable]="true">
-                <ng-template pTemplate="header">
-                    <div class="cm-d-flex f-gap-10 align-c" [id]="task._id">
-                        <strong class="font-bold">
-                            {{task.taskName}}
-                        </strong>
-                    </div>
-                </ng-template>
-                <ng-template pTemplate="footer">
-                    <div class="flex-sb-ac">
-                        <div class="cm-d-flex f-gap-10">
-                            <p-tag [severity]="taskStatusConfig[task.taskStatus]" value="{{task.taskStatus}}" />
-                            <p-tag *ngIf="task.moduleId" [value]="task.moduleId.moduleName" severity="info" />
-                            <p-tag [severity]="taskPriorityConfig[task.taskPriority]" value="{{task.taskPriority}}" />
-                            <p-tag icon="pi pi-exclamation-triangle" severity="warning"
-                                value="Due By: {{task.taskDueDate}}"></p-tag>
-
-                        </div>
-                        <div class="p-text-secondary">
-                            <div class="cm-d-flex f-gap-5">
-                                <i class="pi pi-paperclip" *ngIf="task.taskAttachments.length>0" (click)="openFile(task.taskAttachments[0])">
-
-                                </i>
-                                <span *ngFor="let member of task.taskMembers">
-
-                                    <p-chip label="{{member.fullName}}" icon="pi pi-user" />
-
-                                </span>
-
-                            </div>
-                        </div>
-                    </div>
-                </ng-template>
-
-                <ng-template pTemplate="icons">
-                    <button class="p-panel-header-icon p-link mr-2" (click)="menu.toggle($event); selectedTask = task">
-                        <span class="pi pi-cog"></span>
-                    </button>
-                    <p-menu #menu id="config_menu" [model]="items" [popup]="true">
-                        <ng-template pTemplate="item" let-item>
-                            <div class="cm-d-flex f-gap-10 align-c padding-10px ">
-                                <span [class]="item.icon"></span>
-                                <span class="ml-2">{{ item.label }}</span>
-                            </div>
-
-
-                        </ng-template>
-                    </p-menu>
-                </ng-template>
-
-                <pre>{{task.taskDescription}}</pre>
-                <p-panel [styleClass]="'comments-panel'" [toggleable]="true" [collapsed]="true">
-                    <ng-template pTemplate="header">
-                        <div class="cm-d-flex f-gap-10 align-c">
-                            <strong class="font-bold">
-                                View Comments
-                            </strong>
-                        </div>
-                    </ng-template>
-                    <ng-template pTemplate="content">
-                        <app-comments [entity]="task" [entityType]="'Task'"></app-comments>
-                    </ng-template>
-
-
-                </p-panel>
-            </p-panel>
-        </div>
-        <div class="flex-sb-ac">
-            <div class="created-at">By: {{task?.createdBy?.fullName}}</div>
-            <div class="created-at">Created At: {{task.createdAt}}</div>
-        </div>
-
+<!-- ── Card View ─────────────────────────────────────────────────────────── -->
+<div *ngIf="selectedView === 'card'">
+  <div
+    class="record-card"
+    *ngFor="let task of allTasks"
+    [class.record-card--high]="task.taskPriority === 'High'"
+    [class.record-card--medium]="task.taskPriority === 'Medium'"
+    [class.record-card--low]="task.taskPriority === 'Low'"
+    [id]="task._id"
+  >
+    <!-- Header -->
+    <div class="record-card__header">
+      <span class="record-title">{{ task.taskName }}</span>
+      <div class="record-actions">
+        <button class="nav-icon-btn" (click)="menu.toggle($event); selectedTask = task" title="Options">
+          <i class="pi pi-ellipsis-v"></i>
+        </button>
+        <p-menu #menu [model]="items" [popup]="true">
+          <ng-template pTemplate="item" let-item>
+            <div class="flex-start-c gap-2 padding-10px">
+              <span [class]="item.icon"></span>
+              <span>{{ item.label }}</span>
+            </div>
+          </ng-template>
+        </p-menu>
+      </div>
     </div>
-</div>
-<div *ngIf="selectedView == 'table'">
-    <p-table [value]="allTasks" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+
+    <!-- Description -->
+    <div class="record-card__body">
+      <pre>{{ task.taskDescription }}</pre>
+    </div>
+
+    <!-- Footer: tags + assignees -->
+    <div class="record-card__footer">
+      <div class="tag-group">
+        <p-tag [severity]="taskStatusConfig[task.taskStatus]" [value]="task.taskStatus" />
+        <p-tag *ngIf="task.moduleId" [value]="task.moduleId.moduleName" severity="info" />
+        <p-tag [severity]="taskPriorityConfig[task.taskPriority]" [value]="task.taskPriority" />
+        <p-tag icon="pi pi-clock" severity="warning" [value]="'Due: ' + task.taskDueDate"></p-tag>
+      </div>
+      <div class="assignee-group">
+        <i class="pi pi-paperclip cursor" *ngIf="task.taskAttachments?.length > 0" (click)="openFile(task.taskAttachments[0])"></i>
+        <p-chip *ngFor="let member of task.taskMembers" [label]="member.fullName" icon="pi pi-user" />
+      </div>
+    </div>
+
+    <!-- Meta -->
+    <div class="record-card__meta">
+      <span class="meta-text">By: {{ task?.createdBy?.fullName }}</span>
+      <span class="meta-text">{{ task.createdAt }}</span>
+    </div>
+
+    <!-- Comments toggle -->
+    <div class="comments-toggle">
+      <p-panel styleClass="comments-panel" [toggleable]="true" [collapsed]="true">
         <ng-template pTemplate="header">
-            <tr>
-                <th>Task Name</th>
-                <th>Module</th>
-                <th>Task Description</th>
-                <th>Task Due Date</th>
-                <th>Task Status</th>
-                <th>Task Priority</th>
-                <th>Created At</th>
-                <th>Assigned To</th>
-            </tr>
+          <span style="font-size: 11px; font-weight: 600;">Comments</span>
         </ng-template>
-        <ng-template pTemplate="body" let-task>
-            <tr>
-                <td>{{task.taskName}}</td>
-                <td>
-                    <p-tag *ngIf="task.moduleId" [value]="task.moduleId.moduleName" severity="info"></p-tag>
-                    <span *ngIf="!task.moduleId">-</span>
-                </td>
-                <td>{{task.taskDescription}}</td>
-                <td><p-tag icon="pi pi-exclamation-triangle" severity="warning"
-                        value="Due By: {{task.taskDueDate}}"></p-tag></td>
-                <td>
-                    <p-tag [severity]="taskStatusConfig[task.taskStatus]" value="{{task.taskStatus}}" />
-                </td>
-                <td>
-                    <p-tag [severity]="taskPriorityConfig[task.taskPriority]" value="{{task.taskPriority}}" />
-                </td>
-                <td>{{task.createdAt}}</td>
-                <td>
-                    <span *ngFor="let member of task.taskMembers">{{member.fullName}}</span>
-                </td>
-            </tr>
+        <ng-template pTemplate="content">
+          <app-comments [entity]="task" [entityType]="'Task'"></app-comments>
         </ng-template>
-    </p-table>
+      </p-panel>
+    </div>
+  </div>
 </div>
-<div class="no-records-card" *ngIf="allTasks.length==0">
-    No Tasks Found
+
+<!-- ── Table View ─────────────────────────────────────────────────────────── -->
+<div *ngIf="selectedView === 'table'">
+  <p-table [value]="allTasks" styleClass="p-datatable-sm p-datatable-striped" [tableStyle]="{ 'min-width': '100%' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Task</th>
+        <th style="width: 120px">Module</th>
+        <th>Description</th>
+        <th style="width: 130px">Due Date</th>
+        <th style="width: 110px">Status</th>
+        <th style="width: 90px">Priority</th>
+        <th style="width: 160px">Assigned To</th>
+        <th style="width: 160px">Created At</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-task>
+      <tr>
+        <td class="font-semibold">{{ task.taskName }}</td>
+        <td>
+          <p-tag *ngIf="task.moduleId" [value]="task.moduleId.moduleName" severity="info"></p-tag>
+          <span *ngIf="!task.moduleId" class="text-muted">—</span>
+        </td>
+        <td class="text-secondary">{{ task.taskDescription }}</td>
+        <td><p-tag icon="pi pi-clock" severity="warning" [value]="'Due: ' + task.taskDueDate"></p-tag></td>
+        <td><p-tag [severity]="taskStatusConfig[task.taskStatus]" [value]="task.taskStatus" /></td>
+        <td><p-tag [severity]="taskPriorityConfig[task.taskPriority]" [value]="task.taskPriority" /></td>
+        <td>
+          <span *ngFor="let member of task.taskMembers; let last = last">
+            {{ member.fullName }}<span *ngIf="!last">, </span>
+          </span>
+        </td>
+        <td class="text-muted">{{ task.createdAt }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>
-<p-dialog header="Add/Edit Task" [modal]="true" [(visible)]="addTaskTrue" [style]="{ width: '50rem' }">
-    <app-add-task *ngIf="addTaskTrue" [selectedProject]="selectedProject" [selectedTask]="selectedTask" 
-        (taskAdded)="this.getTasks(this.selectedProject._id); addTaskTrue=false"></app-add-task>
+
+<!-- ── Empty State ────────────────────────────────────────────────────────── -->
+<div class="no-records-card" *ngIf="allTasks.length === 0">
+  <i class="pi pi-check-square"></i>
+  No tasks found for this filter
+</div>
+
+<!-- ── Add/Edit Dialog ────────────────────────────────────────────────────── -->
+<p-dialog header="Add / Edit Task" [modal]="true" [(visible)]="addTaskTrue" [style]="{ width: '520px' }">
+  <app-add-task
+    *ngIf="addTaskTrue"
+    [selectedProject]="selectedProject"
+    [selectedTask]="selectedTask"
+    (taskAdded)="this.getTasks(this.selectedProject._id); addTaskTrue=false"
+  ></app-add-task>
 </p-dialog>

@@ -1,0 +1,463 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Layout — App Shell, Navbar, Sidebar, Main Content
+// ─────────────────────────────────────────────────────────────────────────────
+@use 'tokens' as *;
+@use 'mixins' as *;
+
+// ── App Shell ─────────────────────────────────────────────────────────────
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: $color-bg-canvas;
+}
+
+// ── Top Navbar ─────────────────────────────────────────────────────────────
+.app-navbar {
+  @include flex-between;
+  height: $navbar-height;
+  padding: 0 $space-5;
+  background: $color-bg-primary;
+  border-bottom: 1px solid $color-border;
+  box-shadow: $shadow-xs;
+  flex-shrink: 0;
+  z-index: $z-navbar;
+
+  &__brand {
+    @include flex(flex-start, center, $space-3);
+
+    .brand-logo {
+      width: 28px;
+      height: 28px;
+      background: $color-accent;
+      border-radius: $radius-md;
+      @include flex-center;
+      color: $color-text-inverse;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-bold;
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
+      color: $color-text-primary;
+      letter-spacing: -0.01em;
+    }
+
+    .project-name-badge {
+      @include flex(flex-start, center, $space-1);
+      font-size: $font-size-sm;
+      color: $color-text-secondary;
+
+      &::before {
+        content: '/';
+        color: $color-border-strong;
+        margin: 0 $space-2;
+      }
+
+      span {
+        font-weight: $font-weight-medium;
+        color: $color-text-primary;
+      }
+    }
+  }
+
+  &__center {
+    @include flex(flex-start, center, $space-1);
+    flex: 1;
+    padding: 0 $space-8;
+  }
+
+  &__actions {
+    @include flex(flex-end, center, $space-3);
+  }
+}
+
+// ── Nav Actions ────────────────────────────────────────────────────────────
+.nav-icon-btn {
+  @include flex-center;
+  width: 32px;
+  height: 32px;
+  border-radius: $radius-md;
+  background: transparent;
+  border: none;
+  color: $color-text-secondary;
+  cursor: pointer;
+  transition: background $transition-fast, color $transition-fast;
+  position: relative;
+
+  i {
+    font-size: 15px;
+  }
+
+  &:hover {
+    background: $color-bg-secondary;
+    color: $color-text-primary;
+  }
+}
+
+.nav-notification-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 7px;
+  height: 7px;
+  background: $color-danger;
+  border-radius: 50%;
+  border: 1.5px solid $color-bg-primary;
+}
+
+.nav-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: $radius-pill;
+  background: $color-accent-light;
+  color: $color-accent;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  @include flex-center;
+  cursor: pointer;
+  border: 1.5px solid $color-accent-muted;
+  transition: background $transition-fast;
+
+  &:hover { background: $color-accent-muted; }
+}
+
+.nav-logout {
+  @include flex(flex-start, center, $space-1);
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  cursor: pointer;
+  padding: $space-1 $space-2;
+  border-radius: $radius-md;
+  transition: background $transition-fast, color $transition-fast;
+  border: none;
+  background: none;
+
+  &:hover {
+    background: $color-bg-secondary;
+    color: $color-danger;
+  }
+
+  i { font-size: 13px; }
+}
+
+// ── Body Area (below navbar) ───────────────────────────────────────────────
+.app-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+// ── Left Project Sidebar ───────────────────────────────────────────────────
+.project-rail {
+  width: $sidebar-width;
+  flex-shrink: 0;
+  background: $color-bg-primary;
+  border-right: 1px solid $color-border;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: $z-sidebar;
+
+  &__header {
+    @include flex-between;
+    padding: $space-3 $space-4;
+    border-bottom: 1px solid $color-border;
+    flex-shrink: 0;
+
+    h4 {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      color: $color-text-secondary;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 0;
+    }
+  }
+
+  &__list {
+    flex: 1;
+    overflow-y: auto;
+    padding: $space-2;
+    @include custom-scrollbar;
+  }
+
+  &__footer {
+    padding: $space-3 $space-4;
+    border-top: 1px solid $color-border;
+    flex-shrink: 0;
+  }
+}
+
+.project-rail-item {
+  @include flex(flex-start, center, $space-2);
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: background $transition-fast, color $transition-fast;
+  color: $color-text-secondary;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  margin-bottom: 2px;
+  border: 1px solid transparent;
+
+  .project-rail-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: $color-accent-muted;
+    flex-shrink: 0;
+    transition: background $transition-fast;
+  }
+
+  &:hover {
+    background: $color-bg-secondary;
+    color: $color-text-primary;
+
+    .project-rail-dot { background: $color-accent; }
+  }
+
+  &.active {
+    background: $color-accent-light;
+    color: $color-accent;
+    border-color: $color-accent-muted;
+    font-weight: $font-weight-semibold;
+
+    .project-rail-dot { background: $color-accent; }
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    &:hover { background: transparent; }
+  }
+}
+
+.team-member-item {
+  @include flex(flex-start, center, $space-2);
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: background $transition-fast;
+  font-size: $font-size-sm;
+  margin-bottom: 2px;
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+
+    &.online  { background: $color-success; }
+    &.offline { background: $color-text-muted; }
+  }
+
+  .member-name {
+    flex: 1;
+    @include truncate;
+    color: $color-text-primary;
+  }
+
+  .member-you {
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    margin-left: auto;
+  }
+
+  &:hover:not(.disabled) { background: $color-bg-secondary; }
+  &.disabled { cursor: not-allowed; }
+}
+
+// ── Main Content Area ──────────────────────────────────────────────────────
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: $color-bg-canvas;
+}
+
+// ── Tab Bar ────────────────────────────────────────────────────────────────
+.app-tab-bar {
+  flex-shrink: 0;
+  background: $color-bg-primary;
+  border-bottom: 2px solid $color-border;
+  padding: 0 $space-5;
+  @include flex(flex-start, center, 0);
+
+  // Override PrimeNG tabview inside the tab bar
+  .p-tabview {
+    width: 100%;
+
+    .p-tabview-nav {
+      border-bottom: none !important;
+    }
+  }
+}
+
+// ── Tab Panel Content ──────────────────────────────────────────────────────
+.tab-panel-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: $space-5;
+  @include custom-scrollbar;
+}
+
+// ── Section Header inside panels ───────────────────────────────────────────
+.panel-section-header {
+  @include flex-between;
+  padding-bottom: $space-3;
+  margin-bottom: $space-4;
+  border-bottom: 1px solid $color-border;
+
+  .section-title {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+  }
+
+  .section-actions {
+    @include flex(flex-end, center, $space-2);
+  }
+}
+
+// ── No Records Card ────────────────────────────────────────────────────────
+.no-records-card {
+  @include flex-center;
+  flex-direction: column;
+  gap: $space-3;
+  padding: $space-10;
+  color: $color-text-muted;
+  font-size: $font-size-md;
+  border: 2px dashed $color-border;
+  border-radius: $radius-xl;
+  background: $color-bg-primary;
+  text-align: center;
+
+  i {
+    font-size: 32px;
+    color: $color-accent-muted;
+  }
+}
+
+// ── Add Project Panel in sidebar ────────────────────────────────────────────
+.add-project-btn {
+  width: 100%;
+  @include flex(flex-start, center, $space-2);
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  border: 1px dashed $color-border;
+  background: transparent;
+  color: $color-text-muted;
+  font-size: $font-size-sm;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    border-color: $color-accent-muted;
+    color: $color-accent;
+    background: $color-accent-light;
+  }
+
+  i { font-size: 12px; }
+}
+
+// ── Notification sidebar header ─────────────────────────────────────────────
+.notifications-header {
+  @include flex-between;
+  padding-bottom: $space-3;
+  border-bottom: 1px solid $color-border;
+  margin-bottom: $space-3;
+
+  h3 {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+  }
+}
+
+// ── Login Page ─────────────────────────────────────────────────────────────
+.login-container {
+  @include flex-center;
+  min-height: 100vh;
+  background: $color-bg-canvas;
+  background-image:
+    radial-gradient(ellipse at 20% 20%, rgba(79, 107, 237, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(79, 107, 237, 0.05) 0%, transparent 60%);
+
+  .login-card {
+    @include card($space-8, $radius-xl);
+    width: 380px;
+    box-shadow: $shadow-lg;
+    @include flex(flex-start, stretch, 0);
+    flex-direction: column;
+
+    .login-brand {
+      @include flex-center;
+      flex-direction: column;
+      gap: $space-3;
+      margin-bottom: $space-6;
+
+      .login-logo {
+        width: 44px;
+        height: 44px;
+        border-radius: $radius-lg;
+        background: $color-accent;
+        @include flex-center;
+        color: $color-text-inverse;
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+      }
+
+      h1 {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        color: $color-text-primary;
+        letter-spacing: -0.02em;
+      }
+
+      p {
+        font-size: $font-size-sm;
+        color: $color-text-muted;
+        margin-top: -$space-2;
+      }
+    }
+
+    .login-field {
+      margin-bottom: $space-4;
+
+      label {
+        display: block;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        color: $color-text-secondary;
+        margin-bottom: $space-1;
+      }
+
+      input.p-inputtext {
+        width: 100% !important;
+      }
+
+      .field-error {
+        font-size: $font-size-xs;
+        color: $color-danger;
+        margin-top: $space-1;
+      }
+    }
+
+    .login-submit {
+      width: 100%;
+      margin-top: $space-2;
+
+      .p-button {
+        width: 100%;
+        justify-content: center !important;
+        padding: $space-3 $space-4 !important;
+        font-size: $font-size-base !important;
+      }
+    }
+  }
+}

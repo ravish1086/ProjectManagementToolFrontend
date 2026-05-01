@@ -1,123 +1,165 @@
-<div class="grid mt-3">
-    <!-- Modules Sidebar -->
-    <div class="col-12 md:col-3">
-        <div class="flex justify-content-between align-items-center mb-2">
-            <h3 class="m-0">Modules</h3>
-            <p-button icon="pi pi-plus" size="small" (onClick)="openAddModule()" pTooltip="Add Module"></p-button>
-        </div>
-        
-        <p-listbox [options]="moduleOptions" [(ngModel)]="selectedModule" optionLabel="moduleName" 
-            [listStyle]="{'max-height': '60vh'}" (onChange)="onModuleSelect($event)" class="w-full">
-        </p-listbox>
-    </div>
-
-    <!-- APIs Main Content -->
-    <div class="col-12 md:col-9">
-        <div class="flex justify-content-between align-items-center mb-2">
-            <h3 class="m-0">APIs {{selectedModule && selectedModule._id !== 'ALL' ? '- ' + selectedModule.moduleName : ''}}</h3>
-            <p-button icon="pi pi-plus" label="Add API" size="small" (onClick)="openAddApi()" [disabled]="!modules.length"></p-button>
-        </div>
-
-        <p-table [value]="apis" dataKey="_id" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines" [tableStyle]="{'min-width': '50rem'}">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th style="width: 3rem"></th>
-                    <th>Name</th>
-                    <th>Method</th>
-                    <th>Endpoint</th>
-                    <th>Module</th>
-                    <th style="width: 8rem">Actions</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-api let-expanded="expanded">
-                <tr>
-                    <td>
-                        <button type="button" pButton pRipple [pRowToggler]="api" class="p-button-text p-button-rounded p-button-plain p-button-sm" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-                    </td>
-                    <td class="font-bold">{{api.apiName}}</td>
-                    <td><p-tag [value]="api.apiMethod" [severity]="getMethodSeverity(api.apiMethod)"></p-tag></td>
-                    <td class="font-mono text-sm">{{api.apiEndpoint}}</td>
-                    <td>{{api.moduleId?.moduleName}}</td>
-                    <td>
-                        <div class="flex gap-2">
-                            <p-button icon="pi pi-pencil" size="small" severity="secondary" [text]="true" (onClick)="openAddApi(api)"></p-button>
-                            <p-button icon="pi pi-trash" size="small" severity="danger" [text]="true" (onClick)="deleteApi(api._id)"></p-button>
-                        </div>
-                    </td>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="rowexpansion" let-api>
-                <tr>
-                    <td colspan="6">
-                        <div class="p-3 surface-100 border-round">
-                            <p class="m-0 mb-3">{{api.apiDescription || 'No description provided.'}}</p>
-                            
-                            <div class="grid">
-                                <div class="col-12 md:col-6" *ngIf="api.apiQueryParams?.length">
-                                    <h5 class="mt-0 mb-2">Query Parameters</h5>
-                                    <p-table [value]="api.apiQueryParams" styleClass="p-datatable-sm" class="mb-3">
-                                        <ng-template pTemplate="header">
-                                            <tr><th>Key</th><th>Type</th><th>Req</th><th>Description</th></tr>
-                                        </ng-template>
-                                        <ng-template pTemplate="body" let-qp>
-                                            <tr>
-                                                <td class="font-mono">{{qp.key}}</td>
-                                                <td><p-tag [value]="qp.type" severity="info"></p-tag></td>
-                                                <td><i class="pi" [ngClass]="{'pi-check text-green-500': qp.required, 'pi-times text-red-500': !qp.required}"></i></td>
-                                                <td>{{qp.description}}</td>
-                                            </tr>
-                                        </ng-template>
-                                    </p-table>
-                                </div>
-                                <div class="col-12 md:col-6" *ngIf="api.apiHeaders?.length">
-                                    <h5 class="mt-0 mb-2">Headers</h5>
-                                    <p-table [value]="api.apiHeaders" styleClass="p-datatable-sm" class="mb-3">
-                                        <ng-template pTemplate="header">
-                                            <tr><th>Key</th><th>Value</th><th>Description</th></tr>
-                                        </ng-template>
-                                        <ng-template pTemplate="body" let-h>
-                                            <tr>
-                                                <td class="font-mono">{{h.key}}</td>
-                                                <td class="font-mono">{{h.value}}</td>
-                                                <td>{{h.description}}</td>
-                                            </tr>
-                                        </ng-template>
-                                    </p-table>
-                                </div>
-                            </div>
-
-                            <div class="grid">
-                                <div class="col-12 md:col-6" *ngIf="api.apiBody">
-                                    <h5 class="mt-0 mb-2">Request Body</h5>
-                                    <div class="bg-white p-2 border-round">
-                                        <ngx-json-viewer [json]="api.apiBody" [expanded]="false"></ngx-json-viewer>
-                                    </div>
-                                </div>
-                                <div class="col-12 md:col-6" *ngIf="api.apiResponses?.length">
-                                    <h5 class="mt-0 mb-2">Response Example</h5>
-                                    <div class="bg-white p-2 border-round">
-                                        <ngx-json-viewer [json]="api.apiResponses[0].responseBody" [expanded]="false"></ngx-json-viewer>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="emptymessage">
-                <tr>
-                    <td colspan="6" class="text-center p-4">No APIs found.</td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </div>
+<!-- ── Section Header ─────────────────────────────────────────────────────── -->
+<div class="panel-section-header">
+  <span class="section-title">Modules &amp; APIs</span>
+  <div class="section-actions">
+    <p-button icon="pi pi-plus" label="Add Module" size="small" (onClick)="openAddModule()" pTooltip="Add Module"></p-button>
+    <p-button icon="pi pi-plus" label="Add API" size="small" (onClick)="openAddApi()" [disabled]="!modules.length"></p-button>
+  </div>
 </div>
 
-<!-- Dialogs -->
-<p-dialog header="{{selectedModuleToEdit ? 'Edit' : 'Add'}} Module" [modal]="true" [(visible)]="showAddModule" [style]="{ width: '30rem' }">
-    <app-add-module *ngIf="showAddModule" [selectedProject]="selectedProject" [selectedModule]="selectedModuleToEdit" (moduleAdded)="onModuleSaved()"></app-add-module>
+<div class="d-flex gap-4" style="align-items: flex-start;">
+
+  <!-- ── Modules Sidebar ─────────────────────────────────────────────────── -->
+  <div style="width: 200px; flex-shrink: 0;">
+    <p-listbox
+      [options]="moduleOptions"
+      [(ngModel)]="selectedModule"
+      optionLabel="moduleName"
+      [listStyle]="{'max-height': 'calc(100vh - 260px)'}"
+      (onChange)="onModuleSelect($event)"
+      class="w-100"
+    ></p-listbox>
+  </div>
+
+  <!-- ── API Table ───────────────────────────────────────────────────────── -->
+  <div style="flex: 1; min-width: 0;">
+    <p-table
+      [value]="apis"
+      dataKey="_id"
+      styleClass="p-datatable-sm p-datatable-striped"
+      [tableStyle]="{ 'min-width': '100%' }"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 2.5rem"></th>
+          <th>Name</th>
+          <th style="width: 90px">Method</th>
+          <th>Endpoint</th>
+          <th style="width: 130px">Module</th>
+          <th style="width: 90px">Actions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-api let-expanded="expanded">
+        <tr>
+          <td>
+            <button
+              type="button"
+              pButton
+              pRipple
+              [pRowToggler]="api"
+              class="p-button-text p-button-rounded p-button-plain p-button-sm"
+              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+            ></button>
+          </td>
+          <td class="font-semibold">{{ api.apiName }}</td>
+          <td>
+            <span class="method-badge method-badge--{{ api.apiMethod }}">{{ api.apiMethod }}</span>
+          </td>
+          <td>
+            <span class="api-endpoint">{{ api.apiEndpoint }}</span>
+          </td>
+          <td class="text-secondary">{{ api.moduleId?.moduleName }}</td>
+          <td>
+            <div class="flex-start-c gap-1">
+              <p-button icon="pi pi-pencil" size="small" severity="secondary" [text]="true" (onClick)="openAddApi(api)" pTooltip="Edit"></p-button>
+              <p-button icon="pi pi-trash" size="small" severity="danger" [text]="true" (onClick)="deleteApi(api._id)" pTooltip="Delete"></p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <!-- ── Row Expansion ──────────────────────────────────────────────── -->
+      <ng-template pTemplate="rowexpansion" let-api>
+        <tr>
+          <td colspan="6">
+            <div class="api-expand-panel">
+              <p class="text-secondary" style="margin-bottom: 12px; font-size: 13px;">
+                {{ api.apiDescription || 'No description provided.' }}
+              </p>
+
+              <div class="d-flex gap-4 flex-wrap">
+                <!-- Query Params -->
+                <div style="flex: 1; min-width: 200px;" *ngIf="api.apiQueryParams?.length">
+                  <h5 style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-secondary); margin-bottom: 8px;">Query Parameters</h5>
+                  <div class="param-table">
+                    <p-table [value]="api.apiQueryParams" styleClass="p-datatable-sm">
+                      <ng-template pTemplate="header">
+                        <tr><th>Key</th><th>Type</th><th>Req</th><th>Description</th></tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-qp>
+                        <tr>
+                          <td class="font-mono">{{ qp.key }}</td>
+                          <td><p-tag [value]="qp.type" severity="info"></p-tag></td>
+                          <td><i class="pi" [ngClass]="{'pi-check text-success': qp.required, 'pi-times text-danger': !qp.required}"></i></td>
+                          <td class="text-secondary">{{ qp.description }}</td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                  </div>
+                </div>
+
+                <!-- Headers -->
+                <div style="flex: 1; min-width: 200px;" *ngIf="api.apiHeaders?.length">
+                  <h5 style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-secondary); margin-bottom: 8px;">Headers</h5>
+                  <div class="param-table">
+                    <p-table [value]="api.apiHeaders" styleClass="p-datatable-sm">
+                      <ng-template pTemplate="header">
+                        <tr><th>Key</th><th>Value</th><th>Description</th></tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-h>
+                        <tr>
+                          <td class="font-mono">{{ h.key }}</td>
+                          <td class="font-mono">{{ h.value }}</td>
+                          <td class="text-secondary">{{ h.description }}</td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex gap-4 flex-wrap" style="margin-top: 12px;">
+                <!-- Request Body -->
+                <div style="flex: 1; min-width: 200px;" *ngIf="api.apiBody">
+                  <h5 style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-secondary); margin-bottom: 8px;">Request Body</h5>
+                  <div class="json-block">
+                    <ngx-json-viewer [json]="api.apiBody" [expanded]="false"></ngx-json-viewer>
+                  </div>
+                </div>
+
+                <!-- Response -->
+                <div style="flex: 1; min-width: 200px;" *ngIf="api.apiResponses?.length">
+                  <h5 style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-secondary); margin-bottom: 8px;">Response Example</h5>
+                  <div class="json-block">
+                    <ngx-json-viewer [json]="api.apiResponses[0].responseBody" [expanded]="false"></ngx-json-viewer>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6">
+            <div class="no-records-card" style="border: none; padding: 24px;">
+              <i class="pi pi-code"></i>
+              No APIs defined. Add your first API endpoint.
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<!-- ── Dialogs ────────────────────────────────────────────────────────────── -->
+<p-dialog [header]="selectedModuleToEdit ? 'Edit Module' : 'Add Module'" [modal]="true" [(visible)]="showAddModule" [style]="{ width: '380px' }">
+  <app-add-module *ngIf="showAddModule" [selectedProject]="selectedProject" [selectedModule]="selectedModuleToEdit" (moduleAdded)="onModuleSaved()"></app-add-module>
 </p-dialog>
 
-<p-dialog header="{{selectedApiToEdit ? 'Edit' : 'Add'}} API" [modal]="true" [(visible)]="showAddApi" [style]="{ width: '60rem' }" [maximizable]="true">
-    <app-add-api *ngIf="showAddApi" [selectedProject]="selectedProject" [modules]="modules" [selectedApi]="selectedApiToEdit" (apiAdded)="onApiSaved()"></app-add-api>
+<p-dialog [header]="selectedApiToEdit ? 'Edit API' : 'Add API'" [modal]="true" [(visible)]="showAddApi" [style]="{ width: '680px' }" [maximizable]="true">
+  <app-add-api *ngIf="showAddApi" [selectedProject]="selectedProject" [modules]="modules" [selectedApi]="selectedApiToEdit" (apiAdded)="onApiSaved()"></app-add-api>
 </p-dialog>

@@ -1,102 +1,127 @@
-<h2 class="cm-d-flex flex-sb-ac">
-    Issues
+<!-- ── Section Header ─────────────────────────────────────────────────────── -->
+<div class="panel-section-header">
+  <span class="section-title">Issues</span>
+  <div class="section-actions">
+    <p-selectButton [options]="justifyOptions" [(ngModel)]="selectedView" optionLabel="icon" optionValue="value">
+      <ng-template let-item pTemplate>
+        <i [class]="item.icon"></i>
+      </ng-template>
+    </p-selectButton>
+    <p-button icon="pi pi-plus" label="Add Issue" (onClick)="addIssueTrue = true"></p-button>
+  </div>
+</div>
 
-    <div class="cm-d-flex f-gap-10">
-        <p-selectButton [options]="justifyOptions" [(ngModel)]="selectedView" optionLabel="icon" optionValue="value">
-            <ng-template let-item pTemplate>
-                <i [class]="item.icon"></i>
-            </ng-template>
-        </p-selectButton>
-         
-        <p-button class="add-issue-button" (onClick)=" addIssueTrue=true">Add Issue</p-button>
-    </div>
-    </h2>
-<p-tabView (onChange)="onModuleTabChange($event)" [(activeIndex)]="activeModuleIndex" *ngIf="modulesList.length > 0">
+<!-- ── Module Tabs ────────────────────────────────────────────────────────── -->
+<div class="module-tabs" *ngIf="modulesList.length > 0">
+  <p-tabView (onChange)="onModuleTabChange($event)" [(activeIndex)]="activeModuleIndex">
     <p-tabPanel *ngFor="let module of modulesList" [header]="module.moduleName"></p-tabPanel>
-</p-tabView>
+  </p-tabView>
+</div>
 
-<div class="issue-list" *ngIf="selectedView == 'card'">
-    <div class="issue-item pos-rel" *ngFor="let issue of allIssues" [id]="issue._id">
-        <span class="created-at-abs">{{issue.createdAt}}</span>
-        <h3>{{issue.issueTitle}}</h3>
-        <p-editor [styleClass]="'viewQuill'" *ngIf="issue?.issueDescription?.includes('img')" [(ngModel)]="issue.issueDescription" [readonly]="true" [style]="{ 'min-height': '320px' }" />
-        <p *ngIf="!issue?.issueDescription?.includes('img')">{{issue.issueDescription}}</p>
-        <div class="flex-sb-ac margin-bottom-10ps mr-t-10">
-            <div class="cm-d-flex f-gap-10">
-                <p-tag [severity]="issueStatusConfig[issue.issueStatus]" value="{{issue.issueStatus}}"></p-tag>
-                <p-tag  value="{{issue.issueType}}"></p-tag>
-                <p-tag *ngIf="issue.moduleId" [value]="issue.moduleId.moduleName" severity="info"></p-tag>
-                <p-tag [severity]="issuePriorityConfig[issue.issuePriority]" value="{{issue.issuePriority}}"></p-tag>
-                <p-tag icon="pi pi-exclamation-triangle" severity="warning" value="Due By: {{issue.issueDueDate}}"></p-tag>
-            </div>
-            <div>
-               <span class="font-10px">Assigned To:</span><p-chip label="{{issue.issueAssignee.fullName}}" icon="pi pi-user" />
-            </div>
-        </div>
-        <p-panel [styleClass]="'comments-panel'" [toggleable]="true" [collapsed]="true" >
-            <ng-template pTemplate="header">
-                <div class="cm-d-flex f-gap-10 align-c">
-                    <strong class="font-bold">
-                        View Comments
-                    </strong>
-                </div>
-            </ng-template>
-            <ng-template pTemplate="content">
-                <app-comments [entity]="issue" [entityType]="'Issue'"></app-comments>
-            </ng-template>
-            
-        
-        </p-panel>
+<!-- ── Card View ─────────────────────────────────────────────────────────── -->
+<div *ngIf="selectedView === 'card'">
+  <div
+    class="record-card"
+    *ngFor="let issue of allIssues"
+    [class.record-card--high]="issue.issuePriority === 'High'"
+    [class.record-card--medium]="issue.issuePriority === 'Medium'"
+    [class.record-card--low]="issue.issuePriority === 'Low'"
+    [id]="issue._id"
+  >
+    <span class="created-at-abs">{{ issue.createdAt }}</span>
+
+    <div class="record-card__header">
+      <span class="record-title">{{ issue.issueTitle }}</span>
     </div>
+
+    <div class="record-card__body">
+      <p-editor
+        *ngIf="issue?.issueDescription?.includes('img')"
+        [styleClass]="'viewQuill'"
+        [(ngModel)]="issue.issueDescription"
+        [readonly]="true"
+        [style]="{ 'min-height': '120px' }"
+      />
+      <p *ngIf="!issue?.issueDescription?.includes('img')">{{ issue.issueDescription }}</p>
+    </div>
+
+    <div class="record-card__footer">
+      <div class="tag-group">
+        <p-tag [severity]="issueStatusConfig[issue.issueStatus]" [value]="issue.issueStatus"></p-tag>
+        <p-tag [value]="issue.issueType"></p-tag>
+        <p-tag *ngIf="issue.moduleId" [value]="issue.moduleId.moduleName" severity="info"></p-tag>
+        <p-tag [severity]="issuePriorityConfig[issue.issuePriority]" [value]="issue.issuePriority"></p-tag>
+        <p-tag icon="pi pi-clock" severity="warning" [value]="'Due: ' + issue.issueDueDate"></p-tag>
+      </div>
+      <div class="assignee-group">
+        <span class="text-muted" style="font-size: 11px;">Assignee:</span>
+        <p-chip [label]="issue.issueAssignee.fullName" icon="pi pi-user" />
+      </div>
+    </div>
+
+    <div class="comments-toggle">
+      <p-panel styleClass="comments-panel" [toggleable]="true" [collapsed]="true">
+        <ng-template pTemplate="header">
+          <span style="font-size: 11px; font-weight: 600;">Comments</span>
+        </ng-template>
+        <ng-template pTemplate="content">
+          <app-comments [entity]="issue" [entityType]="'Issue'"></app-comments>
+        </ng-template>
+      </p-panel>
+    </div>
+  </div>
 </div>
 
-<div  *ngIf="selectedView == 'table'">
-    <p-table 
-        [value]="allIssues" 
-        styleClass="p-datatable-gridlines" 
-        [tableStyle]="{ 'min-width': '50rem' }">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>Issue Name</th>
-                    <th>Module</th>
-                    <th>Issue Description</th>
-                    <th>Issue Due Date</th>
-                    <th>Issue Status/Type</th>
-                    <th>Issue Priority</th>
-                    <th>Created At</th>
-                    <th>Assigned To</th>
-
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-issue>
-                <tr>
-                    <td>{{issue.issueTitle}}</td>
-                    <td>
-                        <p-tag *ngIf="issue.moduleId" [value]="issue.moduleId.moduleName" severity="info"></p-tag>
-                        <span *ngIf="!issue.moduleId">-</span>
-                    </td>
-                    <td>{{issue.issueDescription}}</td>
-                    <td><p-tag icon="pi pi-exclamation-triangle" severity="warning" value="Due By: {{issue.issueDueDate}}"></p-tag></td>
-                    <td>
-                        <div class="cm-d-flex f-gap-5">
-                            <p-tag [severity]="issueStatusConfig[issue.issueStatus]" value="{{issue.issueStatus}}"/>
-                            <p-tag  value="{{issue.issueType}}"/>
-                        </div>
-                    </td>
-                    <td>
-                        <p-tag [severity]="issuePriorityConfig[issue.issuePriority]" value="{{issue.issuePriority}}"/>
-                    </td>
-                    <td>{{issue.createdAt}}</td>
-                    <td>{{issue.issueAssignee.fullName}}</td>
-
-                </tr>
-            </ng-template>
-    </p-table>
+<!-- ── Table View ─────────────────────────────────────────────────────────── -->
+<div *ngIf="selectedView === 'table'">
+  <p-table [value]="allIssues" styleClass="p-datatable-sm p-datatable-striped" [tableStyle]="{ 'min-width': '100%' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Issue</th>
+        <th style="width: 120px">Module</th>
+        <th>Description</th>
+        <th style="width: 130px">Due Date</th>
+        <th style="width: 160px">Status / Type</th>
+        <th style="width: 90px">Priority</th>
+        <th style="width: 160px">Assigned To</th>
+        <th style="width: 160px">Created At</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-issue>
+      <tr>
+        <td class="font-semibold">{{ issue.issueTitle }}</td>
+        <td>
+          <p-tag *ngIf="issue.moduleId" [value]="issue.moduleId.moduleName" severity="info"></p-tag>
+          <span *ngIf="!issue.moduleId" class="text-muted">—</span>
+        </td>
+        <td class="text-secondary">{{ issue.issueDescription }}</td>
+        <td><p-tag icon="pi pi-clock" severity="warning" [value]="'Due: ' + issue.issueDueDate"></p-tag></td>
+        <td>
+          <div class="flex-start-c gap-1">
+            <p-tag [severity]="issueStatusConfig[issue.issueStatus]" [value]="issue.issueStatus" />
+            <p-tag [value]="issue.issueType" />
+          </div>
+        </td>
+        <td><p-tag [severity]="issuePriorityConfig[issue.issuePriority]" [value]="issue.issuePriority" /></td>
+        <td>{{ issue.issueAssignee.fullName }}</td>
+        <td class="text-muted">{{ issue.createdAt }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>
-<div class="no-records-card" *ngIf="allIssues.length==0">
-    No Issues Found
+
+<!-- ── Empty State ────────────────────────────────────────────────────────── -->
+<div class="no-records-card" *ngIf="allIssues.length === 0">
+  <i class="pi pi-exclamation-triangle"></i>
+  No issues found
 </div>
-<p-dialog header="Add/Edit Issue" [modal]="true" [(visible)]="addIssueTrue" [style]="{ width: '50rem' }">
-    <app-add-issue *ngIf="addIssueTrue" [selectedProject]="selectedProject" [selectedIssue]="selectedIssue" 
-        (issueAdded)="this.getIssues(this.selectedProject._id); addIssueTrue=false"></app-add-issue>
+
+<!-- ── Add/Edit Dialog ────────────────────────────────────────────────────── -->
+<p-dialog header="Add / Edit Issue" [modal]="true" [(visible)]="addIssueTrue" [style]="{ width: '520px' }">
+  <app-add-issue
+    *ngIf="addIssueTrue"
+    [selectedProject]="selectedProject"
+    [selectedIssue]="selectedIssue"
+    (issueAdded)="this.getIssues(this.selectedProject._id); addIssueTrue=false"
+  ></app-add-issue>
 </p-dialog>

@@ -1,18 +1,32 @@
-<div class="flex-sb-ac align-c mr-t-20"><strong style="font-size: 24px;">Team</strong>
-    <div class="cm-d-flex j-c-fe">
-        <div>Managed Under: <strong>{{selectedProject.projectManager.fullName}} ({{selectedProject.projectManager.designation}})</strong></div>
-    </div>
+<!-- ── Section Header ─────────────────────────────────────────────────────── -->
+<div class="panel-section-header">
+  <div class="flex-start-c gap-3">
+    <span class="section-title">Team</span>
+    <span *ngIf="selectedProject?.projectManager" class="text-muted" style="font-size: 12px;">
+      Manager: <strong class="text-primary">{{ selectedProject.projectManager.fullName }}</strong>
+      <span class="text-secondary"> ({{ selectedProject.projectManager.designation }})</span>
+    </span>
+  </div>
 </div>
 
+<!-- ── Team Grid ──────────────────────────────────────────────────────────── -->
+<div class="team-grid">
+  <div class="team-card" *ngFor="let member of projectMembers">
+    <div class="team-avatar">{{ member.fullName?.charAt(0)?.toUpperCase() }}</div>
+    <div class="team-name">{{ member.fullName }}</div>
+    <div class="team-meta">
+      <span>{{ member.designation }}</span>
+      <span>{{ member.role }}</span>
+      <span>{{ member.email }}</span>
+    </div>
+    <span
+      class="team-manager-badge"
+      *ngIf="member._id === selectedProject?.projectManager?._id"
+    >Manager</span>
+  </div>
+</div>
 
-                        <div class="team-list">
-                            <div class="team-member" *ngFor="let teamMember of projectMembers">
-                                <h3>{{teamMember.fullName}}</h3>
-                                <p>Designation: {{teamMember.designation}}</p>
-                                <p>Role: {{teamMember.role}}</p>
-                                <p>Email: {{teamMember.email}}
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- <button class="add-team-button">Add Team Member</button> -->
+<div class="no-records-card" *ngIf="!projectMembers || projectMembers.length === 0">
+  <i class="pi pi-users"></i>
+  No team members assigned
+</div>

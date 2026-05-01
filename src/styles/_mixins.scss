@@ -1,0 +1,178 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Mixins — Reusable patterns
+// ─────────────────────────────────────────────────────────────────────────────
+@use 'tokens' as *;
+
+// ── Flex Utilities ─────────────────────────────────────────────────────────
+@mixin flex($justify: flex-start, $align: center, $gap: 0) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+  @if $gap != 0 { gap: $gap; }
+}
+
+@mixin flex-between($align: center) {
+  display: flex;
+  justify-content: space-between;
+  align-items: $align;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// ── Card ──────────────────────────────────────────────────────────────────
+@mixin card($padding: $space-4, $radius: $radius-lg) {
+  background: $color-bg-primary;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+  padding: $padding;
+  box-shadow: $shadow-sm;
+}
+
+@mixin card-hover {
+  transition: box-shadow $transition-base, border-color $transition-base;
+  &:hover {
+    box-shadow: $shadow-md;
+    border-color: $color-border-strong;
+  }
+}
+
+// ── Badge / Status Pill ────────────────────────────────────────────────────
+@mixin badge($bg, $color, $radius: $radius-pill) {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  padding: 2px $space-2;
+  border-radius: $radius;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  background: $bg;
+  color: $color;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+// ── Section Header ─────────────────────────────────────────────────────────
+@mixin section-header {
+  @include flex-between;
+  padding: $space-3 0 $space-3 0;
+  border-bottom: 1px solid $color-border;
+  margin-bottom: $space-4;
+
+  h2, .section-title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin: 0;
+  }
+}
+
+// ── Scrollbar ─────────────────────────────────────────────────────────────
+@mixin custom-scrollbar($width: 4px) {
+  scrollbar-width: thin;
+  scrollbar-color: $color-border transparent;
+
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $width;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $color-border-strong;
+    border-radius: $radius-pill;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: $color-text-muted;
+  }
+}
+
+// ── Truncate ───────────────────────────────────────────────────────────────
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// ── Focus Ring ─────────────────────────────────────────────────────────────
+@mixin focus-ring {
+  outline: 2px solid $color-accent;
+  outline-offset: 2px;
+}
+
+// ── Table Compact ─────────────────────────────────────────────────────────
+@mixin compact-table {
+  .p-datatable {
+    .p-datatable-thead > tr > th {
+      padding: $space-2 $space-3;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      color: $color-text-secondary;
+      background: $color-bg-secondary;
+      border-bottom: 1px solid $color-border;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .p-datatable-tbody > tr > td {
+      padding: $space-2 $space-3;
+      font-size: $font-size-base;
+      color: $color-text-primary;
+      border-bottom: 1px solid $color-bg-secondary;
+    }
+
+    .p-datatable-tbody > tr:last-child > td {
+      border-bottom: none;
+    }
+
+    .p-datatable-tbody > tr:hover > td {
+      background: $color-bg-secondary;
+    }
+  }
+}
+
+// ── Button Variants ───────────────────────────────────────────────────────
+@mixin btn-primary {
+  background: $color-accent !important;
+  border-color: $color-accent !important;
+  color: $color-text-inverse !important;
+  font-size: $font-size-sm !important;
+  font-weight: $font-weight-medium !important;
+  padding: 6px 14px !important;
+  border-radius: $radius-md !important;
+  transition: background $transition-fast, box-shadow $transition-fast !important;
+  box-shadow: $shadow-xs !important;
+
+  &:hover {
+    background: $color-accent-hover !important;
+    border-color: $color-accent-hover !important;
+    box-shadow: $shadow-sm !important;
+  }
+}
+
+// ── Input Base ─────────────────────────────────────────────────────────────
+@mixin input-base {
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  padding: $space-2 $space-3;
+  font-size: $font-size-base;
+  font-family: $font-sans;
+  color: $color-text-primary;
+  background: $color-bg-primary;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
+  width: 100%;
+
+  &:focus {
+    border-color: $color-accent;
+    box-shadow: 0 0 0 3px rgba(79, 107, 237, 0.12);
+    outline: none;
+  }
+
+  &::placeholder {
+    color: $color-text-muted;
+  }
+}
