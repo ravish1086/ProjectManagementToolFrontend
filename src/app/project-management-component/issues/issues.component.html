@@ -35,14 +35,15 @@
     </div>
 
     <div class="record-card__body">
-      <p-editor
-        *ngIf="issue?.issueDescription?.includes('img')"
-        [styleClass]="'viewQuill'"
-        [(ngModel)]="issue.issueDescription"
-        [readonly]="true"
-        [style]="{ 'min-height': '120px' }"
-      />
-      <p *ngIf="!issue?.issueDescription?.includes('img')">{{ issue.issueDescription }}</p>
+      <div class="d-flex gap-3" style="align-items: flex-start;">
+        <p-image *ngIf="extractImage(issue.issueDescription)"
+                 [src]="extractImage(issue.issueDescription)!"
+                 [preview]="true"
+                 width="60"
+                 alt="Image">
+        </p-image>
+        <p style="flex: 1; margin: 0;">{{ stripHtml(issue.issueDescription) }}</p>
+      </div>
     </div>
 
     <div class="record-card__footer">

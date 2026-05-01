@@ -64,9 +64,17 @@
       </div>
     </div>
 
-    <!-- Description -->
+    <!-- Description + Attachment Thumbnail -->
     <div class="record-card__body">
       <pre>{{ task.taskDescription }}</pre>
+      <div class="attachment-thumbnail" *ngIf="task.taskAttachments?.length > 0">
+        <p-image
+          [src]="apiUrl + '/' + task.taskAttachments[0].attachmentUrl"
+          [preview]="true"
+          width="60"
+          alt="Attachment">
+        </p-image>
+      </div>
     </div>
 
     <!-- Footer: tags + assignees -->
@@ -78,7 +86,6 @@
         <p-tag icon="pi pi-clock" severity="warning" [value]="'Due: ' + task.taskDueDate"></p-tag>
       </div>
       <div class="assignee-group">
-        <i class="pi pi-paperclip cursor" *ngIf="task.taskAttachments?.length > 0" (click)="openFile(task.taskAttachments[0])"></i>
         <p-chip *ngFor="let member of task.taskMembers" [label]="member.fullName" icon="pi pi-user" />
       </div>
     </div>
