@@ -122,7 +122,9 @@
   border: 1.5px solid $color-accent-muted;
   transition: background $transition-fast;
 
-  &:hover { background: $color-accent-muted; }
+  &:hover {
+    background: $color-accent-muted;
+  }
 }
 
 .nav-logout {
@@ -141,7 +143,9 @@
     color: $color-danger;
   }
 
-  i { font-size: 13px; }
+  i {
+    font-size: 13px;
+  }
 }
 
 // ── Body Area (below navbar) ───────────────────────────────────────────────
@@ -217,7 +221,9 @@
     background: $color-bg-secondary;
     color: $color-text-primary;
 
-    .project-rail-dot { background: $color-accent; }
+    .project-rail-dot {
+      background: $color-accent;
+    }
   }
 
   &.active {
@@ -226,13 +232,18 @@
     border-color: $color-accent-muted;
     font-weight: $font-weight-semibold;
 
-    .project-rail-dot { background: $color-accent; }
+    .project-rail-dot {
+      background: $color-accent;
+    }
   }
 
   &.disabled {
     cursor: not-allowed;
     opacity: 0.6;
-    &:hover { background: transparent; }
+
+    &:hover {
+      background: transparent;
+    }
   }
 }
 
@@ -251,8 +262,13 @@
     border-radius: 50%;
     flex-shrink: 0;
 
-    &.online  { background: $color-success; }
-    &.offline { background: $color-text-muted; }
+    &.online {
+      background: $color-success;
+    }
+
+    &.offline {
+      background: $color-text-muted;
+    }
   }
 
   .member-name {
@@ -267,8 +283,13 @@
     margin-left: auto;
   }
 
-  &:hover:not(.disabled) { background: $color-bg-secondary; }
-  &.disabled { cursor: not-allowed; }
+  &:hover:not(.disabled) {
+    background: $color-bg-secondary;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+  }
 }
 
 // ── Main Content Area ──────────────────────────────────────────────────────
@@ -276,7 +297,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: auto;
   background: $color-bg-canvas;
 }
 
@@ -362,7 +383,9 @@
     background: $color-accent-light;
   }
 
-  i { font-size: 12px; }
+  i {
+    font-size: 12px;
+  }
 }
 
 // ── Notification sidebar header ─────────────────────────────────────────────

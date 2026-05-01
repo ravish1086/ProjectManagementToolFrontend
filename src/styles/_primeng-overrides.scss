@@ -23,6 +23,7 @@
 }
 
 .p-button:not(.p-button-outlined):not(.p-button-text):not(.p-button-link) {
+
   &.p-button-primary,
   &:not([class*="p-button-"]) {
     background: $color-accent !important;
@@ -41,13 +42,15 @@
   background: $color-bg-secondary !important;
   border-color: $color-border !important;
   color: $color-text-primary !important;
+
   &:hover {
     background: $color-bg-tertiary !important;
     border-color: $color-border-strong !important;
   }
 }
 
-.p-button-sm, .p-button.p-button-sm {
+.p-button-sm,
+.p-button.p-button-sm {
   padding: 4px 10px !important;
   font-size: $font-size-xs !important;
 }
@@ -98,8 +101,14 @@
         transition: color $transition-fast, border-color $transition-fast !important;
         margin-bottom: 0 !important;
 
-        &:focus { box-shadow: none !important; }
-        &:hover { color: $color-text-primary !important; background: $color-bg-secondary !important; }
+        &:focus {
+          box-shadow: none !important;
+        }
+
+        &:hover {
+          color: $color-text-primary !important;
+          background: $color-bg-secondary !important;
+        }
       }
 
       &.p-highlight .p-tabview-nav-link {
@@ -125,7 +134,7 @@
   border: 1px solid $color-border !important;
   box-shadow: $shadow-sm !important;
 
-  .p-datatable-thead > tr > th {
+  .p-datatable-thead>tr>th {
     padding: $space-2 $space-3 !important;
     font-size: $font-size-xs !important;
     font-weight: $font-weight-semibold !important;
@@ -139,7 +148,7 @@
     border-right: none !important;
   }
 
-  .p-datatable-tbody > tr > td {
+  .p-datatable-tbody>tr>td {
     padding: $space-2 $space-3 !important;
     font-size: $font-size-base !important;
     color: $color-text-primary !important;
@@ -149,11 +158,11 @@
     border-top: none !important;
   }
 
-  .p-datatable-tbody > tr:hover > td {
+  .p-datatable-tbody>tr:hover>td {
     background: $color-bg-secondary !important;
   }
 
-  .p-datatable-tbody > tr:last-child > td {
+  .p-datatable-tbody>tr:last-child>td {
     border-bottom: none !important;
   }
 }
@@ -272,8 +281,13 @@
       color: $color-text-inverse !important;
     }
 
-    &:first-child { border-radius: $radius-md 0 0 $radius-md !important; }
-    &:last-child  { border-radius: 0 $radius-md $radius-md 0 !important; }
+    &:first-child {
+      border-radius: $radius-md 0 0 $radius-md !important;
+    }
+
+    &:last-child {
+      border-radius: 0 $radius-md $radius-md 0 !important;
+    }
   }
 }
 
@@ -370,16 +384,21 @@
     font-family: $font-sans !important;
     font-size: $font-size-sm !important;
 
-    table td { padding: 2px !important; }
-    table th { padding: 2px !important; }
+    table td {
+      padding: 2px !important;
+    }
 
-    table td > span {
+    table th {
+      padding: 2px !important;
+    }
+
+    table td>span {
       width: 2rem !important;
       height: 2rem !important;
       border-radius: $radius-md !important;
     }
 
-    table td > span.p-highlight {
+    table td>span.p-highlight {
       background: $color-accent !important;
       color: $color-text-inverse !important;
     }
@@ -395,10 +414,12 @@
   min-height: 34px !important;
   color: $color-text-primary !important;
 
-  &:hover { border-color: $color-border-strong !important; }
+  &:hover {
+    border-color: $color-border-strong !important;
+  }
 }
 
-.ng-select.ng-select-focused:not(.ng-select-opened) > .ng-select-container {
+.ng-select.ng-select-focused:not(.ng-select-opened)>.ng-select-container {
   border-color: $color-accent !important;
   box-shadow: 0 0 0 3px rgba(79, 107, 237, 0.12) !important;
 }
@@ -420,8 +441,15 @@
   scrollbar-width: thin;
   scrollbar-color: $color-border-strong transparent;
 
-  &::-webkit-scrollbar { width: 5px; height: 5px; }
-  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
   &::-webkit-scrollbar-thumb {
     background: $color-border-strong;
     border-radius: 999px;
