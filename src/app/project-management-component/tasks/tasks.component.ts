@@ -17,13 +17,14 @@ import { RippleModule } from 'primeng/ripple';
 import {  MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
 import { environment } from '../../../environments/environment';
+import { TabViewModule } from 'primeng/tabview';
 
 @Component({
   selector: 'app-tasks',
   standalone: true,
   imports: [ButtonModule, FormsModule,SelectButtonModule,
      CommonModule, OverlayPanelModule, AddTaskComponent, DialogModule,RippleModule, MenuModule,
-      TableModule, TagModule, PanelModule, ChipModule, CommentsComponent],
+      TableModule, TagModule, PanelModule, ChipModule, CommentsComponent, TabViewModule],
   templateUrl: './tasks.component.html'
 })
 export class TasksComponent {
@@ -46,6 +47,8 @@ taskDueOptions: any[] = [
 
 selectedView = 'card';
 allTasks:any[] = [];
+modulesList: any[] = [];
+activeModuleIndex: number = 0;
   taskStatusConfig:any = {
     'Not Started': 'secondary',
     'In Progress': 'warning',
@@ -83,8 +86,24 @@ ngOnInit(): void {
 }
 
 ngOnChanges(){
+  this.getModules();
   this.getTasks(this.selectedProject._id);
+}
 
+getModules(): void {
+  if (this.selectedProject) {
+    this.apiService.get(apiPaths.getProjectModules + '/' + this.selectedProject._id).subscribe({
+      next: (res: any) => {
+        this.modulesList = [{ _id: 'ALL', moduleName: 'All Modules' }, ...res.data];
+      },
+      error: (err) => console.error(err)
+    });
+  }
+}
+
+onModuleTabChange(event: any) {
+    this.activeModuleIndex = event.index;
+    this.getTasks(this.selectedProject._id);
 }
 
 getTasks(projectId:string){
@@ -92,7 +111,8 @@ getTasks(projectId:string){
     this.allTasks = [];
     return;
   }
-  this.apiService.get(apiPaths.getTasks+'?projectId=' + projectId + '&dueType=' + this.dueType).subscribe({
+  let moduleId = this.modulesList[this.activeModuleIndex]?._id || 'ALL';
+  this.apiService.get(apiPaths.getTasks+'?projectId=' + projectId + '&dueType=' + this.dueType + '&moduleId=' + moduleId).subscribe({
     next: (response:any) => {
       this.allTasks = response.tasks;
     },

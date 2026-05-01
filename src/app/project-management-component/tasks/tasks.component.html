@@ -20,6 +20,10 @@
     </div>
 </h2>
 
+<p-tabView (onChange)="onModuleTabChange($event)" [(activeIndex)]="activeModuleIndex" *ngIf="modulesList.length > 0">
+    <p-tabPanel *ngFor="let module of modulesList" [header]="module.moduleName"></p-tabPanel>
+</p-tabView>
+
 <div class="task-list" *ngIf="selectedView == 'card'">
     <div class="task-item" *ngFor="let task of allTasks">
         <div class="card">
