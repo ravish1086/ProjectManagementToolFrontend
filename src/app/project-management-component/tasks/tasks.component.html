@@ -64,16 +64,16 @@
       </div>
     </div>
 
-    <!-- Description + Attachment Thumbnail -->
     <div class="record-card__body">
-      <pre>{{ task.taskDescription }}</pre>
-      <div class="attachment-thumbnail" *ngIf="task.taskAttachments?.length > 0">
-        <p-image
-          [src]="apiUrl + '/' + task.taskAttachments[0].attachmentUrl"
-          [preview]="true"
-          width="60"
-          alt="Attachment">
-        </p-image>
+      <div class="d-flex gap-3 a-start">
+        <div class="record-card__thumbnail" *ngIf="task.taskAttachments?.length > 0">
+          <p-image
+            [src]="apiUrl + '/' + task.taskAttachments[0].attachmentUrl"
+            [preview]="true"
+            alt="Attachment">
+          </p-image>
+        </div>
+        <pre class="flex-1">{{ task.taskDescription }}</pre>
       </div>
     </div>
 

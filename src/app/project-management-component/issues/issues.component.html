@@ -35,14 +35,15 @@
     </div>
 
     <div class="record-card__body">
-      <div class="d-flex gap-3" style="align-items: flex-start;">
-        <p-image *ngIf="extractImage(issue.issueDescription)"
-                 [src]="extractImage(issue.issueDescription)!"
-                 [preview]="true"
-                 width="60"
-                 alt="Image">
-        </p-image>
-        <p style="flex: 1; margin: 0;">{{ stripHtml(issue.issueDescription) }}</p>
+      <div class="d-flex gap-3 a-start">
+        <div class="record-card__thumbnail" *ngIf="extractImage(issue.issueDescription)">
+          <p-image 
+                   [src]="extractImage(issue.issueDescription)!"
+                   [preview]="true"
+                   alt="Image">
+          </p-image>
+        </div>
+        <p class="flex-1 m-0">{{ stripHtml(issue.issueDescription) }}</p>
       </div>
     </div>
 
