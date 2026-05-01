@@ -100,6 +100,13 @@
                         <app-teams [selectedProject]="selectedProject" *ngIf="selectedProject"></app-teams>
                     </section>
                 </p-tabPanel>
+                <p-tabPanel header="Modules & APIs" [cache]="false">
+                    <ng-template pTemplate="content">
+                        <section class="api-manager">
+                            <app-api-manager [selectedProject]="selectedProject" *ngIf="selectedProject"></app-api-manager>
+                        </section>
+                    </ng-template>
+                </p-tabPanel>
             </p-tabView>
             
 

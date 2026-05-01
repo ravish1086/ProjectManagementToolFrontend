@@ -21,4 +21,10 @@ export const apiPaths = {
     getNotifications: 'notification/getNotifications',
     sendMessage: 'chat/sendMessage',
     getMessages: 'chat/getMessages',
+    createProjectModule: 'projectModule/create',
+    getProjectModules: 'projectModule/project', // Append /:projectId when using
+    createApi: 'api/create',
+    getApis: 'api/project', // Append /:projectId when using
+    updateApi: 'api', // Append /:id when using
+    deleteApi: 'api' // Append /:id when using
 }

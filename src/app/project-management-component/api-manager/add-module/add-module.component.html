@@ -1,0 +1,15 @@
+<div class="add-module-form">
+    <form [formGroup]="moduleForm" (ngSubmit)="saveModule()">
+        <div class="field">
+            <label for="moduleName">Module Name</label>
+            <input id="moduleName" type="text" pInputText formControlName="moduleName" class="w-full" />
+            <small class="p-error" *ngIf="moduleForm.get('moduleName')?.invalid && moduleForm.get('moduleName')?.touched">
+                Module Name is required.
+            </small>
+        </div>
+        
+        <div class="flex justify-content-end gap-2 mt-4">
+            <p-button label="Save" type="submit" [disabled]="moduleForm.invalid" icon="pi pi-check"></p-button>
+        </div>
+    </form>
+</div>

@@ -24,6 +24,7 @@ import { NotificationsComponent } from "../notifications/notifications.component
 import { MessageService } from 'primeng/api';
 import { ChatComponent } from "../chat/chat.component";
 import { SubjectUtilService } from '../services/subject-util.service';
+import { ApiManagerComponent } from './api-manager/api-manager.component';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -33,7 +34,8 @@ import { environment } from '../../environments/environment';
     OverlayPanelModule, DialogModule,
     AddTaskComponent, AddIssueComponent, AddDiscussionComponent,
     SelectButtonModule, FormsModule, TasksComponent, IssuesComponent,
-    DiscussionsComponent, TeamsComponent, AddProjectComponent, NotificationsComponent, ChatComponent],
+    DiscussionsComponent, TeamsComponent, AddProjectComponent, NotificationsComponent, ChatComponent,
+    ApiManagerComponent],
   templateUrl: './project-management-component.component.html'
 })
 export class ProjectManagementComponentComponent {
