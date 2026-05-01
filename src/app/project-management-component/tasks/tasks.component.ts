@@ -18,13 +18,14 @@ import {  MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
 import { environment } from '../../../environments/environment';
 import { TabViewModule } from 'primeng/tabview';
+import { ImageModule } from 'primeng/image';
 
 @Component({
   selector: 'app-tasks',
   standalone: true,
   imports: [ButtonModule, FormsModule,SelectButtonModule,
      CommonModule, OverlayPanelModule, AddTaskComponent, DialogModule,RippleModule, MenuModule,
-      TableModule, TagModule, PanelModule, ChipModule, CommentsComponent, TabViewModule],
+      TableModule, TagModule, PanelModule, ChipModule, CommentsComponent, TabViewModule, ImageModule],
   templateUrl: './tasks.component.html'
 })
 export class TasksComponent {
@@ -32,6 +33,7 @@ export class TasksComponent {
   selectedTask:any;
   items:MenuItem[];
   dueType = 'Today';
+  apiUrl = environment.apiUrl;
   @Input('selectedProject') selectedProject:any;
   justifyOptions: any[] = [
     { icon: 'pi pi-credit-card', value: 'card' },

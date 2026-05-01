@@ -16,12 +16,13 @@ import { ChipModule } from 'primeng/chip';
 import { DialogModule } from 'primeng/dialog';
 import { EditorModule } from 'primeng/editor';
 import { TabViewModule } from 'primeng/tabview';
+import { ImageModule } from 'primeng/image';
 @Component({
   selector: 'app-issues',
   standalone: true,
   imports: [ButtonModule, FormsModule,SelectButtonModule,
     CommonModule, OverlayPanelModule, AddIssueComponent,
-     TableModule, TagModule, PanelModule, CommentsComponent, ChipModule, DialogModule, EditorModule, TabViewModule],
+     TableModule, TagModule, PanelModule, CommentsComponent, ChipModule, DialogModule, EditorModule, TabViewModule, ImageModule],
   templateUrl: './issues.component.html'
 })
 export class IssuesComponent {
@@ -48,6 +49,18 @@ issueStatusConfig:any = {
   }
 
 constructor(private apiService:ApiService) { }
+
+  extractImage(html: string): string | undefined {
+    if (!html) return undefined;
+    const match = html.match(/<img[^>]+src="([^">]+)"/);
+    return match ? match[1] : undefined;
+  }
+  
+  stripHtml(html: string): string {
+    if (!html) return '';
+    let text = html.replace(/<[^>]*>?/gm, '');
+    return text.length > 60 ? text.substring(0, 60) + '...' : text;
+  }
 
 
   ngOnChanges(){

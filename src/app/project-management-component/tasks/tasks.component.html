@@ -125,7 +125,17 @@
           <p-tag *ngIf="task.moduleId" [value]="task.moduleId.moduleName" severity="info"></p-tag>
           <span *ngIf="!task.moduleId" class="text-muted">—</span>
         </td>
-        <td class="text-secondary">{{ task.taskDescription }}</td>
+        <td class="text-secondary">
+          <div class="d-flex align-items-center gap-2">
+            <p-image *ngIf="task.taskAttachments?.length > 0" 
+                     [src]="apiUrl + '/' + task.taskAttachments[0].attachmentUrl" 
+                     [preview]="true" 
+                     width="40" 
+                     alt="Attachment">
+            </p-image>
+            <span>{{ task.taskDescription }}</span>
+          </div>
+        </td>
         <td><p-tag icon="pi pi-clock" severity="warning" [value]="'Due: ' + task.taskDueDate"></p-tag></td>
         <td><p-tag [severity]="taskStatusConfig[task.taskStatus]" [value]="task.taskStatus" /></td>
         <td><p-tag [severity]="taskPriorityConfig[task.taskPriority]" [value]="task.taskPriority" /></td>

@@ -94,7 +94,17 @@
           <p-tag *ngIf="issue.moduleId" [value]="issue.moduleId.moduleName" severity="info"></p-tag>
           <span *ngIf="!issue.moduleId" class="text-muted">—</span>
         </td>
-        <td class="text-secondary">{{ issue.issueDescription }}</td>
+        <td class="text-secondary">
+          <div class="d-flex align-items-center gap-2">
+            <p-image *ngIf="extractImage(issue.issueDescription)" 
+                     [src]="extractImage(issue.issueDescription)" 
+                     [preview]="true" 
+                     width="40" 
+                     alt="Image">
+            </p-image>
+            <span [title]="stripHtml(issue.issueDescription)">{{ stripHtml(issue.issueDescription) }}</span>
+          </div>
+        </td>
         <td><p-tag icon="pi pi-clock" severity="warning" [value]="'Due: ' + issue.issueDueDate"></p-tag></td>
         <td>
           <div class="flex-start-c gap-1">
