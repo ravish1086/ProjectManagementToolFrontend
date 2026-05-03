@@ -100,12 +100,12 @@
         </td>
         <td class="text-secondary">
           <div class="d-flex align-items-center gap-2">
-            <p-image *ngIf="extractImage(issue.issueDescription)" 
-                     [src]="extractImage(issue.issueDescription)" 
-                     [preview]="true" 
-                     width="40" 
-                     alt="Image">
-            </p-image>
+            <div class="record-card__thumbnail cursor-pointer" *ngIf="extractImage(issue.issueDescription)">
+              <p-image [src]="extractImage(issue.issueDescription)" 
+                       [preview]="true" 
+                       alt="Image">
+              </p-image>
+            </div>
             <span [title]="stripHtml(issue.issueDescription)">{{ stripHtml(issue.issueDescription) }}</span>
           </div>
         </td>

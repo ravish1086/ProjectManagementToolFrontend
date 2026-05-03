@@ -110,21 +110,23 @@
     }
   }
 
-  .record-card__thumbnail {
-    width: 60px;
-    height: 60px;
-    flex-shrink: 0;
-    border-radius: $radius-md;
-    border: 1px solid $color-border;
-    overflow: hidden;
+}
 
-    ::ng-deep .p-image img {
-      width: 60px !important;
-      height: 60px !important;
-      object-fit: cover !important;
-    }
+.record-card__thumbnail {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: $radius-md;
+  border: 1px solid $color-border;
+  overflow: hidden;
+
+  ::ng-deep .p-image img {
+    width: 60px !important;
+    height: 60px !important;
+    object-fit: cover !important;
   }
 }
+
 
 // ── Collapsed panel for comments ───────────────────────
 .comments-toggle {

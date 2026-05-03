@@ -136,12 +136,12 @@
         </td>
         <td class="text-secondary">
           <div class="d-flex align-items-center gap-2">
-            <p-image *ngIf="task.taskAttachments?.length > 0" 
-                     [src]="apiUrl + '/' + task.taskAttachments[0].attachmentUrl" 
-                     [preview]="true" 
-                     width="40" 
-                     alt="Attachment">
-            </p-image>
+            <div class="record-card__thumbnail cursor-pointer" *ngIf="task.taskAttachments?.length > 0">
+              <p-image [src]="apiUrl + '/' + task.taskAttachments[0].attachmentUrl" 
+                       [preview]="true" 
+                       alt="Attachment">
+              </p-image>
+            </div>
             <span>{{ task.taskDescription }}</span>
           </div>
         </td>
