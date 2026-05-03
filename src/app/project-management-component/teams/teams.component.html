@@ -6,6 +6,7 @@
       Manager: <strong class="text-primary">{{ selectedProject.projectManager.fullName }}</strong>
       <span class="text-secondary"> ({{ selectedProject.projectManager.designation }})</span>
     </span>
+    <button pButton type="button" icon="pi pi-users" label="Manage Members" class="p-button-outlined p-button-sm ml-auto" (click)="openManageMembers()"></button>
   </div>
 </div>
 
@@ -30,3 +31,17 @@
   <i class="pi pi-users"></i>
   No team members assigned
 </div>
+
+<!-- ── Manage Members Dialog ────────────────────────────────────────────────── -->
+<p-dialog [(visible)]="manageMembersVisible" [style]="{ width: '400px' }" [modal]="true" header="Manage Team Members">
+  <div class="p-fluid">
+    <div class="field mb-4">
+      <label for="members">Select Members</label>
+      <ng-select [items]="usersList" bindLabel="fullName" [multiple]="true" bindValue="_id" placeholder="Select members" [(ngModel)]="selectedMembers" id="members">
+      </ng-select>
+    </div>
+    <div class="flex j-end">
+      <p-button label="Save" icon="pi pi-check" (click)="saveMembers()"></p-button>
+    </div>
+  </div>
+</p-dialog>

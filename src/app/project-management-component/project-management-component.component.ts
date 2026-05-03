@@ -3,6 +3,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { TabViewModule } from 'primeng/tabview';
 import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
+import { MenuModule } from 'primeng/menu';
 import { ApiService } from '../services/api.service';
 import { apiPaths } from '../apiPaths';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
@@ -32,7 +33,7 @@ import { NotesComponent } from './notes/notes.component';
   selector: 'app-project-management-component',
   standalone: true,
   imports: [CommonModule, TabViewModule, SidebarModule, ButtonModule,
-    OverlayPanelModule, DialogModule,
+    OverlayPanelModule, DialogModule, MenuModule,
     AddTaskComponent, AddIssueComponent, AddDiscussionComponent,
     SelectButtonModule, FormsModule, TasksComponent, IssuesComponent,
     DiscussionsComponent, TeamsComponent, AddProjectComponent, NotificationsComponent, ChatComponent,
@@ -44,7 +45,12 @@ export class ProjectManagementComponentComponent {
   sessionObject = sessionObject;
   notificationsVisible = false;
 addProjectTrue=false;
+editProjectTrue=false;
   sidebarVisible=false;
+  projectMenuItems: any[] = [
+    { label: 'Edit Project', icon: 'pi pi-pencil', command: () => { this.editProjectTrue = true; } },
+    { label: 'Archive Project', icon: 'pi pi-trash', command: () => { this.archiveProject(); } }
+  ];
   projectsList:any[] = [];
   notificationsList:any[] = [];
   selectedProject:any;
@@ -80,13 +86,32 @@ addProjectTrue=false;
     this.apiService.get(apiPaths.getProjects).subscribe({
       next: (response:any) => {
         this.projectsList = response.projects;
-        this.selectedProject = this.projectsList[0];
-        // this.getTasks(this.selectedProject._id);
+        if(this.selectedProject) {
+            let found = this.projectsList.find(p => p._id === this.selectedProject._id);
+            this.selectedProject = found || this.projectsList[0];
+        } else {
+            this.selectedProject = this.projectsList[0];
+        }
       },
       error: (error) => {
         console.error(error);
       }
     })
+  }
+
+  archiveProject() {
+    if(confirm(`Are you sure you want to archive project "${this.selectedProject.projectName}"?`)) {
+      this.apiService.put(`${apiPaths.updateProject}/${this.selectedProject._id}`, { isArchived: true }).subscribe({
+        next: (res: any) => {
+          this.messageService.add({severity:'success', summary:'Success', detail:'Project archived successfully'});
+          this.selectedProject = null;
+          this.getAllProjects();
+        },
+        error: (err: any) => {
+          this.messageService.add({severity:'error', summary:'Error', detail:'Failed to archive project'});
+        }
+      });
+    }
   }
 
   

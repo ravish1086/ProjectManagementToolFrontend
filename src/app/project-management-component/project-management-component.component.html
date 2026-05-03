@@ -5,9 +5,11 @@
     <div class="app-navbar__brand">
       <div class="brand-logo">DT</div>
       <span class="brand-name">DevTrack</span>
-      <div class="project-name-badge" *ngIf="selectedProject">
+      <div class="project-name-badge" *ngIf="selectedProject" (click)="projectMenu.toggle($event)" style="cursor: pointer;">
         <span>{{ selectedProject?.projectName }}</span>
+        <i class="pi pi-angle-down" style="margin-left: 8px;"></i>
       </div>
+      <p-menu #projectMenu [popup]="true" [model]="projectMenuItems"></p-menu>
     </div>
 
     <div class="app-navbar__actions">
@@ -107,7 +109,7 @@
           <p-tabPanel header="Team">
             <ng-template pTemplate="content">
               <div class="tab-panel-content">
-                <app-teams [selectedProject]="selectedProject"></app-teams>
+                <app-teams [selectedProject]="selectedProject" (projectUpdated)="getAllProjects()"></app-teams>
               </div>
             </ng-template>
           </p-tabPanel>
@@ -137,7 +139,12 @@
 
 <!-- ── Add Project Dialog ──────────────────────────────────────────────────── -->
 <p-dialog [(visible)]="addProjectTrue" [style]="{ width: '480px' }" [modal]="true" header="New Project">
-  <app-add-project (projectAdded)="getAllProjects(); addProjectTrue=false"></app-add-project>
+  <app-add-project *ngIf="addProjectTrue" (projectAdded)="getAllProjects(); addProjectTrue=false"></app-add-project>
+</p-dialog>
+
+<!-- ── Edit Project Dialog ──────────────────────────────────────────────────── -->
+<p-dialog [(visible)]="editProjectTrue" [style]="{ width: '480px' }" [modal]="true" header="Edit Project">
+  <app-add-project *ngIf="editProjectTrue" [editProjectData]="selectedProject" (projectAdded)="getAllProjects(); editProjectTrue=false"></app-add-project>
 </p-dialog>
 
 <!-- ── Chat Widget ─────────────────────────────────────────────────────────── -->

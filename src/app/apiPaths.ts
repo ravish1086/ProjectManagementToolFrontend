@@ -2,7 +2,7 @@ export const apiPaths = {
     getProjects: 'project/getProjects',
     getProject: '/projects/:id',
     createProject: 'project/createProject',
-    updateProject: '/projects/:id',
+    updateProject: 'project',
     createTask: 'task/createTask',
     getTasks: 'task/getTasks',
     updateTask: 'task/updateTask',
