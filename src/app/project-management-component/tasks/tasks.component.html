@@ -53,7 +53,7 @@
         <button class="nav-icon-btn" (click)="menu.toggle($event); selectedTask = task" title="Options">
           <i class="pi pi-ellipsis-v"></i>
         </button>
-        <p-menu #menu [model]="items" [popup]="true">
+        <p-menu #menu [model]="items" [popup]="true" appendTo="body">
           <ng-template pTemplate="item" let-item>
             <div class="flex-start-c gap-2 padding-10px">
               <span [class]="item.icon"></span>
