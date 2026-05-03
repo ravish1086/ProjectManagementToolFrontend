@@ -28,6 +28,7 @@ import { SubjectUtilService } from '../services/subject-util.service';
 import { ApiManagerComponent } from './api-manager/api-manager.component';
 import { environment } from '../../environments/environment';
 import { NotesComponent } from './notes/notes.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @Component({
   selector: 'app-project-management-component',
@@ -37,7 +38,7 @@ import { NotesComponent } from './notes/notes.component';
     AddTaskComponent, AddIssueComponent, AddDiscussionComponent,
     SelectButtonModule, FormsModule, TasksComponent, IssuesComponent,
     DiscussionsComponent, TeamsComponent, AddProjectComponent, NotificationsComponent, ChatComponent,
-    ApiManagerComponent, NotesComponent],
+    ApiManagerComponent, NotesComponent, DashboardComponent],
   templateUrl: './project-management-component.component.html'
 })
 export class ProjectManagementComponentComponent {
@@ -47,6 +48,7 @@ export class ProjectManagementComponentComponent {
 addProjectTrue=false;
 editProjectTrue=false;
   sidebarVisible=false;
+  showDashboard = false;
   projectMenuItems: any[] = [
     { label: 'Edit Project', icon: 'pi pi-pencil', command: () => { this.editProjectTrue = true; } },
     { label: 'Archive Project', icon: 'pi pi-trash', command: () => { this.archiveProject(); } }
@@ -78,8 +80,15 @@ editProjectTrue=false;
 
   selectProject(project:any){
     this.selectedProject = project;
+    this.showDashboard = false;
     this.sidebarVisible = false;
 
+  }
+
+  selectDashboard() {
+    this.showDashboard = true;
+    this.selectedProject = null;
+    this.sidebarVisible = false;
   }
 
   getAllProjects(){
@@ -88,9 +97,12 @@ editProjectTrue=false;
         this.projectsList = response.projects;
         if(this.selectedProject) {
             let found = this.projectsList.find(p => p._id === this.selectedProject._id);
-            this.selectedProject = found || this.projectsList[0];
-        } else {
-            this.selectedProject = this.projectsList[0];
+            this.selectedProject = found || null;
+            if (!this.selectedProject && this.projectsList.length > 0 && !this.showDashboard) {
+                this.selectedProject = this.projectsList[0];
+            }
+        } else if (!this.showDashboard) {
+            this.showDashboard = true;
         }
       },
       error: (error) => {

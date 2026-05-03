@@ -40,8 +40,11 @@
       </div>
 
       <div class="project-rail__list">
+        <div class="project-rail-item" [class.active]="showDashboard" (click)="selectDashboard()">
+          <i class="pi pi-home" style="margin-right: 8px;"></i> My Dashboard
+        </div>
         <div *ngFor="let project of projectsList" class="project-rail-item"
-          [class.active]="selectedProject?._id === project._id" (click)="selectProject(project)">
+          [class.active]="!showDashboard && selectedProject?._id === project._id" (click)="selectProject(project)">
           <span class="project-rail-dot"></span>
           {{ project.projectName }}
         </div>
@@ -65,14 +68,20 @@
 
     <!-- ── Main Content ────────────────────────────────────────────────────── -->
     <main class="app-main">
-      <div *ngIf="!selectedProject" class="tab-panel-content flex-center">
+      <div *ngIf="!selectedProject && !showDashboard" class="tab-panel-content flex-center">
         <div class="no-records-card">
           <i class="pi pi-folder-open"></i>
-          <span>Select a project from the left panel to get started</span>
+          <span>Select a project or dashboard from the left panel to get started</span>
         </div>
       </div>
 
-      <ng-container *ngIf="selectedProject">
+      <ng-container *ngIf="showDashboard">
+        <div class="tab-panel-content">
+          <app-dashboard></app-dashboard>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="!showDashboard && selectedProject">
         <p-tabView [(activeIndex)]="activeIndex" class="app-tab-bar">
           <p-tabPanel header="Tasks" [cache]="false">
             <ng-template pTemplate="content">

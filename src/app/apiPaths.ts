@@ -28,5 +28,6 @@ export const apiPaths = {
     updateApi: 'api', // Append /:id when using
     deleteApi: 'api', // Append /:id when using
     getNote: 'note/getNote',
-    saveNote: 'note/saveNote'
+    saveNote: 'note/saveNote',
+    getDashboardData: 'dashboard/getDashboard'
 }
