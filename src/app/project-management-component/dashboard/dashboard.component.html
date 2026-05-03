@@ -1,113 +1,140 @@
 <div class="panel-section-header">
   <div class="flex-start-c gap-3">
     <span class="section-title">My Dashboard</span>
-    <span class="text-muted" style="font-size: 12px;">Overview of your items across all projects</span>
+    <span class="text-muted" style="font-size: 12px;">Your assigned items across all projects</span>
   </div>
 </div>
 
-<div class="module-tabs mt-3" *ngIf="!isLoading">
-  <p-tabView>
-    <p-tabPanel header="Tasks ({{dashboardData.tasks.length}})">
-      <div class="record-card" *ngFor="let task of dashboardData.tasks"
-        [class.record-card--high]="task.taskPriority === 'High'"
-        [class.record-card--medium]="task.taskPriority === 'Medium'"
-        [class.record-card--low]="task.taskPriority === 'Low'">
-        <div class="record-card__header">
-          <span class="record-title">{{ task.taskName }}</span>
-        </div>
-        <div class="record-card__body">
-          <pre class="flex-1 m-0">{{ task.taskDescription }}</pre>
-        </div>
-        <div class="record-card__footer">
-          <div class="tag-group">
-            <p-tag severity="secondary" [value]="task.projectId?.projectName" icon="pi pi-folder"></p-tag>
-            <p-tag *ngIf="task.moduleId" severity="info" [value]="task.moduleId?.moduleName" icon="pi pi-box"></p-tag>
-            <p-tag [severity]="taskStatusConfig[task.taskStatus] || 'info'" [value]="task.taskStatus"></p-tag>
-            <p-tag [severity]="taskPriorityConfig[task.taskPriority] || 'info'" [value]="task.taskPriority"></p-tag>
-            <p-tag icon="pi pi-clock" severity="warning" [value]="'Due: ' + task.taskDueDate"></p-tag>
+<div class="module-tabs mt-3">
+  <p-tabView (onChange)="onTabChange($event)">
+
+    <!-- ─── Tasks ─────────────────────────────── -->
+    <p-tabPanel header="My Tasks">
+      <div *ngIf="loadingTasks" class="flex-center" style="height: 150px">
+        <i class="pi pi-spin pi-spinner" style="font-size: 1.5rem"></i>
+      </div>
+
+      <ng-container *ngIf="!loadingTasks">
+        <div class="record-card" *ngFor="let task of tasks"
+          [class.record-card--high]="task.taskPriority === 'High'"
+          [class.record-card--medium]="task.taskPriority === 'Medium'"
+          [class.record-card--low]="task.taskPriority === 'Low'">
+          <div class="record-card__header">
+            <span class="record-title">{{ task.taskName }}</span>
+          </div>
+          <div class="record-card__body" *ngIf="task.taskDescription">
+            <pre class="flex-1 m-0 text-secondary" style="white-space: pre-wrap; font-size: 12px;">{{ task.taskDescription }}</pre>
+          </div>
+          <div class="record-card__footer">
+            <div class="tag-group">
+              <p-tag severity="secondary" [value]="task.projectId?.projectName" icon="pi pi-folder"></p-tag>
+              <p-tag *ngIf="task.moduleId?.moduleName" severity="info" [value]="task.moduleId.moduleName" icon="pi pi-box"></p-tag>
+              <p-tag [severity]="taskStatusConfig[task.taskStatus] || 'info'" [value]="task.taskStatus"></p-tag>
+              <p-tag [severity]="taskPriorityConfig[task.taskPriority] || 'info'" [value]="task.taskPriority"></p-tag>
+              <p-tag icon="pi pi-clock" severity="warning" [value]="'Due: ' + task.taskDueDate"></p-tag>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="no-records-card" *ngIf="dashboardData.tasks.length === 0">
-        <i class="pi pi-check-square"></i>
-        No tasks assigned to you
-      </div>
+
+        <div class="no-records-card" *ngIf="tasks.length === 0">
+          <i class="pi pi-check-square"></i>
+          No tasks assigned to you
+        </div>
+      </ng-container>
     </p-tabPanel>
 
-    <p-tabPanel header="Issues ({{dashboardData.issues.length}})">
-      <div class="record-card" *ngFor="let issue of dashboardData.issues"
-        [class.record-card--high]="issue.issuePriority === 'High'"
-        [class.record-card--medium]="issue.issuePriority === 'Medium'"
-        [class.record-card--low]="issue.issuePriority === 'Low'">
-        <div class="record-card__header">
-          <span class="record-title">{{ issue.issueTitle }}</span>
-        </div>
-        <div class="record-card__body">
-          <p class="flex-1 m-0">{{ stripHtml(issue.issueDescription) }}</p>
-        </div>
-        <div class="record-card__footer">
-          <div class="tag-group">
-            <p-tag severity="secondary" [value]="issue.issueProjectId?.projectName" icon="pi pi-folder"></p-tag>
-            <p-tag *ngIf="issue.moduleId" severity="info" [value]="issue.moduleId?.moduleName" icon="pi pi-box"></p-tag>
-            <p-tag [severity]="issueStatusConfig[issue.issueStatus] || 'info'" [value]="issue.issueStatus"></p-tag>
-            <p-tag [severity]="issuePriorityConfig[issue.issuePriority] || 'info'" [value]="issue.issuePriority"></p-tag>
+    <!-- ─── Issues ────────────────────────────── -->
+    <p-tabPanel header="My Issues">
+      <div *ngIf="loadingIssues" class="flex-center" style="height: 150px">
+        <i class="pi pi-spin pi-spinner" style="font-size: 1.5rem"></i>
+      </div>
+
+      <ng-container *ngIf="!loadingIssues">
+        <div class="record-card" *ngFor="let issue of issues"
+          [class.record-card--high]="issue.issuePriority === 'High'"
+          [class.record-card--medium]="issue.issuePriority === 'Medium'"
+          [class.record-card--low]="issue.issuePriority === 'Low'">
+          <div class="record-card__header">
+            <span class="record-title">{{ issue.issueTitle }}</span>
+          </div>
+          <div class="record-card__body" *ngIf="issue.issueDescription">
+            <p class="flex-1 m-0 text-secondary" style="font-size: 12px;">{{ stripHtml(issue.issueDescription) }}</p>
+          </div>
+          <div class="record-card__footer">
+            <div class="tag-group">
+              <p-tag severity="secondary" [value]="issue.issueProjectId?.projectName" icon="pi pi-folder"></p-tag>
+              <p-tag *ngIf="issue.moduleId?.moduleName" severity="info" [value]="issue.moduleId.moduleName" icon="pi pi-box"></p-tag>
+              <p-tag [severity]="issueStatusConfig[issue.issueStatus] || 'info'" [value]="issue.issueStatus"></p-tag>
+              <p-tag [severity]="issuePriorityConfig[issue.issuePriority] || 'info'" [value]="issue.issuePriority"></p-tag>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="no-records-card" *ngIf="dashboardData.issues.length === 0">
-        <i class="pi pi-exclamation-triangle"></i>
-        No issues assigned to you
-      </div>
+
+        <div class="no-records-card" *ngIf="issues.length === 0">
+          <i class="pi pi-exclamation-triangle"></i>
+          No issues assigned to you
+        </div>
+      </ng-container>
     </p-tabPanel>
 
-    <p-tabPanel header="Discussions ({{dashboardData.discussions.length}})">
-      <div class="record-card" *ngFor="let discussion of dashboardData.discussions">
-        <div class="record-card__header">
-          <span class="record-title">{{ discussion.discussionTitle }}</span>
-        </div>
-        <div class="record-card__body">
-          <p class="flex-1 m-0">{{ stripHtml(discussion.discussionDescription) }}</p>
-        </div>
-        <div class="record-card__footer">
-          <div class="tag-group">
-            <p-tag severity="secondary" [value]="discussion.discussionForProject?.projectName" icon="pi pi-folder"></p-tag>
-            <p-tag *ngIf="discussion.moduleId" severity="info" [value]="discussion.moduleId?.moduleName" icon="pi pi-box"></p-tag>
-            <p-tag [value]="discussion.discussionType"></p-tag>
-          </div>
-          <div class="assignee-group text-muted" style="font-size: 11px;">
-             {{ discussion.createdAtAgo }}
-          </div>
-        </div>
+    <!-- ─── Discussions ───────────────────────── -->
+    <p-tabPanel header="My Discussions">
+      <div *ngIf="loadingDiscussions" class="flex-center" style="height: 150px">
+        <i class="pi pi-spin pi-spinner" style="font-size: 1.5rem"></i>
       </div>
-      <div class="no-records-card" *ngIf="dashboardData.discussions.length === 0">
-        <i class="pi pi-comments"></i>
-        No discussions found
-      </div>
+
+      <ng-container *ngIf="!loadingDiscussions">
+        <div class="record-card" *ngFor="let discussion of discussions">
+          <div class="record-card__header">
+            <span class="record-title">{{ discussion.discussionTitle }}</span>
+          </div>
+          <div class="record-card__body" *ngIf="discussion.discussionDescription">
+            <p class="flex-1 m-0 text-secondary" style="font-size: 12px;">{{ stripHtml(discussion.discussionDescription) }}</p>
+          </div>
+          <div class="record-card__footer">
+            <div class="tag-group">
+              <p-tag severity="secondary" [value]="discussion.discussionForProject?.projectName" icon="pi pi-folder"></p-tag>
+              <p-tag *ngIf="discussion.moduleId?.moduleName" severity="info" [value]="discussion.moduleId.moduleName" icon="pi pi-box"></p-tag>
+              <p-tag [value]="discussion.discussionType"></p-tag>
+            </div>
+            <span class="text-muted" style="font-size: 11px;">{{ discussion.createdAtAgo }}</span>
+          </div>
+        </div>
+
+        <div class="no-records-card" *ngIf="discussions.length === 0">
+          <i class="pi pi-comments"></i>
+          No discussions found
+        </div>
+      </ng-container>
     </p-tabPanel>
 
-    <p-tabPanel header="Notes ({{dashboardData.notes.length}})">
-      <div class="record-card" *ngFor="let note of dashboardData.notes">
-        <div class="record-card__header">
-          <span class="record-title">Note for {{ note.date }}</span>
-        </div>
-        <div class="record-card__body">
-          <p class="flex-1 m-0">{{ stripHtml(note.content) }}</p>
-        </div>
-        <div class="record-card__footer">
-          <div class="tag-group">
-            <p-tag severity="secondary" [value]="note.projectId?.projectName" icon="pi pi-folder"></p-tag>
+    <!-- ─── Notes ─────────────────────────────── -->
+    <p-tabPanel header="My Notes">
+      <div *ngIf="loadingNotes" class="flex-center" style="height: 150px">
+        <i class="pi pi-spin pi-spinner" style="font-size: 1.5rem"></i>
+      </div>
+
+      <ng-container *ngIf="!loadingNotes">
+        <div class="record-card" *ngFor="let note of notes">
+          <div class="record-card__header">
+            <span class="record-title">Note — {{ note.date }}</span>
+          </div>
+          <div class="record-card__body">
+            <p class="flex-1 m-0 text-secondary" style="font-size: 12px;">{{ stripHtml(note.content) }}</p>
+          </div>
+          <div class="record-card__footer">
+            <div class="tag-group">
+              <p-tag severity="secondary" [value]="note.projectId?.projectName" icon="pi pi-folder"></p-tag>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="no-records-card" *ngIf="dashboardData.notes.length === 0">
-        <i class="pi pi-book"></i>
-        No notes found
-      </div>
+
+        <div class="no-records-card" *ngIf="notes.length === 0">
+          <i class="pi pi-book"></i>
+          No notes found
+        </div>
+      </ng-container>
     </p-tabPanel>
 
   </p-tabView>
-</div>
-
-<div class="flex-center" style="height: 200px" *ngIf="isLoading">
-  <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
 </div>
