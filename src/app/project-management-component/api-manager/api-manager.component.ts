@@ -12,11 +12,12 @@ import { FormsModule } from '@angular/forms';
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
 import { AddModuleComponent } from './add-module/add-module.component';
 import { AddApiComponent } from './add-api/add-api.component';
+import { ApiTesterComponent } from './api-tester/api-tester.component';
 
 @Component({
   selector: 'app-api-manager',
   standalone: true,
-  imports: [CommonModule, FormsModule, ButtonModule, TableModule, DialogModule, TagModule, ListboxModule, TooltipModule, NgxJsonViewerModule, AddModuleComponent, AddApiComponent],
+  imports: [CommonModule, FormsModule, ButtonModule, TableModule, DialogModule, TagModule, ListboxModule, TooltipModule, NgxJsonViewerModule, AddModuleComponent, AddApiComponent, ApiTesterComponent],
   templateUrl: './api-manager.component.html'
 })
 export class ApiManagerComponent implements OnChanges {
@@ -28,8 +29,10 @@ export class ApiManagerComponent implements OnChanges {
 
   showAddModule = false;
   showAddApi = false;
+  showApiTester = false;
   selectedApiToEdit: any = null;
   selectedModuleToEdit: any = null;
+  selectedApiToTest: any = null;
 
   get moduleOptions() {
     return [{_id: 'ALL', moduleName: 'All Modules'}, ...this.modules];
@@ -109,4 +112,10 @@ export class ApiManagerComponent implements OnChanges {
       });
     }
   }
+
+  openApiTester(api: any) {
+    this.selectedApiToTest = api;
+    this.showApiTester = true;
+  }
 }
+

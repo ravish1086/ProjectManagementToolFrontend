@@ -2,8 +2,10 @@
 <div class="panel-section-header">
   <span class="section-title">Modules &amp; APIs</span>
   <div class="section-actions">
-    <p-button icon="pi pi-plus" label="Add Module" size="small" (onClick)="openAddModule()" pTooltip="Add Module"></p-button>
-    <p-button icon="pi pi-plus" label="Add API" size="small" (onClick)="openAddApi()" [disabled]="!modules.length"></p-button>
+    <p-button icon="pi pi-plus" label="Add Module" size="small" (onClick)="openAddModule()"
+      pTooltip="Add Module"></p-button>
+    <p-button icon="pi pi-plus" label="Add API" size="small" (onClick)="openAddApi()"
+      [disabled]="!modules.length"></p-button>
   </div>
 </div>
 
@@ -11,24 +13,14 @@
 
   <!-- ── Modules Sidebar ─────────────────────────────────────────────────── -->
   <div style="width: 200px; flex-shrink: 0;">
-    <p-listbox
-      [options]="moduleOptions"
-      [(ngModel)]="selectedModule"
-      optionLabel="moduleName"
-      [listStyle]="{'max-height': 'calc(100vh - 260px)'}"
-      (onChange)="onModuleSelect($event)"
-      class="w-100"
-    ></p-listbox>
+    <p-listbox [options]="moduleOptions" [(ngModel)]="selectedModule" optionLabel="moduleName"
+      [listStyle]="{'max-height': 'calc(100vh - 260px)'}" (onChange)="onModuleSelect($event)" class="w-100"></p-listbox>
   </div>
 
   <!-- ── API Table ───────────────────────────────────────────────────────── -->
   <div style="flex: 1; min-width: 0;">
-    <p-table
-      [value]="apis"
-      dataKey="_id"
-      styleClass="p-datatable-sm p-datatable-striped"
-      [tableStyle]="{ 'min-width': '100%' }"
-    >
+    <p-table [value]="apis" dataKey="_id" styleClass="p-datatable-sm p-datatable-striped"
+      [tableStyle]="{ 'min-width': '100%' }">
       <ng-template pTemplate="header">
         <tr>
           <th style="width: 2.5rem"></th>
@@ -43,14 +35,9 @@
       <ng-template pTemplate="body" let-api let-expanded="expanded">
         <tr>
           <td>
-            <button
-              type="button"
-              pButton
-              pRipple
-              [pRowToggler]="api"
+            <button type="button" pButton pRipple [pRowToggler]="api"
               class="p-button-text p-button-rounded p-button-plain p-button-sm"
-              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
-            ></button>
+              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
           </td>
           <td class="font-semibold">{{ api.apiName }}</td>
           <td>
@@ -62,8 +49,12 @@
           <td class="text-secondary">{{ api.moduleId?.moduleName }}</td>
           <td>
             <div class="flex-start-c gap-1">
-              <p-button icon="pi pi-pencil" size="small" severity="secondary" [text]="true" (onClick)="openAddApi(api)" pTooltip="Edit"></p-button>
-              <p-button icon="pi pi-trash" size="small" severity="danger" [text]="true" (onClick)="deleteApi(api._id)" pTooltip="Delete"></p-button>
+              <p-button icon="pi pi-play" size="small" severity="success" [text]="true" (onClick)="openApiTester(api)"
+                pTooltip="Test API"></p-button>
+              <p-button icon="pi pi-pencil" size="small" severity="secondary" [text]="true" (onClick)="openAddApi(api)"
+                pTooltip="Edit"></p-button>
+              <p-button icon="pi pi-trash" size="small" severity="danger" [text]="true" (onClick)="deleteApi(api._id)"
+                pTooltip="Delete"></p-button>
             </div>
           </td>
         </tr>
@@ -81,85 +72,116 @@
               <div class="d-flex gap-4 flex-wrap">
                 <!-- Query Params -->
                 <div style="flex: 1; min-width: 200px;" *ngIf="api.apiQueryParams?.length">
-                  <h5 style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-secondary); margin-bottom: 8px;">Query Parameters</h5>
+                  <h5
+                    style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-secondary); margin-bottom: 8px;">
+                    Query Parameters</h5>
                   <div class="param-table">
                     <p-table [value]="api.apiQueryParams" styleClass="p-datatable-sm">
                       <ng-template pTemplate="header">
-                        <tr><th>Key</th><th>Type</th><th>Req</th><th>Description</th></tr>
-                      </ng-template>
-                      <ng-template pTemplate="body" let-qp>
-                        <tr>
-                          <td class="font-mono">{{ qp.key }}</td>
-                          <td><p-tag [value]="qp.type" severity="info"></p-tag></td>
-                          <td><i class="pi" [ngClass]="{'pi-check text-success': qp.required, 'pi-times text-danger': !qp.required}"></i></td>
-                          <td class="text-secondary">{{ qp.description }}</td>
-                        </tr>
-                      </ng-template>
-                    </p-table>
-                  </div>
-                </div>
-
-                <!-- Headers -->
-                <div style="flex: 1; min-width: 200px;" *ngIf="api.apiHeaders?.length">
-                  <h5 style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-secondary); margin-bottom: 8px;">Headers</h5>
-                  <div class="param-table">
-                    <p-table [value]="api.apiHeaders" styleClass="p-datatable-sm">
-                      <ng-template pTemplate="header">
-                        <tr><th>Key</th><th>Value</th><th>Description</th></tr>
-                      </ng-template>
-                      <ng-template pTemplate="body" let-h>
-                        <tr>
-                          <td class="font-mono">{{ h.key }}</td>
-                          <td class="font-mono">{{ h.value }}</td>
-                          <td class="text-secondary">{{ h.description }}</td>
-                        </tr>
-                      </ng-template>
-                    </p-table>
-                  </div>
-                </div>
-              </div>
-
-              <div class="d-flex gap-4 flex-wrap" style="margin-top: 12px;">
-                <!-- Request Body -->
-                <div style="flex: 1; min-width: 200px;" *ngIf="api.apiBody">
-                  <h5 style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-secondary); margin-bottom: 8px;">Request Body</h5>
-                  <div class="json-block">
-                    <ngx-json-viewer [json]="api.apiBody" [expanded]="false"></ngx-json-viewer>
-                  </div>
-                </div>
-
-                <!-- Response -->
-                <div style="flex: 1; min-width: 200px;" *ngIf="api.apiResponses?.length">
-                  <h5 style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-secondary); margin-bottom: 8px;">Response Example</h5>
-                  <div class="json-block">
-                    <ngx-json-viewer [json]="api.apiResponses[0].responseBody" [expanded]="false"></ngx-json-viewer>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </td>
+        <tr>
+          <th>Key</th>
+          <th>Type</th>
+          <th>Req</th>
+          <th>Description</th>
         </tr>
       </ng-template>
-
-      <ng-template pTemplate="emptymessage">
+      <ng-template pTemplate="body" let-qp>
         <tr>
-          <td colspan="6">
-            <div class="no-records-card" style="border: none; padding: 24px;">
-              <i class="pi pi-code"></i>
-              No APIs defined. Add your first API endpoint.
-            </div>
-          </td>
+          <td class="font-mono">{{ qp.key }}</td>
+          <td><p-tag [value]="qp.type" severity="info"></p-tag></td>
+          <td><i class="pi"
+              [ngClass]="{'pi-check text-success': qp.required, 'pi-times text-danger': !qp.required}"></i></td>
+          <td class="text-secondary">{{ qp.description }}</td>
         </tr>
       </ng-template>
     </p-table>
   </div>
 </div>
 
-<!-- ── Dialogs ────────────────────────────────────────────────────────────── -->
-<p-dialog [header]="selectedModuleToEdit ? 'Edit Module' : 'Add Module'" [modal]="true" [(visible)]="showAddModule" [style]="{ width: '380px' }">
-  <app-add-module *ngIf="showAddModule" [selectedProject]="selectedProject" [selectedModule]="selectedModuleToEdit" (moduleAdded)="onModuleSaved()"></app-add-module>
+<!-- Headers -->
+<div style="flex: 1; min-width: 200px;" *ngIf="api.apiHeaders?.length">
+  <h5
+    style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-secondary); margin-bottom: 8px;">
+    Headers</h5>
+  <div class="param-table">
+    <p-table [value]="api.apiHeaders" styleClass="p-datatable-sm">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Key</th>
+          <th>Value</th>
+          <th>Description</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-h>
+        <tr>
+          <td class="font-mono">{{ h.key }}</td>
+          <td class="font-mono">{{ h.value }}</td>
+          <td class="text-secondary">{{ h.description }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+</div>
+
+<div class="d-flex gap-4 flex-wrap" style="margin-top: 12px;">
+  <!-- Request Body -->
+  <div style="flex: 1; min-width: 200px;" *ngIf="api.apiBody">
+    <h5
+      style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-secondary); margin-bottom: 8px;">
+      Request Body</h5>
+    <div class="json-block">
+      <ngx-json-viewer style="display: block;" [json]="api.apiBody" [expanded]="false"></ngx-json-viewer>
+    </div>
+  </div>
+
+  <!-- Response -->
+  <div style="flex: 1; min-width: 200px;" *ngIf="api.apiResponses?.length">
+    <h5
+      style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-secondary); margin-bottom: 8px;">
+      Response Example</h5>
+    <div class="json-block">
+      <ngx-json-viewer style="display: block;" [json]="api.apiResponses[0].responseBody"
+        [expanded]="false"></ngx-json-viewer>
+    </div>
+  </div>
+</div>
+</div>
+</td>
+</tr>
+</ng-template>
+
+<ng-template pTemplate="emptymessage">
+  <tr>
+    <td colspan="6">
+      <div class="no-records-card" style="border: none; padding: 24px;">
+        <i class="pi pi-code"></i>
+        No APIs defined. Add your first API endpoint.
+      </div>
+    </td>
+  </tr>
+</ng-template>
+</p-table>
+</div>
+</div>
+
+<p-dialog [header]="selectedModuleToEdit ? 'Edit Module' : 'Add Module'" [modal]="true" [(visible)]="showAddModule"
+  [style]="{ width: '380px' }">
+  <app-add-module *ngIf="showAddModule" [selectedProject]="selectedProject" [selectedModule]="selectedModuleToEdit"
+    (moduleAdded)="onModuleSaved()"></app-add-module>
 </p-dialog>
 
-<p-dialog [header]="selectedApiToEdit ? 'Edit API' : 'Add API'" [modal]="true" [(visible)]="showAddApi" [style]="{ width: '680px' }" [maximizable]="true">
-  <app-add-api *ngIf="showAddApi" [selectedProject]="selectedProject" [modules]="modules" [selectedApi]="selectedApiToEdit" (apiAdded)="onApiSaved()"></app-add-api>
+<p-dialog [header]="selectedApiToEdit ? 'Edit API' : 'Add API'" [modal]="true" [(visible)]="showAddApi"
+  [style]="{ width: '680px' }" [maximizable]="true">
+  <app-add-api *ngIf="showAddApi" [selectedProject]="selectedProject" [modules]="modules"
+    [selectedApi]="selectedApiToEdit" (apiAdded)="onApiSaved()"></app-add-api>
+</p-dialog>
+
+<!-- ── API Tester Dialog ────────────────────────────────────────────────────── -->
+<p-dialog [header]="'Test API — ' + (selectedApiToTest?.apiName || '')" [modal]="true" [(visible)]="showApiTester"
+  [style]="{ width: '92vw', height: '82vh' }" [maximizable]="true"
+  [contentStyle]="{ padding: '12px', height: 'calc(100% - 60px)', overflow: 'hidden', display: 'flex', flexDirection: 'column' }">
+  <app-api-tester *ngIf="showApiTester" [api]="selectedApiToTest" [projectId]="selectedProject?._id"
+    (closeTester)="showApiTester = false"
+    style="flex:1; display:flex; flex-direction:column; min-height:0;"></app-api-tester>
 </p-dialog>

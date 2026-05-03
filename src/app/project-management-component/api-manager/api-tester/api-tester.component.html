@@ -1,0 +1,173 @@
+<div class="tester-root">
+
+  <!-- ── Base URL Banner ─────────────────────────────────────────────────────── -->
+  <div class="base-url-bar">
+    <span class="base-url-label">
+      <i class="pi pi-server"></i> Base URL
+    </span>
+    <input class="base-url-input" [(ngModel)]="baseUrl" placeholder="https://api.example.com  (saved per project)"
+      (keydown.enter)="saveBaseUrl()" />
+    <button class="save-btn" (click)="saveBaseUrl()" [class.saved]="baseUrlSavedFlash">
+      <i class="pi" [ngClass]="baseUrlSavedFlash ? 'pi-check' : 'pi-save'"></i>
+      {{ baseUrlSavedFlash ? 'Saved!' : 'Save' }}
+    </button>
+  </div>
+
+  <!-- ── URL Bar ─────────────────────────────────────────────────────────────── -->
+  <div class="url-bar">
+    <span class="method-pill" [ngClass]="methodClass">
+      <select [(ngModel)]="method" class="method-select">
+        <option *ngFor="let m of methods" [value]="m">{{ m }}</option>
+      </select>
+    </span>
+
+    <div class="endpoint-wrap">
+      <span class="base-prefix">{{ baseUrl || '&lt;base url&gt;' }}</span>
+      <input class="endpoint-input" [(ngModel)]="endpoint" placeholder="/endpoint/path" />
+    </div>
+
+    <button class="send-btn" [disabled]="isLoading || !baseUrl" (click)="sendRequest()">
+      <i class="pi" [ngClass]="isLoading ? 'pi-spin pi-spinner' : 'pi-send'"></i>
+      {{ isLoading ? 'Sending…' : 'Send' }}
+    </button>
+  </div>
+
+  <!-- ── Main Two-Pane Area ──────────────────────────────────────────────────── -->
+  <div class="tester-body">
+
+    <!-- ── Left: Request Config ──────────────────────────────────────────────── -->
+    <div class="request-pane">
+      <div class="pane-tabs">
+        <button class="pane-tab" [class.active]="activeReqTab===0" (click)="activeReqTab=0">
+          Headers <span class="badge" *ngIf="activeHeaderCount">{{ activeHeaderCount }}</span>
+        </button>
+        <button class="pane-tab" [class.active]="activeReqTab===1" (click)="activeReqTab=1">
+          Params <span class="badge" *ngIf="activeParamCount">{{ activeParamCount }}</span>
+        </button>
+        <button class="pane-tab" [class.active]="activeReqTab===2" (click)="activeReqTab=2">Body</button>
+      </div>
+
+      <!-- Headers Tab -->
+      <div class="tab-content" *ngIf="activeReqTab===0">
+        <div class="kv-table">
+          <div class="kv-header">
+            <span class="kv-toggle"></span>
+            <span class="kv-key">Key</span>
+            <span class="kv-val">Value</span>
+            <span class="kv-del"></span>
+          </div>
+          <div class="kv-row" *ngFor="let h of headers; let i=index">
+            <span class="kv-toggle">
+              <input type="checkbox" [(ngModel)]="h.enabled" />
+            </span>
+            <input class="kv-key" [(ngModel)]="h.key" placeholder="Header name" />
+            <input class="kv-val" [(ngModel)]="h.value" placeholder="Value" />
+            <button class="kv-del-btn" (click)="removeHeader(i)">
+              <i class="pi pi-times"></i>
+            </button>
+          </div>
+        </div>
+        <button class="add-row-btn" (click)="addHeader()">
+          <i class="pi pi-plus"></i> Add Header
+        </button>
+      </div>
+
+      <!-- Params Tab -->
+      <div class="tab-content" *ngIf="activeReqTab===1">
+        <div class="kv-table">
+          <div class="kv-header">
+            <span class="kv-toggle"></span>
+            <span class="kv-key">Key</span>
+            <span class="kv-val">Value</span>
+            <span class="kv-del"></span>
+          </div>
+          <div class="kv-row" *ngFor="let p of queryParams; let i=index">
+            <span class="kv-toggle">
+              <input type="checkbox" [(ngModel)]="p.enabled" />
+            </span>
+            <input class="kv-key" [(ngModel)]="p.key" placeholder="Param key" />
+            <input class="kv-val" [(ngModel)]="p.value" placeholder="Value" />
+            <button class="kv-del-btn" (click)="removeParam(i)">
+              <i class="pi pi-times"></i>
+            </button>
+          </div>
+        </div>
+        <button class="add-row-btn" (click)="addParam()">
+          <i class="pi pi-plus"></i> Add Param
+        </button>
+      </div>
+
+      <!-- Body Tab -->
+      <div class="tab-content body-tab" *ngIf="activeReqTab===2">
+        <div class="body-hint">Raw JSON body</div>
+        <textarea class="body-editor" [(ngModel)]="bodyText" placeholder='{ "key": "value" }'
+          spellcheck="false"></textarea>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="pane-divider"></div>
+
+    <!-- ── Right: Response Viewer ─────────────────────────────────────────────── -->
+    <div class="response-pane">
+
+      <!-- Empty state -->
+      <div class="resp-empty" *ngIf="!response && !isLoading">
+        <i class="pi pi-send"></i>
+        <p>Hit <strong>Send</strong> to see the response</p>
+      </div>
+
+      <!-- Loading -->
+      <div class="resp-empty" *ngIf="isLoading">
+        <i class="pi pi-spin pi-spinner" style="font-size:2rem;"></i>
+        <p>Waiting for response…</p>
+      </div>
+
+      <!-- Response data -->
+      <ng-container *ngIf="response && !isLoading">
+        <div class="resp-meta">
+          <span class="status-badge" [ngClass]="'status-' + getStatusSeverity(response.status)">
+            {{ response.status }} {{ response.statusText }}
+          </span>
+          <span class="resp-time">
+            <i class="pi pi-clock"></i> {{ response.time }} ms
+          </span>
+          <div class="resp-actions">
+            <button class="icon-btn" (click)="copyBody()" [pTooltip]="bodyCopied ? 'Copied!' : 'Copy response'">
+              <i class="pi" [ngClass]="bodyCopied ? 'pi-check' : 'pi-copy'"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="pane-tabs" style="margin-top:8px;">
+          <button class="pane-tab" [class.active]="activeRespTab===0" (click)="activeRespTab=0">Body</button>
+          <button class="pane-tab" [class.active]="activeRespTab===1" (click)="activeRespTab=1">
+            Headers <span class="badge" *ngIf="response.respHeaders.length">{{ response.respHeaders.length }}</span>
+          </button>
+        </div>
+
+        <!-- Response Body -->
+        <div class="resp-body-area" *ngIf="activeRespTab===0">
+          <ngx-json-viewer style="display: block;" *ngIf="response.isJson" [json]="response.body"
+            [expanded]="true"></ngx-json-viewer>
+          <pre *ngIf="!response.isJson" class="resp-raw">{{ response.rawBody }}</pre>
+        </div>
+
+        <!-- Response Headers -->
+        <div class="resp-body-area" *ngIf="activeRespTab===1">
+          <div class="kv-table">
+            <div class="kv-header" style="grid-template-columns: 1fr 1fr;">
+              <span>Header</span><span>Value</span>
+            </div>
+            <div class="kv-row resp-hdr-row" *ngFor="let h of response.respHeaders"
+              style="grid-template-columns: 1fr 1fr;">
+              <span class="font-mono resp-hdr-key">{{ h.key }}</span>
+              <span class="font-mono resp-hdr-val">{{ h.value }}</span>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+</div>
